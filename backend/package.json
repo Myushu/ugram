@@ -1,0 +1,38 @@
+{
+  "name": "node-starter",
+  "version": "0.1.0",
+  "description": "Packs de départs pour développement avancé d'application web",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "istanbul cover _mocha -- -u exports -R spec test/**/*",
+    "coverage": "opn ./coverage/lcov-report/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GLO3102/ugram-h17-team-06.git"
+  },
+  "author": "Équipe 06",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GLO3102/ugram-h17-team-06/issues"
+  },
+  "homepage": "https://github.com/GLO3102/ugram-h17-team-06#readme",
+  "dependencies": {
+    "aws-sdk": "^2.6.15",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "redis": "^2.6.3",
+    "winston": "^2.3.0",
+    "winston-cloudwatch": "^1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "opn-cli": "^3.1.0"
+  }
+}
