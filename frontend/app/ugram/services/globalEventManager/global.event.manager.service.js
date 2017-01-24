@@ -13,11 +13,11 @@ var GlobalEventsManager = (function () {
     function GlobalEventsManager() {
         this.showNavBar = new core_1.EventEmitter();
     }
-    GlobalEventsManager = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], GlobalEventsManager);
     return GlobalEventsManager;
 }());
+GlobalEventsManager = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], GlobalEventsManager);
 exports.GlobalEventsManager = GlobalEventsManager;
 //# sourceMappingURL=global.event.manager.service.js.map

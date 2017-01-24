@@ -2,12 +2,15 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //Components
-//import { SignInComponent }              from './uram/components/sign-in/sign-in.component';
-//import { SignUpComponent }              from './uram/components/sign-in/sign-up.component';
+//import { SignInComponent }              from './ugram/components/sign-in/sign-in.component';
+//import { SignUpComponent }              from './ugram/components/sign-in/sign-up.component';
+
+import { HomeComponent }        from 'app/ugram/components/home/home.component';
 
 const routes: Routes = [
-    //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    //{ path: 'dashboard', component: DashboardComponent},
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent},
+
 ];
 
 

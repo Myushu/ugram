@@ -17,7 +17,7 @@ export class AppComponent {
         private router: Router,
         private _cookieService:CookieService
     ) {
-        if (!this._cookieService.get('token'))
-            this.router.navigate(['/login']);
+        //if (!this._cookieService.get('token'))
+        //    this.router.navigate(['/login']);
     }
 }

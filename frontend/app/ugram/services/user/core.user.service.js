@@ -8,11 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var core_2 = require('angular2-cookie/core');
-var router_1 = require('@angular/router');
-require('rxjs/add/operator/toPromise');
-var core_api_service_1 = require('app/uram/services/api/core.api.service');
+var core_1 = require("@angular/core");
+var core_2 = require("angular2-cookie/core");
+var router_1 = require("@angular/router");
+require("rxjs/add/operator/toPromise");
+var core_api_service_1 = require("app/ugram/services/api/core.api.service");
 var CoreUserService = (function () {
     function CoreUserService(coreApiService, _cookieService, router) {
         this.coreApiService = coreApiService;
@@ -67,11 +67,13 @@ var CoreUserService = (function () {
         if (!this.isLogIn())
             this.router.navigate(['/signin']);
     };
-    CoreUserService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [core_api_service_1.CoreApiService, core_2.CookieService, router_1.Router])
-    ], CoreUserService);
     return CoreUserService;
 }());
+CoreUserService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [core_api_service_1.CoreApiService,
+        core_2.CookieService,
+        router_1.Router])
+], CoreUserService);
 exports.CoreUserService = CoreUserService;
 //# sourceMappingURL=core.user.service.js.map

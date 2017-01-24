@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var core_2 = require('angular2-cookie/core');
-var router_1 = require('@angular/router');
-var global_event_manager_service_1 = require("app/uram/services/globalEventManager/global.event.manager.service");
+var core_2 = require("angular2-cookie/core");
+var router_1 = require("@angular/router");
+var global_event_manager_service_1 = require("app/ugram/services/globalEventManager/global.event.manager.service");
 var NavBarComponent = (function () {
     function NavBarComponent(globalEventsManager, _cookieService, router) {
         var _this = this;
@@ -19,8 +19,8 @@ var NavBarComponent = (function () {
         this._cookieService = _cookieService;
         this.router = router;
         this.showNavBar = false;
-        if (this._cookieService.get('token'))
-            this.showNavBar = true;
+        //if (this._cookieService.get('token'))
+        this.showNavBar = true;
         this.globalEventsManager.showNavBar.subscribe(function (mode) {
             _this.showNavBar = mode;
         });
@@ -30,14 +30,16 @@ var NavBarComponent = (function () {
         this.globalEventsManager.showNavBar.emit(false);
         this.router.navigate(['/signin']);
     };
-    NavBarComponent = __decorate([
-        core_1.Component({
-            selector: "navbar",
-            templateUrl: 'app/uram/templates/menu/menu.component.html',
-        }), 
-        __metadata('design:paramtypes', [global_event_manager_service_1.GlobalEventsManager, core_2.CookieService, router_1.Router])
-    ], NavBarComponent);
     return NavBarComponent;
 }());
+NavBarComponent = __decorate([
+    core_1.Component({
+        selector: "navbar",
+        templateUrl: 'app/ugram/templates/menu/menu.component.html',
+    }),
+    __metadata("design:paramtypes", [global_event_manager_service_1.GlobalEventsManager,
+        core_2.CookieService,
+        router_1.Router])
+], NavBarComponent);
 exports.NavBarComponent = NavBarComponent;
 //# sourceMappingURL=navbar.component.js.map

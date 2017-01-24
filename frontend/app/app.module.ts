@@ -11,11 +11,14 @@ import { AppRoutingModule }    from './app-routing.module';
 
 
 //Components
-import { AppComponent }         from './app.component'
+import { AppComponent }         from './app.component';
+import { NavBarComponent }      from './ugram/components/nav/navbar.component';
+import { HomeComponent }        from 'app/ugram/components/home/home.component';
+
 
 //Services
-import { CoreApiService}        from './uram/services/api/core.api.service';
-import { GlobalEventsManager }  from './uram/services/globalEventManager/global.event.manager.service';
+import { CoreApiService}        from './ugram/services/api/core.api.service';
+import { GlobalEventsManager }  from './ugram/services/globalEventManager/global.event.manager.service';
 
 
 
@@ -29,7 +32,9 @@ import { GlobalEventsManager }  from './uram/services/globalEventManager/global.
   ],
   declarations: [
       AppComponent,
-      //DashboardComponent,
+      NavBarComponent,
+      HomeComponent,
+
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},

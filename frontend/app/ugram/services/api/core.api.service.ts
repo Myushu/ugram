@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CoreApiService {
 
-    private baseUrl = "#";
+    private baseUrl = "http://api.ugram.net";
 
     constructor(public http: Http, private _cookieService: CookieService) {}
 
@@ -16,13 +16,6 @@ export class CoreApiService {
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        //if (this._cookieService.get('token')) {
-        //    var token = this._cookieService.getObject('token');
-        //    headers.append('access-token', token['access-token']);
-        //    headers.append('client', token['client']);
-        //    headers.append('uid', token['uid']);
-        //}
-
         var request = new RequestOptions({
             method: req.method,
             url: req.url,
@@ -40,7 +33,9 @@ export class CoreApiService {
 
     static getRoute() {
         return {
-
+            pictures: {
+                get_pictures: "/pictures"
+            }
         };
     }
 }

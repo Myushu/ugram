@@ -1,0 +1,15 @@
+<div id="page-wrapper">
+    <div class="public_photos">
+            <div class="photo-container col-md-12" *ngFor="let image of images;">
+                <div class="photo-card">
+                    <div class="img"><img src="{{image.url}}" width="600px"></div>
+                    <div class="user">
+                        <ul>
+                            <li class="name"><a href="#">{{image.userId}}</a></li>
+                            <li class="date">3 hours ago</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

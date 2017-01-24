@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
 
-import { CoreApiService } from 'app/uram/services/api/core.api.service';
+import { CoreApiService } from 'app/ugram/services/api/core.api.service';
 
 @Injectable()
 export class CoreUserService {
