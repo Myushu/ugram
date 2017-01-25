@@ -110,9 +110,29 @@ ul {
         }
         .main_profile1 {
             margin: -90px auto 0;
-            height: 260px;
+            height: 350px;
+            background-color: #FAFAFA;
             .profile-name {
                 padding-top: 90px;
+            }
+            .update {
+                background-color: #3498db;
+                color: #fff;
+                font-size: 15px;
+                border: 0;
+                border-radius: 0;
+                &:hover {
+                    color: #3498db;
+                    background-color: #fff;
+                    border: 1px solid #3498db;
+                }
+            }
+            h2 {
+                margin-top: 0;
+                font-size: 15px;
+            }
+            .container {
+                margin-left: 0;
             }
         }
     }
@@ -138,4 +158,20 @@ ul {
             }
         }
     }
+}
+
+//LOGIN
+
+#page-wrapper {
+    .login-container {
+        width: 60%;
+        background-color: #fff;
+        padding: 40px;
+        display: inline-block;
+        border: 1px solid #e6e6e6;
+    }
+}
+
+delete-icon {
+    display: initial!important;
 }

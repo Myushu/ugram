@@ -14,12 +14,16 @@ var common_1 = require("@angular/common");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 //Routing
 var app_routing_module_1 = require("./app-routing.module");
+var ng2_tag_input_1 = require("ng2-tag-input");
 //Components
 var app_component_1 = require("./app.component");
 var navbar_component_1 = require("./ugram/components/nav/navbar.component");
 var home_component_1 = require("app/ugram/components/home/home.component");
 var picture_component_1 = require("app/ugram/components/picture/picture.component");
 var user_feed_component_1 = require("app/ugram/components/user/user.feed.component");
+var login_component_1 = require("app/ugram/components/login/login.component");
+var user_profile_component_1 = require("app/ugram/components/user/user.profile.component");
+var user_upload_component_1 = require("app/ugram/components/user/user.upload.component");
 //Services
 var core_api_service_1 = require("./ugram/services/api/core.api.service");
 var global_event_manager_service_1 = require("./ugram/services/globalEventManager/global.event.manager.service");
@@ -35,7 +39,8 @@ AppModule = __decorate([
             forms_1.FormsModule,
             http_1.HttpModule,
             app_routing_module_1.AppRoutingModule,
-            ng_bootstrap_1.NgbModule.forRoot()
+            ng_bootstrap_1.NgbModule.forRoot(),
+            ng2_tag_input_1.TagInputModule
         ],
         declarations: [
             app_component_1.AppComponent,
@@ -43,6 +48,9 @@ AppModule = __decorate([
             home_component_1.HomeComponent,
             picture_component_1.PictureComponent,
             user_feed_component_1.UserFeedComponent,
+            login_component_1.LoginComponent,
+            user_profile_component_1.UserProfileComponent,
+            user_upload_component_1.UserUploadComponent
         ],
         providers: [
             { provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy },

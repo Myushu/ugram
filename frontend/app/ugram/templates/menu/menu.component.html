@@ -66,7 +66,13 @@
                     <a href="#"><i class="fa fa-comments" aria-hidden="true"></i> DIRECT</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> PROFILE</a>
+                    <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i> UPLOAD</a>
+                </li>
+                <li>
+                    <a routerLink="/profile/"><i class="fa fa-user" aria-hidden="true"></i> PROFILE</a>
+                </li>
+                <li>
+                    <a (click)="logoutAction()" ><i class="fa fa-sign-out" aria-hidden="true"></i> LOGOUT</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

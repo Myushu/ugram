@@ -27,7 +27,8 @@
             //MY LIB
             'moment': 'node_modules/moment/moment.js',
             '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
-            'angular2-cookie':            'npm:angular2-cookie'
+            'angular2-cookie':            'npm:angular2-cookie',
+            'ng2-tag-input': 'node_modules/ng2-tag-input/'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -46,6 +47,18 @@
             'angular2-cookie': {
                 main: './core.js',
                 defaultExtension: 'js'
+            },
+            'ng2-tag-input': {
+                main: 'dist/ng2-tag-input.bundle.js',
+                format: 'cjs',
+            },
+            'ng2-material-dropdown': {
+                defaultExtension: 'js',
+                main: 'dist/ng2-dropdown.bundle.js',
+                format: 'cjs',
+            },
+            'ng2-tag-input/modules/components/tag-input.template.html': {
+                defaultJSExtension: false
             }
         }
     });

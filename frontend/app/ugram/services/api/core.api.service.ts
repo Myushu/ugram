@@ -15,7 +15,9 @@ export class CoreApiService {
         req.url = this.baseUrl + req.url;
 
         var headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/json');
+        if (req.token)
+            headers.append('Authorization', 'Bearer '+req.token);
         var request = new RequestOptions({
             method: req.method,
             url: req.url,
@@ -39,7 +41,9 @@ export class CoreApiService {
                 get_user_picture: "/users/{user_id}/pictures/{picture_id}",
             },
             user: {
-                get_user: "/users/{user_id}"
+                get_user: "/users/{user_id}",
+                get_users: "/users/",
+                update_user: "/users/{user_id}"
             }
         };
     }
