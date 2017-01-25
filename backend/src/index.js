@@ -39,6 +39,7 @@ app.use(errors.genericErrorHandler);
 app.use(morgan('combined', {'stream': logger.stream}));
 
 require('./controllers/home-controller')(app);
+require('./controllers/users-controller')(app);
 
 const port = process.env.PORT || 3000;
 app.listen(port);
