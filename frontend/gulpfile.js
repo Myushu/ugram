@@ -12,15 +12,7 @@ gulp.task('clean', function () {
     return del('dist/**/*');
 });
 
-// TypeScript compile
-gulp.task('compile', ['clean'], function () {
-    return gulp
-        .src('app/**/*.ts')
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(gulp.dest('dist/app'));
-});
-
-var jsFiles = 'dist/app/**/*.js',
+var jsFiles = 'app/**/*.js',
     jsDest = 'dist/js';
 
 gulp.task('compress', function() {

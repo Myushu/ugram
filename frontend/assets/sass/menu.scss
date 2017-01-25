@@ -4,107 +4,32 @@ body {
     height: auto;
     min-height: 100%;
     position: relative;
-    background-color: #2e3335;
+    background-color: #F1F5F8;
 }
 
-#page-wrapper {
-  //height: 100%;
-}
-
-#wrapper{
-    background-color: $gray95;
-    .navbar-static-top {
-        background-color: $blue90;
-        border-radius: 0;
-        border: none;
-        height: 60px;
-        .navbar-header {
-            width: 250px;
-            background-color: $gray;
-            height: 60px;
-            .navbar-brand {
-                height: 35px;
-                //width: 100%;
-                padding: 0;
-                //margin-top: 8px;
-                //margin-left: 8px;
-                margin: 13px;
-            }
-
+.navbar {
+    height: 80px;
+    margin-bottom: 0;
+    background-color: #fff;
+    .navbar-header {
+        .navbar-brand {
+            width: 150px;
+            height: auto;
         }
+    }
+    .navbar-collapse {
         .navbar-right {
-            height: 60px;
-            .dropdown {
-                //height: 100%;
-                > a {
-                    color: #fff;
-                    text-decoration: none;
-                    min-height: 50px;
-                    padding: 0 10px;
-                    height: 60px;
-                    line-height: 60px;
-                    &:hover {
-                        background-color: $blue80;
-                    }
-                    img {
-                        width: 35px;
-                        border-radius: 50%;
-                    }
-                    .spacing {
-                        padding: 0 7px;
-                    }
-                }
-                .dropdown-menu {
-                    width: 100%;
-                    border-radius: 0;
-                    margin-top: -1px;
-                    padding: 0;
-                    border: none;
-                    box-shadow: none;
-                    .dropdown-item {
-                        display: block;
-                        color: #fff;
-                        text-decoration: none;
-                        background-color: $blue90;
-                        &:hover {
-                            background-color: $blue80;
-                        }
-                    }
-                }
-            }
-            .open {
+            li {
+                height: 78px;
                 a {
-                    background-color: $blue80;
+                    line-height: 39px;
+                    font-size: 17px;
                 }
-            }
-
-        }
-
-        .sidebar {
-            background-color: $gray95;
-            margin-top: 60px;
-            ul {
-                .active {
-                    background-color: $gray90;
-                }
-                li {
-                    border: none;
-                    height: 50px;
-                    a {
-                        padding: 0 15px;
-                        color: #fff;
-                        line-height: 50px;
-                        &:hover {
-                            background-color: $gray80;
-                        }
-                    }
-                    img {
-                        -webkit-filter: brightness(5);
-                        filter: brightness(5);
-                    }
+                &:last-child {
+                    border-right: 0;
                 }
             }
         }
-
     }
 }
+

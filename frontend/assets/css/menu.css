@@ -1,0 +1,28 @@
+@font-face {
+  font-family: SensationRegular;
+  src: url(../fonts/Sansation/Sansation-Regular.ttf); }
+@font-face {
+  font-family: SensationLight;
+  src: url(../fonts/Sansation/Sansation-Light.ttf); }
+body {
+  height: auto;
+  min-height: 100%;
+  position: relative;
+  background-color: #F1F5F8; }
+
+.navbar {
+  height: 80px;
+  margin-bottom: 0;
+  background-color: #fff; }
+  .navbar .navbar-header .navbar-brand {
+    width: 150px;
+    height: auto; }
+  .navbar .navbar-collapse .navbar-right li {
+    height: 78px; }
+    .navbar .navbar-collapse .navbar-right li a {
+      line-height: 39px;
+      font-size: 17px; }
+    .navbar .navbar-collapse .navbar-right li:last-child {
+      border-right: 0; }
+
+/*# sourceMappingURL=menu.css.map */

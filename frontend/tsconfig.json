@@ -11,10 +11,6 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "baseUrl": ".",
-    "outDir": "./dist/out-tsc"
-  },
-  "types": [
-    "core-js"
-  ]
+    "baseUrl": "."
+  }
 }

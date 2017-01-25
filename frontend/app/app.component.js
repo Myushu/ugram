@@ -8,24 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var core_2 = require('angular2-cookie/core');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var core_2 = require("angular2-cookie/core");
+var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var AppComponent = (function () {
-    function AppComponent(router, _cookieService) {
+    function AppComponent(router, _cookieService, modalService) {
         this.router = router;
         this._cookieService = _cookieService;
-        if (!this._cookieService.get('token'))
-            this.router.navigate(['/login']);
+        this.modalService = modalService;
+        //if (!this._cookieService.get('token'))
+        //    this.router.navigate(['/login']);
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            template: "<div id=\"wrapper\">\n                <navbar></navbar>\n                <router-outlet></router-outlet>\n                </div>\n                "
-        }), 
-        __metadata('design:paramtypes', [router_1.Router, core_2.CookieService])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'my-app',
+        template: "<div id=\"wrapper\">\n                <navbar></navbar>\n                <router-outlet></router-outlet>\n                </div>\n                "
+    }),
+    __metadata("design:paramtypes", [router_1.Router,
+        core_2.CookieService,
+        ng_bootstrap_1.NgbModal])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map
