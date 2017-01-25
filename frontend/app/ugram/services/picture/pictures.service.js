@@ -27,6 +27,71 @@ var PicturesService = (function () {
             });
         });
     };
+    PicturesService.prototype.get_picture = function (user_id, image_id) {
+        var _this = this;
+        var url = core_api_service_1.CoreApiService.getRoute().pictures.get_user_picture;
+        var url = url.replace("{user_id}", user_id);
+        var url = url.replace("{picture_id}", image_id);
+        var req = {
+            method: "GET",
+            url: url
+        };
+        return new Promise(function (resolve, reject) {
+            _this.coreApiService.request(req).then(function (data) {
+                var json = JSON.parse((data._body));
+                resolve(json);
+            });
+        });
+    };
+    PicturesService.prototype.get_user_picture = function (user_id) {
+        var _this = this;
+        var url = core_api_service_1.CoreApiService.getRoute().pictures.get_user_pictures;
+        var url = url.replace("{user_id}", user_id);
+        var req = {
+            method: "GET",
+            url: url
+        };
+        return new Promise(function (resolve, reject) {
+            _this.coreApiService.request(req).then(function (data) {
+                var json = JSON.parse((data._body));
+                resolve(json);
+            });
+        });
+    };
+    PicturesService.prototype.timeSince = function (date) {
+        var seconds = Math.floor((+new Date() - date) / 1000);
+        var interval = Math.floor(seconds / 31536000);
+        if (interval > 1) {
+            return interval + " years ago";
+        }
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+            return interval + " months ago";
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+            return interval + " days ago";
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+            return interval + " hours ago";
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+            return interval + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
+    };
+    PicturesService.prototype.format_pucture = function (pics) {
+        if (!pics.length)
+            pics.timeSince = this.timeSince(pics.createdDate);
+        else {
+            for (var i = 0; i < pics.length; i++) {
+                pics[i].timeSince = this.timeSince(pics[i].createdDate);
+            }
+        }
+        return (pics);
+    };
     return PicturesService;
 }());
 PicturesService = __decorate([

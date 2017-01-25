@@ -37,7 +37,12 @@ var CoreApiService = (function () {
     CoreApiService.getRoute = function () {
         return {
             pictures: {
-                get_pictures: "/pictures"
+                get_pictures: "/pictures",
+                get_user_pictures: "/users/{user_id}/pictures/",
+                get_user_picture: "/users/{user_id}/pictures/{picture_id}",
+            },
+            user: {
+                get_user: "/users/{user_id}"
             }
         };
     };

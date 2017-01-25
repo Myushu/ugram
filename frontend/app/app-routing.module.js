@@ -11,9 +11,13 @@ var router_1 = require("@angular/router");
 //import { SignInComponent }              from './ugram/components/sign-in/sign-in.component';
 //import { SignUpComponent }              from './ugram/components/sign-in/sign-up.component';
 var home_component_1 = require("app/ugram/components/home/home.component");
+var picture_component_1 = require("app/ugram/components/picture/picture.component");
+var user_feed_component_1 = require("app/ugram/components/user/user.feed.component");
 var routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: home_component_1.HomeComponent },
+    { path: 'picture/:userid/:id', component: picture_component_1.PictureComponent },
+    { path: 'user/:userid', component: user_feed_component_1.UserFeedComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

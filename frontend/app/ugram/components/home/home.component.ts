@@ -12,10 +12,11 @@ import { PicturesService } from 'app/ugram/services/picture/pictures.service';
 
 export class HomeComponent  {
     private images = [];
+
     constructor(
-        private _cookieService:CookieService,
-        private router: Router,
-        private picturesService: PicturesService
+        //private _cookieService:CookieService,
+        //private router: Router,
+        private picturesService: PicturesService,
     ) {
 
     }
@@ -23,9 +24,9 @@ export class HomeComponent  {
     ngOnInit() {
         this.picturesService.get_pictures().then(res => {
             this.images = res['items'];
+            this.images = this.picturesService.format_pucture(this.images);
             console.log(this.images);
         });
     }
-
 
 }

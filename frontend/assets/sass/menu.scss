@@ -7,128 +7,29 @@ body {
     background-color: #F1F5F8;
 }
 
-#page-wrapper {
-  //height: 100%;
-}
-
-#wrapper{
-    background-color: #FFFFFF;
-    .navbar-static-top {
-        background-color: #F1F5F8;
-        border-radius: 0;
-        border: none;
-        height: 60px;
-        .navbar-header {
-            width: 250px;
-            background-color: #FFFFFF;
-            height: 60px;
-            text-align: center;
-            .navbar-brand {
-                width: 150px;
-                padding: 0;
-                margin: 13px;
-                float: none;
-            }
-
+.navbar {
+    height: 80px;
+    margin-bottom: 0;
+    background-color: #fff;
+    .navbar-header {
+        .navbar-brand {
+            width: 150px;
+            height: auto;
         }
+    }
+    .navbar-collapse {
         .navbar-right {
-            height: 60px;
-            .dropdown {
-                //height: 100%;
-                > a {
-                    color: #337ab7;
-                    text-decoration: none;
-                    min-height: 50px;
-                    padding: 0 10px;
-                    height: 60px;
-                    line-height: 60px;
-                    &:hover {
-                        //background-color: $blue80;
-                    }
-                    img {
-                        width: 35px;
-                        border-radius: 50%;
-                    }
-                    .spacing {
-                        padding: 0 7px;
-                    }
-
-                }
-                input {
-                    width: 200px;
-                    border-radius: 20px;
-                    border: none;
-                    margin-right: 20px;
-                    padding: 10px;
-                    height: 30px;
-                    &:focus {
-                        outline: 0;
-                    }
-                }
-                .dropdown-menu {
-                    width: 100%;
-                    border-radius: 0;
-                    margin-top: -1px;
-                    padding: 0;
-                    border: none;
-                    box-shadow: none;
-                    .dropdown-item {
-                        display: block;
-                        color: #fff;
-                        text-decoration: none;
-                        background-color: $blue90;
-                        &:hover {
-                            background-color: $blue80;
-                        }
-                    }
-                }
-            }
-            .open {
+            li {
+                height: 78px;
                 a {
-                    background-color: $blue80;
+                    line-height: 39px;
+                    font-size: 17px;
                 }
-            }
-
-        }
-
-        .sidebar {
-            background-color: #FFFFFF;
-            margin-top: 60px;
-            ul {
-                //.active {
-                //    background-color: $gray90;
-                //}
-                margin-top: 20px;
-                li {
-                    border: none;
-                    height: 60px;
-                    a {
-                        padding: 0 15px;
-                        color: #337ab7;
-                        line-height: 60px;
-                        font-family: Helvetica;
-                        font-size: 14px;
-                        &:hover {
-                            background-color: #fff;
-                        }
-                        .fa {
-                            font-size: x-large;
-                            margin-right: 10px;
-                        }
-                    }
-                    img {
-                        -webkit-filter: brightness(5);
-                        filter: brightness(5);
-                    }
-                    &:hover {
-                        border-left: 5px solid $blue;
-                    }
-                    &.active {
-                        border-left: 5px solid $blue;
-                    }
+                &:last-child {
+                    border-right: 0;
                 }
             }
         }
-
     }
 }
+

@@ -18,6 +18,8 @@ var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var navbar_component_1 = require("./ugram/components/nav/navbar.component");
 var home_component_1 = require("app/ugram/components/home/home.component");
+var picture_component_1 = require("app/ugram/components/picture/picture.component");
+var user_feed_component_1 = require("app/ugram/components/user/user.feed.component");
 //Services
 var core_api_service_1 = require("./ugram/services/api/core.api.service");
 var global_event_manager_service_1 = require("./ugram/services/globalEventManager/global.event.manager.service");
@@ -39,6 +41,8 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             navbar_component_1.NavBarComponent,
             home_component_1.HomeComponent,
+            picture_component_1.PictureComponent,
+            user_feed_component_1.UserFeedComponent,
         ],
         providers: [
             { provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy },

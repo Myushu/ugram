@@ -9,32 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var pictures_service_1 = require("app/ugram/services/picture/pictures.service");
-var HomeComponent = (function () {
-    function HomeComponent(
+var PictureComponent = (function () {
+    function PictureComponent(
         //private _cookieService:CookieService,
-        //private router: Router,
-        picturesService) {
+        router, picturesService, Route) {
+        this.router = router;
         this.picturesService = picturesService;
-        this.images = [];
+        this.Route = Route;
+        this.image = [];
     }
-    HomeComponent.prototype.ngOnInit = function () {
+    PictureComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.picturesService.get_pictures().then(function (res) {
-            _this.images = res['items'];
-            _this.images = _this.picturesService.format_pucture(_this.images);
-            console.log(_this.images);
+        this.Route.params.subscribe(function (params) {
+            _this.userId = params['userid'];
+            _this.imageId = params['id'];
+            _this.picturesService.get_picture(_this.userId, _this.imageId).then(function (res) {
+                console.log(res);
+                _this.image = _this.picturesService.format_pucture(res);
+                console.log(_this.image);
+            });
         });
     };
-    return HomeComponent;
+    return PictureComponent;
 }());
-HomeComponent = __decorate([
+PictureComponent = __decorate([
     core_1.Component({
         selector: "home",
-        templateUrl: 'app/ugram/templates/home/home.component.html',
+        templateUrl: 'app/ugram/templates/picture/picture.component.html',
         providers: [pictures_service_1.PicturesService]
     }),
-    __metadata("design:paramtypes", [pictures_service_1.PicturesService])
-], HomeComponent);
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+    __metadata("design:paramtypes", [router_1.Router,
+        pictures_service_1.PicturesService,
+        router_1.ActivatedRoute])
+], PictureComponent);
+exports.PictureComponent = PictureComponent;
+//# sourceMappingURL=picture.component.js.map

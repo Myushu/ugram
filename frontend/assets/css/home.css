@@ -2,37 +2,82 @@ ul {
   margin: 0; }
 
 #page-wrapper {
-  background-color: #F1F5F8;
+  background-color: #FAFAFA;
   padding: 0;
   height: 100%;
-  padding-top: 80px; }
+  padding-top: 40px;
+  overflow: auto; }
   #page-wrapper .photo-container {
     text-align: center;
     padding: 20px; }
     #page-wrapper .photo-container .photo-card {
       padding: 20px;
-      width: 60%;
+      width: 100%;
+      max-width: 600px;
       display: inline-block;
       background-color: #fff;
-      -webkit-box-shadow: 3px 3px 9px 0px #b0b0ae;
-      -moz-box-shadow: 3px 3px 9px 0px #b0b0ae;
-      box-shadow: 3px 3px 9px 0px #b0b0ae; }
+      border: 1px solid #e6e6e6; }
       #page-wrapper .photo-container .photo-card div.user {
         height: 60px;
         text-align: -webkit-auto; }
         #page-wrapper .photo-container .photo-card div.user ul {
           padding: 10px; }
           #page-wrapper .photo-container .photo-card div.user ul li {
-            list-style: none; }
-            #page-wrapper .photo-container .photo-card div.user ul li.name a {
-              font-size: 18px;
-              color: #696D70;
-              text-decoration: none; }
+            list-style: none;
+            border: 0; }
+            #page-wrapper .photo-container .photo-card div.user ul li.name {
+              width: 100%;
+              float: left;
+              text-align: inherit; }
+              #page-wrapper .photo-container .photo-card div.user ul li.name a {
+                font-size: 18px;
+                color: #696D70;
+                text-decoration: none; }
             #page-wrapper .photo-container .photo-card div.user ul li.date {
               font-size: 12px;
               color: #bdbdbd;
-              margin-left: 5px; }
+              padding-top: 0; }
       #page-wrapper .photo-container .photo-card div.img img {
         width: 100%; }
+
+#page-wrapper .container {
+  margin-left: 20px;
+  padding: 20px; }
+  #page-wrapper .container .image img {
+    max-width: 800px; }
+  #page-wrapper .container .infos ul li {
+    list-style: none; }
+    #page-wrapper .container .infos ul li.user {
+      font-size: 24px;
+      color: #696D70;
+      text-decoration: none;
+      width: 100%;
+      text-align: initial; }
+    #page-wrapper .container .infos ul li.time {
+      color: #bdbdbd;
+      border: 0; }
+
+#page-wrapper .header_profile img {
+  height: 10em; }
+#page-wrapper .header_profile .main_profile1 {
+  margin: -90px auto 0;
+  height: 260px; }
+  #page-wrapper .header_profile .main_profile1 .profile-name {
+    padding-top: 90px; }
+#page-wrapper .row {
+  margin-top: 20px;
+  max-width: 70%;
+  display: inline-block; }
+  #page-wrapper .row div .thumbnail {
+    height: 350px;
+    width: 350px;
+    overflow: hidden;
+    border: none;
+    display: inline-block;
+    padding: 0;
+    border-radius: 0; }
+    #page-wrapper .row div .thumbnail .img img {
+      margin-left: -50%;
+      width: 600px; }
 
 /*# sourceMappingURL=home.css.map */

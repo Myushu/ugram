@@ -14,6 +14,8 @@ import { AppRoutingModule }    from './app-routing.module';
 import { AppComponent }         from './app.component';
 import { NavBarComponent }      from './ugram/components/nav/navbar.component';
 import { HomeComponent }        from 'app/ugram/components/home/home.component';
+import { PictureComponent }     from 'app/ugram/components/picture/picture.component';
+import { UserFeedComponent }    from 'app/ugram/components/user/user.feed.component';
 
 
 //Services
@@ -34,7 +36,8 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       AppComponent,
       NavBarComponent,
       HomeComponent,
-
+      PictureComponent,
+      UserFeedComponent,
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},
