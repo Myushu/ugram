@@ -21,7 +21,9 @@ var CoreApiService = (function () {
     CoreApiService.prototype.request = function (req) {
         req.url = this.baseUrl + req.url;
         var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/json');
+        if (req.token)
+            headers.append('Authorization', 'Bearer ' + req.token);
         var request = new http_1.RequestOptions({
             method: req.method,
             url: req.url,
@@ -42,7 +44,9 @@ var CoreApiService = (function () {
                 get_user_picture: "/users/{user_id}/pictures/{picture_id}",
             },
             user: {
-                get_user: "/users/{user_id}"
+                get_user: "/users/{user_id}",
+                get_users: "/users/",
+                update_user: "/users/{user_id}"
             }
         };
     };

@@ -46,9 +46,11 @@
 }
 .fa-chain:before, .fa-link:before { content: "\f0c1"; }
 .fa-globe:before { content: "\f0ac"; }
-body { background-color: #f2f2f2; color: #444; font-family: 'Lato', sans-serif; font-weight: 300; line-height: 1; text-align: center; }
+
+.main_profile1 body { background-color: #f2f2f2; color: #444; font-family: 'Lato', sans-serif; font-weight: 300; line-height: 1; text-align: center; }
 .main_profile1 { background:#fff; margin: -73px auto 0; max-width:70%; border-radius: 3px; height:279px; }
-img { vertical-align:middle }
+
+.main_profile1 img { vertical-align:middle }
 .img-responsive { display: table; margin: 0px auto 0px; max-width:100%; height:auto; }
 .img_text { font-family:'Lato'; font-weight:bold; font-size:14px; text-align:left; color:#333; margin:0; padding:5px 10px; }
 .profile-img { height: 7em; margin-right: auto; margin-left: auto; border: .5em solid #f2f2f2; border-radius: 100%; box-shadow:  0 1px 0 0 rgba(0, 0, 0, .1); }
@@ -56,8 +58,10 @@ img { vertical-align:middle }
 .profile-text { margin :0 0 9px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 22px; font-size:11px; text-transform: uppercase; padding-top:0px; line-height:15px; }
 .profile-title { color: #ccc; }
 .social { width: auto; height:auto; margin-top: 0; margin-left:0; display:inline-block; }
-ul { list-style: none; font-size: 0; margin:0; padding:0px; }
-ul li { display: inline-block; height: auto; vertical-align: top; color: rgba(0, 0, 0, .6); font: 300 11px 'Source Sans Pro'; letter-spacing: 2px; text-align: center; text-transform: uppercase; float:left; padding: 5px 15px; border-right: 1px solid rgba(0, 0, 0, .05); }
+
+.main_profile1 ul { list-style: none; font-size: 0; margin:0; padding:0px; }
+
+.main_profile1 ul li { display: inline-block; height: auto; vertical-align: top; color: rgba(0, 0, 0, .6); font: 300 11px 'Source Sans Pro'; letter-spacing: 2px; text-align: center; text-transform: uppercase; float:left; padding: 5px 15px; border-right: 1px solid rgba(0, 0, 0, .05); }
 .buttons { display: table; height: auto; width: 100%; }
 .container { padding: 0; text-align: center; vertical-align: middle; width:100%; }
 .btn { color: #000; cursor: pointer; display: block; font-size: 11px; font-weight: 400; line-height: 30px; margin: 0 auto 0; max-width: 160px; position: relative; text-decoration: none; text-transform: uppercase; vertical-align: middle; width: 27%; }

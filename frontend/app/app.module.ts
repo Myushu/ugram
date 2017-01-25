@@ -9,6 +9,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //Routing
 import { AppRoutingModule }    from './app-routing.module';
 
+import { TagInputModule } from 'ng2-tag-input';
+
 
 //Components
 import { AppComponent }         from './app.component';
@@ -16,13 +18,14 @@ import { NavBarComponent }      from './ugram/components/nav/navbar.component';
 import { HomeComponent }        from 'app/ugram/components/home/home.component';
 import { PictureComponent }     from 'app/ugram/components/picture/picture.component';
 import { UserFeedComponent }    from 'app/ugram/components/user/user.feed.component';
+import {LoginComponent}         from "app/ugram/components/login/login.component";
+import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.component';
+import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
 
 
 //Services
 import { CoreApiService}        from './ugram/services/api/core.api.service';
 import { GlobalEventsManager }  from './ugram/services/globalEventManager/global.event.manager.service';
-
-
 
 @NgModule({
   imports:      [
@@ -30,7 +33,8 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       FormsModule,
       HttpModule,
       AppRoutingModule,
-      NgbModule.forRoot()
+      NgbModule.forRoot(),
+      TagInputModule
   ],
   declarations: [
       AppComponent,
@@ -38,6 +42,9 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       HomeComponent,
       PictureComponent,
       UserFeedComponent,
+      LoginComponent,
+      UserProfileComponent,
+      UserUploadComponent
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},

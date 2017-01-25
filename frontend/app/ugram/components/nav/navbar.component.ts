@@ -28,6 +28,6 @@ export class NavBarComponent  {
     logoutAction(): void {
         this._cookieService.removeAll();
         this.globalEventsManager.showNavBar.emit(false);
-        this.router.navigate(['/signin']);
+        this.router.navigate(['/login']);
     }
 }

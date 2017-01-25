@@ -14,6 +14,19 @@ var UserService = (function () {
     function UserService(coreApiService) {
         this.coreApiService = coreApiService;
     }
+    UserService.prototype.get_users = function () {
+        var _this = this;
+        var req = {
+            method: "GET",
+            url: core_api_service_1.CoreApiService.getRoute().user.get_users
+        };
+        return new Promise(function (resolve, reject) {
+            _this.coreApiService.request(req).then(function (data) {
+                var json = JSON.parse((data._body));
+                resolve(json);
+            });
+        });
+    };
     UserService.prototype.get_user = function (user_id) {
         var _this = this;
         var url = core_api_service_1.CoreApiService.getRoute().user.get_user;
@@ -26,6 +39,44 @@ var UserService = (function () {
             _this.coreApiService.request(req).then(function (data) {
                 var json = JSON.parse((data._body));
                 resolve(json);
+            });
+        });
+    };
+    UserService.prototype.update_user = function (user_id, user, token) {
+        var _this = this;
+        var url = core_api_service_1.CoreApiService.getRoute().user.update_user;
+        var url = url.replace("{user_id}", user_id);
+        var req = {
+            method: "PUT",
+            url: url,
+            data: JSON.stringify(user),
+            token: token
+        };
+        return new Promise(function (resolve, reject) {
+            _this.coreApiService.request(req).then(function (data) {
+                var json = JSON.parse((data._body));
+                resolve(json);
+            });
+        });
+    };
+    UserService.prototype.who_im_i = function (token) {
+        var _this = this;
+        var users;
+        return new Promise(function (resolve, reject) {
+            _this.get_users().then(function (data) {
+                for (var i = 0; i < data['totalEntries']; i++) {
+                    console.log('u', data['items'][i]);
+                    var user = {
+                        "email": data['items'][i]['email'],
+                        "firstName": data['items'][i]['firstName'],
+                        "lastName": data['items'][i]['lastName'],
+                        "phoneNumber": data['items'][i]['phoneNumber']
+                    };
+                    _this.update_user(data['items'][i]['id'], user, token).then(function (data) {
+                        if (data['id'])
+                            resolve(data);
+                    });
+                }
             });
         });
     };
