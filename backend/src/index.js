@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const errors = require('./common/errors');
 const logger = require('./common/logger');
+const sql = require('./common/sql');
 
 const app = express();
 const corsOptions = {
@@ -41,6 +42,7 @@ app.use(morgan('combined', {'stream': logger.stream}));
 require('./controllers/home-controller')(app);
 require('./controllers/users-controller')(app);
 
+sql.initSQL();
 const port = process.env.PORT || 3000;
 app.listen(port);
 
