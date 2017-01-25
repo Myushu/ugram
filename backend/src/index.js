@@ -38,7 +38,7 @@ app.use(errors.genericErrorHandler);
 // Enables access-logs on each calls
 app.use(morgan('combined', {'stream': logger.stream}));
 
-require('./controllers/sample-controller')(app);
+require('./controllers/home-controller')(app);
 
 const port = process.env.PORT || 3000;
 app.listen(port);
