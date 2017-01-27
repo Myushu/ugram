@@ -76,7 +76,8 @@ ul {
             //padding: 20px 20px 50px;
             //border: 1px solid #e6e6e6;
             img {
-                max-width: 800px;
+                //max-width: 800px;
+                max-width: 100%;
             }
         }
         .infos {
@@ -105,13 +106,16 @@ ul {
 
 #page-wrapper {
     .header_profile {
+        text-align: center;
         img {
-            height: 10em;
+            height: 6em;
         }
         .main_profile1 {
             margin: -90px auto 0;
-            height: 350px;
+            //height: 350px;
+            padding-bottom: 20px;
             background-color: #FAFAFA;
+            text-align: center;
             .profile-name {
                 padding-top: 90px;
             }
@@ -133,12 +137,15 @@ ul {
             }
             .container {
                 margin-left: 0;
+                display: inline-block;
+                > .btn {
+                    width: 10%!important;
+                }
             }
         }
     }
     .row {
-        margin-top: 20px;
-        max-width: 70%;
+        width: 70%;
         display: inline-block;
         div {
             .thumbnail {
@@ -163,12 +170,15 @@ ul {
 //LOGIN
 
 #page-wrapper {
-    .login-container {
-        width: 60%;
-        background-color: #fff;
-        padding: 40px;
-        display: inline-block;
-        border: 1px solid #e6e6e6;
+    &.login {
+        text-align: center;
+        .login-container {
+            width: 60%;
+            background-color: #fff;
+            padding: 40px;
+            display: inline-block;
+            border: 1px solid #e6e6e6;
+        }
     }
 }
 

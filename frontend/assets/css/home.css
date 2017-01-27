@@ -44,7 +44,7 @@ ul {
   margin-left: 20px;
   padding: 20px; }
   #page-wrapper .container .image img {
-    max-width: 800px; }
+    max-width: 100%; }
   #page-wrapper .container .infos ul li {
     list-style: none; }
     #page-wrapper .container .infos ul li.user {
@@ -57,32 +57,37 @@ ul {
       color: #bdbdbd;
       border: 0; }
 
-#page-wrapper .header_profile img {
-  height: 10em; }
-#page-wrapper .header_profile .main_profile1 {
-  margin: -90px auto 0;
-  height: 350px;
-  background-color: #FAFAFA; }
-  #page-wrapper .header_profile .main_profile1 .profile-name {
-    padding-top: 90px; }
-  #page-wrapper .header_profile .main_profile1 .update {
-    background-color: #3498db;
-    color: #fff;
-    font-size: 15px;
-    border: 0;
-    border-radius: 0; }
-    #page-wrapper .header_profile .main_profile1 .update:hover {
-      color: #3498db;
-      background-color: #fff;
-      border: 1px solid #3498db; }
-  #page-wrapper .header_profile .main_profile1 h2 {
-    margin-top: 0;
-    font-size: 15px; }
-  #page-wrapper .header_profile .main_profile1 .container {
-    margin-left: 0; }
+#page-wrapper .header_profile {
+  text-align: center; }
+  #page-wrapper .header_profile img {
+    height: 6em; }
+  #page-wrapper .header_profile .main_profile1 {
+    margin: -90px auto 0;
+    padding-bottom: 20px;
+    background-color: #FAFAFA;
+    text-align: center; }
+    #page-wrapper .header_profile .main_profile1 .profile-name {
+      padding-top: 90px; }
+    #page-wrapper .header_profile .main_profile1 .update {
+      background-color: #3498db;
+      color: #fff;
+      font-size: 15px;
+      border: 0;
+      border-radius: 0; }
+      #page-wrapper .header_profile .main_profile1 .update:hover {
+        color: #3498db;
+        background-color: #fff;
+        border: 1px solid #3498db; }
+    #page-wrapper .header_profile .main_profile1 h2 {
+      margin-top: 0;
+      font-size: 15px; }
+    #page-wrapper .header_profile .main_profile1 .container {
+      margin-left: 0;
+      display: inline-block; }
+      #page-wrapper .header_profile .main_profile1 .container > .btn {
+        width: 10% !important; }
 #page-wrapper .row {
-  margin-top: 20px;
-  max-width: 70%;
+  width: 70%;
   display: inline-block; }
   #page-wrapper .row div .thumbnail {
     height: 350px;
@@ -96,12 +101,14 @@ ul {
       margin-left: -50%;
       width: 600px; }
 
-#page-wrapper .login-container {
-  width: 60%;
-  background-color: #fff;
-  padding: 40px;
-  display: inline-block;
-  border: 1px solid #e6e6e6; }
+#page-wrapper.login {
+  text-align: center; }
+  #page-wrapper.login .login-container {
+    width: 60%;
+    background-color: #fff;
+    padding: 40px;
+    display: inline-block;
+    border: 1px solid #e6e6e6; }
 
 delete-icon {
   display: initial !important; }
