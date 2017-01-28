@@ -1,0 +1,19 @@
+25c25,28
+<       allowNull: false
+---
+>       allowNull: false,
+>       validate : {
+>         isEmail : true,
+>       }
+37c40,43
+<       allowNull: true
+---
+>       allowNull: true,
+>       validate : {
+>         isNumeric : true,
+>       }
+56c62,63
+<     tableName: 'USER'
+---
+>     tableName: 'USER',
+>     timestamps : false,

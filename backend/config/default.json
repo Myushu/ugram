@@ -2,7 +2,7 @@
   "sql" : {
     "host" : "localhost",
     "port" : 3306,
-    "database" : "ugram",
+    "database" : "UGRAM",
     "credentials" : {
       "user" : "root",
       "password" : "root"
