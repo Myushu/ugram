@@ -6,8 +6,13 @@ var sequelize = new Sequelize({
   username : config.getSqlCredentialsConfig('user'),
   password : config.getSqlCredentialsConfig('password'),
   database : config.getSqlConfig('database'),
-  host: config.getSqlConfig('host'),
+  host : config.getSqlConfig('host'),
   port : config.getSqlConfig('port'),
+  options : {
+  retry : {
+    max : config.getSqlConfig('maxRetries'),
+    },
+  },
   dialect: 'mysql',
 });
 
