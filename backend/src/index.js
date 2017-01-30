@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const errors = require('./common/errors');
 const logger = require('./common/logger');
-const sql = require('./common/sql');
+const orm = require('./common/orm');
 
 const app = express();
 const corsOptions = {
@@ -34,16 +34,14 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
-
 app.use(errors.genericErrorHandler);
-// Enables access-logs on each calls
 app.use(morgan('combined', {'stream': logger.stream}));
 
 require('./controllers/home-controller')(app);
 require('./controllers/users-controller')(app);
 
-sql.initSQL();
 const port = process.env.PORT || 3000;
+orm.initConnection();
 app.listen(port);
 
 logger.info(`App started on port ${port}`)
