@@ -269,3 +269,35 @@ delete-icon {
         }
     }
 }
+
+//Upload
+
+#page-wrapper {
+    .upload-container {
+        text-align: center;
+        .upload {
+            background-color: #fff;
+            border: 1px solid #e6e6e6;
+            padding: 20px;
+            display: inline-block;
+            width: 600px;
+            .form-group {
+                .inputfile {
+                    width: 0.1px;
+                    height: 0.1px;
+                    opacity: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    z-index: -1;
+                }
+                .inputfile + label {
+                    padding: 10px;
+                    color: white;
+                    background-color: #337ab7;
+                    display: inline-block;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
