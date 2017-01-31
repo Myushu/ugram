@@ -1,15 +1,15 @@
-import { NgModule }       from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
-import { HttpModule}    from '@angular/http';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { NgModule }         from '@angular/core';
+import { BrowserModule }    from '@angular/platform-browser';
+import { FormsModule }      from '@angular/forms';
+import { HttpModule}        from '@angular/http';
+import { CookieService }    from 'angular2-cookie/services/cookies.service';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule }        from '@ng-bootstrap/ng-bootstrap';
 
 //Routing
-import { AppRoutingModule }    from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
-import { TagInputModule } from 'ng2-tag-input';
+import { TagInputModule }   from 'ng2-tag-input';
 
 
 //Components
@@ -21,6 +21,7 @@ import { UserFeedComponent }    from 'app/ugram/components/user/user.feed.compon
 import {LoginComponent}         from "app/ugram/components/login/login.component";
 import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.component';
 import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
+import { UserUpdateComponent }  from 'app/ugram/components/user/user.update.component';
 
 
 //Services
@@ -44,7 +45,8 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       UserFeedComponent,
       LoginComponent,
       UserProfileComponent,
-      UserUploadComponent
+      UserUploadComponent,
+      UserUpdateComponent,
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},

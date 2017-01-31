@@ -24,6 +24,7 @@ var user_feed_component_1 = require("app/ugram/components/user/user.feed.compone
 var login_component_1 = require("app/ugram/components/login/login.component");
 var user_profile_component_1 = require("app/ugram/components/user/user.profile.component");
 var user_upload_component_1 = require("app/ugram/components/user/user.upload.component");
+var user_update_component_1 = require("app/ugram/components/user/user.update.component");
 //Services
 var core_api_service_1 = require("./ugram/services/api/core.api.service");
 var global_event_manager_service_1 = require("./ugram/services/globalEventManager/global.event.manager.service");
@@ -50,7 +51,8 @@ AppModule = __decorate([
             user_feed_component_1.UserFeedComponent,
             login_component_1.LoginComponent,
             user_profile_component_1.UserProfileComponent,
-            user_upload_component_1.UserUploadComponent
+            user_upload_component_1.UserUploadComponent,
+            user_update_component_1.UserUpdateComponent,
         ],
         providers: [
             { provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy },
