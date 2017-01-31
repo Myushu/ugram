@@ -21,6 +21,7 @@ import { UserFeedComponent }    from 'app/ugram/components/user/user.feed.compon
 import {LoginComponent}         from "app/ugram/components/login/login.component";
 import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.component';
 import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
+import {UserDiscoverComponent} from 'app/ugram/components/user/user.discover.component';
 
 
 //Services
@@ -44,7 +45,8 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       UserFeedComponent,
       LoginComponent,
       UserProfileComponent,
-      UserUploadComponent
+      UserUploadComponent,
+      UserDiscoverComponent
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},

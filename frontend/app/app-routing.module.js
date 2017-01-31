@@ -16,6 +16,7 @@ var user_feed_component_1 = require("app/ugram/components/user/user.feed.compone
 var login_component_1 = require("app/ugram/components/login/login.component");
 var user_profile_component_1 = require("app/ugram/components/user/user.profile.component");
 var user_upload_component_1 = require("app/ugram/components/user/user.upload.component");
+var user_discover_component_1 = require("app/ugram/components/user/user.discover.component");
 var routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: home_component_1.HomeComponent },
@@ -23,7 +24,8 @@ var routes = [
     { path: 'user/:userid', component: user_feed_component_1.UserFeedComponent },
     { path: 'login', component: login_component_1.LoginComponent },
     { path: 'profile', component: user_profile_component_1.UserProfileComponent },
-    { path: 'upload', component: user_upload_component_1.UserUploadComponent }
+    { path: 'upload', component: user_upload_component_1.UserUploadComponent },
+    { path: 'discover', component: user_discover_component_1.UserDiscoverComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
