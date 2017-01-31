@@ -8,18 +8,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent }        from 'app/ugram/components/home/home.component';
 import { PictureComponent }     from 'app/ugram/components/picture/picture.component';
 import { UserFeedComponent }    from 'app/ugram/components/user/user.feed.component';
+import { UserUpdateComponent }           from 'app/ugram/components/user/user.update.component';
 import {LoginComponent}         from 'app/ugram/components/login/login.component';
 import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.component';
 import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
+import {UserDiscoverComponent} from 'app/ugram/components/user/user.discover.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent},
     { path: 'picture/:userid/:id', component: PictureComponent },
     { path: 'user/:userid', component: UserFeedComponent},
+    { path: 'update', component: UserUpdateComponent},
+    { path: 'user/:userid', component: UserFeedComponent},
     { path: 'login', component: LoginComponent},
     { path: 'profile', component: UserProfileComponent },
-    { path: 'upload', component: UserUploadComponent}
+    { path: 'upload', component: UserUploadComponent},
+    { path: 'discover', component: UserDiscoverComponent }
 ];
 
 
