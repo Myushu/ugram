@@ -245,3 +245,27 @@ delete-icon {
         }
     }
 }
+
+//Update
+
+#page-wrapper {
+    .update-container {
+        text-align: center;
+        .update {
+            background-color: #fff;
+            border: 1px solid #e6e6e6;
+            padding: 20px;
+            display: inline-block;
+            width: 600px;
+            .form-group {
+                text-align: start;
+            }
+            h3 {
+                margin: 0;
+                font-size: 15px;
+                color: #999;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
