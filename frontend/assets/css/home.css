@@ -155,4 +155,42 @@ delete-icon {
         font-weight: bold;
         color: #999; }
 
+#page-wrapper .update-container {
+  text-align: center; }
+  #page-wrapper .update-container .update {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    display: inline-block;
+    width: 600px; }
+    #page-wrapper .update-container .update .form-group {
+      text-align: start; }
+    #page-wrapper .update-container .update h3 {
+      margin: 0;
+      font-size: 15px;
+      color: #999;
+      margin-bottom: 20px; }
+
+#page-wrapper .upload-container {
+  text-align: center; }
+  #page-wrapper .upload-container .upload {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    display: inline-block;
+    width: 600px; }
+    #page-wrapper .upload-container .upload .form-group .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1; }
+    #page-wrapper .upload-container .upload .form-group .inputfile + label {
+      padding: 10px;
+      color: white;
+      background-color: #337ab7;
+      display: inline-block;
+      cursor: pointer; }
+
 /*# sourceMappingURL=home.css.map */

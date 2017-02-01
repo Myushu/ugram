@@ -1,26 +1,36 @@
-<div class="form-group row">
-    <label for="user-surname-update" class="col-2 col-form-label">Surname</label>
-    <div class="col-10">
-        <input [(ngModel)]="UserSurName" class="form-control" type="text" value='{{UserSurName}}'
-               id="user-surname-update">
+<div id="page-wrapper">
+    <div class="update-container">
+        <div class="update">
+            <h2>Edit Profile</h2>
+            <h3>@{{user.id}}</h3>
+            <div class="form-group row">
+                <label for="user-surname-update" class="col-2 col-form-label">Surname</label>
+                <div class="col-10">
+                    <input [(ngModel)]="UserSurName" class="form-control" type="text" value='{{UserSurName}}'
+                           id="user-surname-update">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="user-name-update" class="col-2 col-form-label">Name</label>
+                <div class="col-10">
+                    <input [(ngModel)]="UserName" class="form-control" type="text" value='{{UserName}}' id="user-name-update">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="user-email-update" class="col-2 col-form-label">Email</label>
+                <div class="col-10">
+                    <input [(ngModel)]="UserEmail" class="form-control" type="email" value='{{UserEmail}}' id="user-email-update">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="user-tel-update" class="col-2 col-form-label">Telephone</label>
+                <div class="col-10">
+                    <input [(ngModel)]="UserTel" class="form-control" type="tel" value='{{UserTel}}' id="user-tel-update">
+                </div>
+            </div>
+            <div class="form-group row">
+                <button (click)="submitUpdate()" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
     </div>
 </div>
-<div class="form-group row">
-    <label for="user-name-update" class="col-2 col-form-label">Name</label>
-    <div class="col-10">
-        <input [(ngModel)]="UserName" class="form-control" type="text" value='{{UserName}}' id="user-name-update">
-    </div>
-</div>
-<div class="form-group row">
-    <label for="user-email-update" class="col-2 col-form-label">Email</label>
-    <div class="col-10">
-        <input [(ngModel)]="UserEmail" class="form-control" type="email" value='{{UserEmail}}' id="user-email-update">
-    </div>
-</div>
-<div class="form-group row">
-    <label for="user-tel-update" class="col-2 col-form-label">Telephone</label>
-    <div class="col-10">
-        <input [(ngModel)]="UserTel" class="form-control" type="tel" value='{{UserTel}}' id="user-tel-update">
-    </div>
-</div>
-<button (click)="submitUpdate()" type="submit" class="btn btn-primary">Submit</button>
