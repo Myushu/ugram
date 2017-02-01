@@ -11,12 +11,11 @@ export class PicturesService {
 
     }
 
-    get_pictures() {
+    get_pictures(page_size, page) {
         var req = {
             method: "GET",
-            url: CoreApiService.getRoute().pictures.get_pictures,
+            url: CoreApiService.getRoute().pictures.get_pictures + '?page=' + page + '&perPage='+page_size ,
         };
-
         return new Promise((resolve, reject) => {
             this.coreApiService.request(req).then(data => {
 
@@ -34,7 +33,7 @@ export class PicturesService {
         var url = url.replace("{picture_id}", image_id);
         var req = {
             method: "GET",
-            url: url
+            url: url,
         };
 
         return new Promise((resolve, reject) => {
