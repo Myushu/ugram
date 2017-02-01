@@ -44,4 +44,4 @@ const port = process.env.PORT || 3000;
 orm.initConnection();
 app.listen(port);
 
-logger.info(`App started on port ${port}`)
+logger.info(`App started on port ${port}`);

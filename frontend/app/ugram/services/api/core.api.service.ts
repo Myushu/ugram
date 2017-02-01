@@ -43,7 +43,7 @@ export class CoreApiService {
             },
             user: {
                 get_user: "/users/{user_id}",
-                get_users: "/users",
+                get_users: "/users?perPage=1000",
                 update_user: "/users/{user_id}"
             }
         };
