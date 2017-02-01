@@ -14,11 +14,11 @@ var PicturesService = (function () {
     function PicturesService(coreApiService) {
         this.coreApiService = coreApiService;
     }
-    PicturesService.prototype.get_pictures = function () {
+    PicturesService.prototype.get_pictures = function (page_size, page) {
         var _this = this;
         var req = {
             method: "GET",
-            url: core_api_service_1.CoreApiService.getRoute().pictures.get_pictures,
+            url: core_api_service_1.CoreApiService.getRoute().pictures.get_pictures + '?page=' + page + '&perPage=' + page_size,
         };
         return new Promise(function (resolve, reject) {
             _this.coreApiService.request(req).then(function (data) {
@@ -34,7 +34,7 @@ var PicturesService = (function () {
         var url = url.replace("{picture_id}", image_id);
         var req = {
             method: "GET",
-            url: url
+            url: url,
         };
         return new Promise(function (resolve, reject) {
             _this.coreApiService.request(req).then(function (data) {

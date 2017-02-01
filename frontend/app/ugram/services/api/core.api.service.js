@@ -31,6 +31,7 @@ var CoreApiService = (function () {
         });
         if (req.data)
             request.body = req.data;
+        console.log('request', request);
         return this.http.request(new http_1.Request(request))
             .toPromise()
             .then(function (res) { return res; })
@@ -40,12 +41,12 @@ var CoreApiService = (function () {
         return {
             pictures: {
                 get_pictures: "/pictures",
-                get_user_pictures: "/users/{user_id}/pictures/",
+                get_user_pictures: "/users/{user_id}/pictures",
                 get_user_picture: "/users/{user_id}/pictures/{picture_id}",
             },
             user: {
                 get_user: "/users/{user_id}",
-                get_users: "/users/",
+                get_users: "/users",
                 update_user: "/users/{user_id}"
             }
         };

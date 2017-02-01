@@ -27,6 +27,7 @@ export class CoreApiService {
         if (req.data)
             request.body = req.data;
 
+        console.log('request', request)
         return this.http.request(new Request(request))
             .toPromise()
             .then(res => res)
@@ -37,12 +38,12 @@ export class CoreApiService {
         return {
             pictures: {
                 get_pictures: "/pictures",
-                get_user_pictures: "/users/{user_id}/pictures/",
+                get_user_pictures: "/users/{user_id}/pictures",
                 get_user_picture: "/users/{user_id}/pictures/{picture_id}",
             },
             user: {
                 get_user: "/users/{user_id}",
-                get_users: "/users/",
+                get_users: "/users",
                 update_user: "/users/{user_id}"
             }
         };

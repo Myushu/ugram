@@ -14,18 +14,40 @@ var router_1 = require("@angular/router");
 var pictures_service_1 = require("app/ugram/services/picture/pictures.service");
 var user_service_1 = require("app/ugram/services/user/user.service");
 var HomeComponent = (function () {
-    function HomeComponent(_cookieService, router, picturesService, userService) {
+    function HomeComponent(lc, _cookieService, router, picturesService, userService) {
+        var _this = this;
+        this.lc = lc;
         this._cookieService = _cookieService;
         this.router = router;
         this.picturesService = picturesService;
         this.userService = userService;
         this.images = [];
+        this.currentPage = 0;
         if (!this._cookieService.get('token'))
             this.router.navigate(['/login']);
+        window.onscroll = function () {
+            var windowHeight = "innerHeight" in window ? window.innerHeight
+                : document.documentElement.offsetHeight;
+            var body = document.body, html = document.documentElement;
+            var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+            var windowBottom = windowHeight + window.pageYOffset;
+            if (windowBottom >= docHeight) {
+                console.log('bottom anchor');
+                _this.currentPage += 1;
+                console.log('page', _this.currentPage);
+                _this.picturesService.get_pictures(20, _this.currentPage).then(function (res) {
+                    res['items'] = _this.picturesService.format_pucture(res['items']);
+                    _this.images = _this.images.concat(res['items']);
+                });
+            }
+            lc.run(function () {
+                //this.statusText = status;
+            });
+        };
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.picturesService.get_pictures().then(function (res) {
+        this.picturesService.get_pictures(20, this.currentPage).then(function (res) {
             _this.images = res['items'];
             _this.images = _this.picturesService.format_pucture(_this.images);
             console.log(_this.images);
@@ -39,7 +61,8 @@ HomeComponent = __decorate([
         templateUrl: 'app/ugram/templates/home/home.component.html',
         providers: [pictures_service_1.PicturesService, user_service_1.UserService]
     }),
-    __metadata("design:paramtypes", [core_2.CookieService,
+    __metadata("design:paramtypes", [core_1.NgZone,
+        core_2.CookieService,
         router_1.Router,
         pictures_service_1.PicturesService,
         user_service_1.UserService])
