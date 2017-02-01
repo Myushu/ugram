@@ -1,16 +1,23 @@
 const service = require('../services/users-service');
+const sequelizeHandlers = require('sequelize-handlers');
+const orm = require('../common/orm');
+const userModel = orm.getSequelize().import("../models/USER.js")
 
 module.exports = function(app) {
 
-    app.get('/users', (req, res) => {
-        return res.send(service.getUsers());
-    });
+    // Get all users
+    app.get('/users', sequelizeHandlers.query(userModel));
 
-    app.get('/users/:id', (req, res) => {
-        return res.send(service.getUsersById());
-    });
+    // Get a user
+    app.get('/users/:id', sequelizeHandlers.get(userModel));
 
-    app.post('/users/:id', (req, res) => {
-        return res.send(service.postUsersById());
-    });
+    // Create a new user
+    app.post('/users', sequelizeHandlers.create(userModel));
+
+    // Update a user
+    app.put('/users/:id', sequelizeHandlers.update(userModel));
+
+    // Delete a user
+    app.delete('/user/:id', sequelizeHandlers.remove(userModel));
+
 }
