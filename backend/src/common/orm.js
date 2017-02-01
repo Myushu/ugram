@@ -9,16 +9,16 @@ var sequelize = new Sequelize({
   host : config.getSqlConfig('host'),
   port : config.getSqlConfig('port'),
   options : {
-  retry : {
-    max : config.getSqlConfig('maxRetries'),
+    retry : {
+      max : config.getSqlConfig('maxRetries'),
+      },
     },
-  },
   dialect: 'mysql',
 });
 
 exports.initConnection = () => {
-  sequelize.query("SELECT 1", { type: sequelize.QueryTypes.SELECT })
-    .catch(function(err) {
+  sequelize.sync()
+      .catch(function(err) {
       logger.error(err.message);
       process.exit();
   });
@@ -27,3 +27,38 @@ exports.initConnection = () => {
 exports.getSequelize = () => {
   return sequelize;
 }
+
+// exports.findAll = (model, res, attributes) => {
+//   model.findAll({
+//     attributes : attributes
+//  }).then(function(result) {
+//     if (!result)
+//       res.sendStatus(404);
+//     res.json(result);
+//  }).catch(function(err) {
+//     logger.error(err.message);
+//     return res.sendStatus(500).send(err.message);
+//  });
+// }
+
+// exports.find = (model, res, attributes, where) => {
+//   model.find({
+//     attributes : attributes,
+//     where: where
+//  }).then(function(result) {
+//    if (!result)
+//     res.sendStatus(404)
+//   else
+//     res.json(result);
+//  }).catch(function(err) {
+//    logger.error(err.message);
+//    return res.sendStatus(500).send(err.message);
+//  });
+// }
+
+// exports.build = (model, res, attributes) => {
+//   model.build(attributes)
+//   .save().then(function(result) {
+//     res.sendStatus(201);
+//   });
+// }
