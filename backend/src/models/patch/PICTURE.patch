@@ -1,0 +1,9 @@
+26c26
+<       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+---
+>       // defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+33c33,34
+<     tableName: 'PICTURE'
+---
+>     tableName: 'PICTURE',
+>     timestamps : false,

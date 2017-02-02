@@ -23,13 +23,14 @@ module.exports = function(sequelize, DataTypes) {
     DATE_POSTED: {
       type: DataTypes.TIME,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+      // defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     DESCRIPTION: {
       type: DataTypes.STRING,
       allowNull: false
     }
   }, {
-    tableName: 'PICTURE'
+    tableName: 'PICTURE',
+    timestamps : false,
   });
 };

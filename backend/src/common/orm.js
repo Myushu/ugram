@@ -30,9 +30,8 @@ exports.getSequelize = () => {
 }
 
 exports.findAll = (model, res, attributes) => {
-  model.findAll({
-    attributes : attributes
- }).then(function(result) {
+  model.findAll(attributes)
+  .then(function(result) {
     if (!result)
       res.sendStatus(404);
     res.json(result);
