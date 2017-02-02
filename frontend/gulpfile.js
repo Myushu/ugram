@@ -1,6 +1,5 @@
 const gulp = require('gulp');
 const del = require('del');
-const typescript = require('gulp-typescript');
 const tscConfig = require('./tsconfig.json');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -37,3 +36,5 @@ gulp.task('sass:watch', function () {
 
 
 gulp.task('default', ['compile']);
+gulp.task('build', ['compress', 'sass']);
+gulp.task('test', ['compress', 'sass', 'clean']);

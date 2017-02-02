@@ -7,7 +7,8 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "test": "gulp test"
   },
   "licenses": [
     {
@@ -34,6 +35,7 @@
     "app-module-path": "^2.1.0",
     "core-js": "^2.4.1",
     "del": "^2.2.2",
+    "gulp": "^3.9.1",
     "ng2-bootstrap": "^1.1.16",
     "ng2-tag-input": "^0.7.7",
     "reflect-metadata": "^0.1.8",

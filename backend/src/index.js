@@ -43,4 +43,5 @@ require('./controllers/users-controller')(app);
 app.use(errors.errorHandler);
 orm.initConnection();
 app.listen(port);
-logger.info(`App started on port ${port}`)
+logger.info(`App started on port ${port}`);
+

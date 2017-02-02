@@ -4,7 +4,7 @@
   "description": "Packs de départs pour développement avancé d'application web",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "test": "istanbul cover _mocha -- -u exports -R spec test/**/*",
     "coverage": "opn ./coverage/lcov-report/index.html"
   },
@@ -21,11 +21,15 @@
   "dependencies": {
     "aws-sdk": "^2.6.15",
     "body-parser": "^1.15.2",
+    "config": "^1.25.1",
     "cors": "^2.8.1",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
+    "mysql": "^2.13.0",
     "redis": "^2.6.3",
+    "sequelize": "^3.30.1",
+    "sql": "^0.73.0",
     "winston": "^2.3.0",
     "winston-cloudwatch": "^1.7.0"
   },
