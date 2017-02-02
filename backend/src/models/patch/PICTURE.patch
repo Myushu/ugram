@@ -1,7 +1,7 @@
 26c26
 <       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 ---
->       // defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+>       DataTypes.NOW
 33c33,34
 <     tableName: 'PICTURE'
 ---

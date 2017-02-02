@@ -3,9 +3,10 @@ const orm = require('../common/orm');
 const userModel = orm.getSequelize().import("../models/USER.js")
 
 exports.getUsersById = (idUser, res) => {
-  orm.find(userModel, res,
-          [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'],
-          { 'ID_USER' : idUser});
+  orm.find(userModel, res, {
+    attributes : [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'],
+    where : { 'ID_USER' : idUser}
+  });
 }
 
 exports.getAllUsers = (res) => {
@@ -18,9 +19,9 @@ exports.createUser = (req, res) => {
 }
 
 exports.updateUser = (content, idUser, res) => {
-  orm.update(userModel, content, {'ID_USER' : idUser}, res);
+  orm.update(userModel, content, res, { where : {'ID_USER' : idUser}});
 }
 
 exports.deleteUser = (idUser, res) => {
-  orm.delete(userModel, {'ID_USER' : idUser}, res);
+  orm.delete(userModel, { where : {'ID_USER' : idUser}}, res);
 }
