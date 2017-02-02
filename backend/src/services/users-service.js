@@ -9,8 +9,8 @@ exports.getUsersById = (idUser, res) => {
 }
 
 exports.getAllUsers = (res) => {
-  orm.findAll(userModel, res,
-          [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']);
+  orm.findAll(userModel, res, {
+          attributes : [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']});
 }
 
 exports.createUser = (req, res) => {
