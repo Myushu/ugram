@@ -1,7 +1,6 @@
 const service = require('../services/users-service');
 const orm = require('../common/orm');
 const userModel = orm.getSequelize().import("../models/USER.js")
-const pictureModel = orm.getSequelize().import("../models/PICTURE.js")
 
 module.exports = function(app) {
     // Get all users

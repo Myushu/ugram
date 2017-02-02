@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     DATE_POSTED: {
       type: DataTypes.TIME,
       allowNull: false,
-      // defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: DataTypes.NOW
     },
     DESCRIPTION: {
       type: DataTypes.STRING,

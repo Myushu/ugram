@@ -30,8 +30,8 @@ exports.getSequelize = () => {
 }
 
 exports.findAll = (model, res, attributes) => {
-  model.findAll(attributes)
-  .then(function(result) {
+  model.findAll(attributes
+  ).then(function(result) {
     if (!result)
       res.sendStatus(404);
     res.json(result);
@@ -41,11 +41,9 @@ exports.findAll = (model, res, attributes) => {
  });
 }
 
-exports.find = (model, res, attributes, where, functionUpdate) => {
-  model.find({
-    attributes : attributes,
-    where: where
- }).then(function(result) {
+exports.find = (model, res, attributes, functionUpdate) => {
+  model.find(attributes
+  ).then(function(result) {
    if (!result)
     res.sendStatus(404)
   else if (functionUpdate != undefined)
@@ -67,8 +65,8 @@ exports.build = (model, res, attributes) => {
   });
 }
 
-exports.update = (model, newContent, attributesWhere, res) => {
-  this.find(model, res, undefined, attributesWhere, function(resultModel, res) {
+exports.update = (model, newContent, res, attributes) => {
+  this.find(model, res, attributes, function(resultModel, res) {
     resultModel.update(newContent).then(function(result) {
       if (!result)
        res.sendStatus(404)
@@ -80,9 +78,9 @@ exports.update = (model, newContent, attributesWhere, res) => {
   });
 }
 
-exports.delete = (model, attributesWhere, res) => {
-  this.find(model, res, undefined, attributesWhere, function(resultModel, res) {
-    resultModel.destroy().then(function(result) {
+exports.delete = (model, attributes, res) => {
+  this.find(model, res, attributes, function(resultModel, res) {
+    resultModel.destroy({cascade : true}).then(function(result) {
       if (!result)
        res.sendStatus(404)
      else
