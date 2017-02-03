@@ -13,6 +13,7 @@ import {LoginComponent}         from 'app/ugram/components/login/login.component
 import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.component';
 import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
 import {UserDiscoverComponent} from 'app/ugram/components/user/user.discover.component';
+import {UserListComponent} from  'app/ugram/components/user/user.list.component'
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
     { path: 'user/:userid', component: UserFeedComponent},
     { path: 'update', component: UserUpdateComponent},
     { path: 'user/:userid', component: UserFeedComponent},
+    { path: 'users', component: UserListComponent},
     { path: 'login', component: LoginComponent},
     { path: 'profile', component: UserProfileComponent },
     { path: 'upload', component: UserUploadComponent},
