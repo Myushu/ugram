@@ -1,7 +1,8 @@
 const logger = require('./logger');
 const errorMap = require('./errorMap');
+const errno = require('errno')
 
-sequelizeErrorHandler = (error, req, res, next) => {
+sequelizeErrorHandler = (error, res) => {
   var errorInfo = errorMap.map.find(e => e.name === error.name && e.type === error.errors[0].type);
   if (errorInfo === undefined) {
     logger.error("Error code not found");
@@ -10,12 +11,26 @@ sequelizeErrorHandler = (error, req, res, next) => {
     res.status(errorInfo.statusCode).send({
       code : errorInfo.code,
       path : error.errors[0].path,
-      message : error.errors[0].message,
+      message : error.errors[0].errno,
     });
   }
 }
 
-expressErrorHandler = (error, req, res, next) => {
+SequelizeForeignKeyHandler = (error, res) => {
+  var errorInfo = errorMap.map.find(e => e.name === error.name);
+  if (errorInfo === undefined) {
+    logger.error("Error code not found");
+    res.status(500).send("Error code not found");
+  } else {
+    res.status(errorInfo.statusCode).send({
+      code : errorInfo.code,
+      message : errorInfo.message
+    });
+  }
+}
+
+
+expressErrorHandler = (error, res) => {
   var errorInfo = errorMap.map.find(e => e.name === error.name);
   if (errorInfo === undefined) {
     logger.error("Error code not found");
@@ -28,10 +43,12 @@ expressErrorHandler = (error, req, res, next) => {
   }
 }
 
-exports.errorHandler = (error, req, res, next) => {
+exports.handle = (error, res) => {
   console.log(error); // tmp
   if (error.errors != undefined)
-    sequelizeErrorHandler(error, req, res, next);
+    sequelizeErrorHandler(error, res);
+  else if (error.parent != undefined)
+    SequelizeForeignKeyHandler(error, res);
   else
-    expressErrorHandler(error, req, res, next);
+    expressErrorHandler(error, res);
 }
