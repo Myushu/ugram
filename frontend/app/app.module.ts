@@ -23,7 +23,7 @@ import {UserProfileComponent}   from 'app/ugram/components/user/user.profile.com
 import {UserUploadComponent}    from 'app/ugram/components/user/user.upload.component';
 import { UserUpdateComponent }  from 'app/ugram/components/user/user.update.component';
 import {UserDiscoverComponent} from 'app/ugram/components/user/user.discover.component';
-
+import {UserListComponent} from 'app/ugram/components/user/user.list.component';
 
 //Services
 import { CoreApiService}        from './ugram/services/api/core.api.service';
@@ -48,7 +48,8 @@ import { GlobalEventsManager }  from './ugram/services/globalEventManager/global
       UserProfileComponent,
       UserUploadComponent,
       UserUpdateComponent,
-      UserDiscoverComponent
+      UserDiscoverComponent,
+      UserListComponent
   ],
   providers: [
       {provide: LocationStrategy, useClass: HashLocationStrategy},

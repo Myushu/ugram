@@ -4,68 +4,12 @@
             <ul class="discover-feed">
                 <li>DISCOVER PEOPLE</li>
             </ul>
-            <ul class="discover-feed">
+            <ul *ngFor="let user of users;" class="discover-feed">
                 <li class="infos">
                     <ul>
-                        <li>Antonin Bouscarel</li>
-                        <li>@Bousca_a</li>
-                    </ul>
-                </li>
-                <li class="images">
-                    <ul>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <ul class="discover-feed">
-                <li class="infos">
-                    <ul>
-                        <li>Antonin Bouscarel</li>
-                        <li>@Bousca_a</li>
-                    </ul>
-                </li>
-                <li class="images">
-                    <ul>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <ul class="discover-feed">
-                <li class="infos">
-                    <ul>
-                        <li>Antonin Bouscarel</li>
-                        <li>@Bousca_a</li>
-                    </ul>
-                </li>
-                <li class="images">
-                    <ul>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
-                        <li class="col-md-4">
-                            <img src="http://images.ugram.net/ylakhdar/190.jpg">
-                        </li>
+                        <li>Name: {{user.firstName}} {{user.lastName}}</li>
+                        <li>id: {{user.id}}</li>
+                        <li>e-mail: {{user.email}}</li>
                     </ul>
                 </li>
             </ul>
