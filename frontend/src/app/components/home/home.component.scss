@@ -1,0 +1,51 @@
+#page-wrapper {
+  background-color: #FAFAFA;
+  padding: 0;
+  height: 100%;
+  padding-top: 40px;
+  overflow: auto;
+  .photo-container {
+    text-align: center;
+    padding: 20px;
+    .photo-card {
+      padding: 20px;
+      width: 100%;
+      max-width: 600px;
+      display: inline-block;
+      background-color: #fff;
+      border: 1px solid #e6e6e6;
+      div {
+        &.user {
+          height: 60px;
+          ul {
+            padding: 10px;
+            li {
+              list-style: none;
+              border: 0;
+              &.name  {
+                width: 100%;
+                float: left;
+                text-align: inherit;
+                a {
+                  font-size: 18px;
+                  color: #696D70;
+                  text-decoration: none;
+                }
+              }
+              &.date {
+                font-size: 12px;
+                color: #bdbdbd;
+                padding-top: 0;
+              }
+            }
+          }
+        }
+        &.img {
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

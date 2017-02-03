@@ -1,0 +1,33 @@
+#page-wrapper {
+  .container {
+    margin-left: 20px;
+    padding:20px;
+    .image {
+      //background-color: #fff;
+      //padding: 20px 20px 50px;
+      //border: 1px solid #e6e6e6;
+      img {
+        //max-width: 800px;
+        max-width: 100%;
+      }
+    }
+    .infos {
+      ul {
+        li {
+          list-style: none;
+          &.user {
+            font-size: 24px;
+            color: #696D70;
+            text-decoration: none;
+            width: 100%;
+            text-align: initial;
+          }
+          &.time {
+            color: #bdbdbd;
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+}
