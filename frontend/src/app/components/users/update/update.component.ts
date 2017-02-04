@@ -44,6 +44,9 @@ export class UpdateComponent implements OnInit {
       'email' : this.UserEmail
     };
 
-    this.userService.update_user(this.user['id'], userUpdate, "353aac98-0fed-42aa-afcf-e7228f06ed53");
+    this.userService.update_user(this.user['id'], userUpdate, "353aac98-0fed-42aa-afcf-e7228f06ed53").then(res => {
+      this.router.navigate(['/profile']);
+    })
+
   }
 }

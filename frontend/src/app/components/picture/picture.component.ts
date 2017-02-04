@@ -52,7 +52,7 @@ export class PictureComponent implements OnInit {
 
     for(var i = 0; i < this.tags.length; i++) {
       if (this.tags[i]['value'])
-        body.tags.push(this.tags[i]['value'])
+        body.tags.push(this.tags[i]['value']);
       else
         body.tags.push(this.tags[i])
     }
@@ -63,7 +63,7 @@ export class PictureComponent implements OnInit {
         body.mentions.push(this.mentions[i])
     }
     this.picturesService.updateImage(this.userId, this.imageId, body).then(res => {
-      this.image = this.picturesService.format_pucture(res);
+      this.image = this.picturesService.format_picture(res);
       this.updated = 0;
     })
   }
@@ -84,6 +84,7 @@ export class PictureComponent implements OnInit {
             this.users.push(res['items'][i]['id']);
           }
         });
+        console.log(this.users);
       });
     })
   }
