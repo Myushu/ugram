@@ -26,7 +26,6 @@ export class ApiService {
     if (req.data)
       request.body = req.data;
 
-    console.log('request', request);
     return this.http.request(new Request(request))
       .toPromise()
       .then(res => res)

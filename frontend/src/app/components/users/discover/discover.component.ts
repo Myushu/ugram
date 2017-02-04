@@ -27,7 +27,7 @@ export class DiscoverComponent implements OnInit {
 
   onPager(event: number): void {
     document.body.scrollTop = 0;
-    this.page = event;
+    this.page = event - 1;
     this.getUser();
   }
 
@@ -37,9 +37,9 @@ export class DiscoverComponent implements OnInit {
 
   getUser() {
     this.userService.get_users(this.pageSize, this.page).then(res => {
+      console.log(res);
       this.totalEntries = res['totalEntries'];
       this.users = res['items'];
-      console.log(this.users);
     });
   }
 }

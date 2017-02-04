@@ -13,7 +13,7 @@ import { GlobalEventManagerService }  from "app/services/globalEventManager/glob
   providers: [CookieService, UsersService, GlobalEventManagerService]
 })
 export class LoginComponent implements OnInit {
-  public token: string = "";
+  public token: string = "353aac98-0fed-42aa-afcf-e7228f06ed53";
 
   constructor(
     private _cookieService: CookieService,
