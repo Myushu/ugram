@@ -12,8 +12,6 @@ exports.creationMention = (userId, pictureId, mention, res) => {
 }
 
 exports.deleteMention = (userId, pictureId, res) => {
-  var mention = {
-    ID_PICTURE : pictureId,
-  };
+  mention.ID_PICTURE = pictureId;
   orm.delete(mentionModel, mention, res);
 }
