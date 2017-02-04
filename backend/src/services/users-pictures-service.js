@@ -1,16 +1,28 @@
 const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
-const userModel = orm.getSequelize().import("../models/USER.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
+const reactionModel = orm.getSequelize().import("../models/REACTION.js");
+const userModel = orm.getSequelize().import("../models/USER.js");
 
-pictureModel.belongsTo(userModel, {foreignKey: 'ID_OWNER'})
+pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
+reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictureByUserId = (res, userId, query) => {
   var attributes = {
     attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
     order : 'DATE_POSTED desc',
-    where : {'ID_OWNER' : userId}
+    where : {'ID_OWNER' : userId},
+    include : {
+      model : reactionModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
+      }
+    }
   };
   queryManager.fillAttributesFromQuery(attributes, query);
   orm.findAll(pictureModel, res, attributes);
@@ -31,6 +43,16 @@ exports.getPictureById = (userId, pictureId, res) => {
     where : {
       'ID_OWNER' : userId,
       'ID_PICTURE' : pictureId
+    },
+    include : {
+      model : reactionModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
+      }
     }
   });
 }

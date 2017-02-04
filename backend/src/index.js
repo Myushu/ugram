@@ -41,6 +41,7 @@ require('./controllers/home-controller')(app);
 require('./controllers/users-controller')(app);
 require('./controllers/pictures-controller')(app);
 require('./controllers/users-pictures-controller')(app);
+require('./controllers/reaction-controller')(app);
 
 orm.initConnection();
 app.listen(port);

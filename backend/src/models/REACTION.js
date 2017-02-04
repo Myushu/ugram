@@ -2,10 +2,6 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('REACTION', {
-    ID_REACTION: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false
-    },
     ID_USER: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -25,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-    tableName: 'REACTION'
+    tableName: 'REACTION',
+    timestamps : false,
   });
 };
