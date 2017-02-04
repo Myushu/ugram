@@ -19,5 +19,5 @@ exports.deleteReaction = (userId, pictureId, res) => {
     ID_PICTURE : pictureId,
     ID_USER : userId // todo : we should be used token
   };
-  orm.delete(reactionModel, reaction, res);
+  orm.delete(reactionModel, res , { where : reaction});
 }

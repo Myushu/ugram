@@ -52,11 +52,18 @@ module.exports = function(sequelize, DataTypes) {
     },
     DATE_BIRTHDAY: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      validate : {
+        isAfter : '1970-01-01',
+        IsBefore : DataTypes.NOW
+      }
     },
     SEXE: {
       type: DataTypes.CHAR(1),
-      allowNull: false
+      allowNull: false,
+      validate : {
+        isIn : [['M', 'F', 'X']]
+      }
     }
   }, {
     tableName: 'USER',
