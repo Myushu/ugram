@@ -30,9 +30,11 @@ export class PictureComponent implements OnInit {
       this.imageId = params['id'];
       this.picturesService.get_picture(this.userId, this.imageId).then(res => {
         console.log(res);
-        this.image = this.picturesService.format_pucture(res);
+        this.image = this.picturesService.format_picture(res);
         console.log(this.image);
       });
     })
   }
+
 }
+

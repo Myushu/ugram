@@ -32,7 +32,7 @@ export class FeedComponent implements OnInit {
         console.log(this.user);
         this.picturesService.get_user_picture(this.user['id']).then(res => {
           this.images = res['items'];
-          this.images = this.picturesService.format_pucture(this.images);
+          this.images = this.picturesService.format_picture(this.images);
           this.nb_image = this.images['length'];
         });
       });

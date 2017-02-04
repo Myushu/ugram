@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.picturesService.get_pictures(this.pageSize, this.page).then(res => {
       this.totalEntries = res['totalEntries'];
       this.images = res['items'];
-      this.images = this.picturesService.format_pucture(this.images);
+      this.images = this.picturesService.format_picture(this.images);
     });
   }
 
