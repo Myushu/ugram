@@ -45,8 +45,8 @@ export class PicturesService {
     });
   }
 
-  get_user_picture(user_id) {
-    var url = this.coreApiService.getRoute().pictures.get_user_pictures;
+  get_user_picture(user_id, page_size, page) {
+    var url = this.coreApiService.getRoute().pictures.get_user_pictures + '?page=' + page + '&perPage='+page_size;
     var url = url.replace("{user_id}", user_id);
     var req = {
       method: "GET",
