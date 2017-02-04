@@ -8,6 +8,8 @@
 
 **AWS Link :** [laval-ugram-team-06.s3-website-us-east-1.amazonaws.com](http://laval-ugram-team-06.s3-website-us-east-1.amazonaws.com/)
 
+The compressed and minified files are in frontend/src/dist
+
 
 
 ## Project Configuration
