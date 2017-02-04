@@ -4,8 +4,6 @@
 
 
 
-[TOC]
-
 ## About Project
 
 **AWS Link :** [laval-ugram-team-06.s3-website-us-east-1.amazonaws.com](http://laval-ugram-team-06.s3-website-us-east-1.amazonaws.com/)
