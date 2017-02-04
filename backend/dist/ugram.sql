@@ -43,7 +43,7 @@ use UGRAM;
     ID_PICTURE int not null,
     constraint PK_MENTION primary key (ID_USER, ID_PICTURE),
     constraint FK_MENTION_USER foreign key (ID_USER) references USER(ID_USER),
-    constraint FK_MENTION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE)
+    constraint FK_MENTION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 
   create table HASHTAG (
@@ -54,12 +54,11 @@ use UGRAM;
   );
 
   create table REACTION (
-    ID_REACTION int not null,
     ID_USER int not null,
     ID_PICTURE int not null,
     constraint PK_REACTION primary key (ID_USER, ID_PICTURE),
     constraint FK_REACTION_USER foreign key (ID_USER) references USER(ID_USER),
-    constraint FK_REACTION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE)
+    constraint FK_REACTION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 
   create table COMMENT (
@@ -69,7 +68,7 @@ use UGRAM;
     CONTENT text not null,
     constraint PK_COMMENT primary key (ID_USER, ID_PICTURE, DATE_CREATION),
     constraint FK_COMMENT_USER foreign key (ID_USER) references USER(ID_USER),
-    constraint FK_COMMENT_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE)
+    constraint FK_COMMENT_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 
   create table CHAT (
