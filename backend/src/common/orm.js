@@ -56,10 +56,15 @@ exports.find = (model, res, attributes, functionUpdate) => {
  });
 }
 
-exports.build = (model, res, attributes) => {
+exports.build = (model, res, attributes, callbacks) => {
   model.build(attributes).save()
   .then(function(result) {
-    res.sendStatus(201);
+    res.status(201);
+    for (var i = 0; i < callbacks.length; ++i) {
+      callbacks[i](result.dataValues, attributes, res);
+    }
+    if (callbacks.length == 0)
+      res.send();
   }).catch(function(err) {
     errorManager.handle(err, res);
   });
