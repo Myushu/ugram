@@ -1,6 +1,7 @@
 const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
+const mentionService = require('./mention-service');
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 const userModel = orm.getSequelize().import("../models/USER.js");
@@ -41,8 +42,16 @@ exports.getAllPictureByUserId = (res, userId, query) => {
 }
 
 exports.createPicture = (userId, picture, res) => {
+  var listCallbacks = [];
   picture.ID_OWNER = userId;
-  orm.build(pictureModel, res, picture);
+  if (picture.MENTIONs != undefined) {
+    listCallbacks.push(function(result, picture, res) {
+      for (var i = 0; i < picture.MENTIONs.length; ++i) {
+        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], res);
+      }
+    });
+  }  
+  orm.build(pictureModel, res, picture, listCallbacks);
 }
 
 exports.deletePicture = (userId, pictureId, res) => {
