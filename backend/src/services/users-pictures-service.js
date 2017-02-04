@@ -4,16 +4,19 @@ const queryManager = require('../common/queryManager');
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 const userModel = orm.getSequelize().import("../models/USER.js");
+const mentionModel = orm.getSequelize().import("../models/MENTION.js");
 
 pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
+pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
 reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
+mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictureByUserId = (res, userId, query) => {
   var attributes = {
     attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
     order : 'DATE_POSTED desc',
     where : {'ID_OWNER' : userId},
-    include : {
+    include : [{
       model : reactionModel,
       attributes : {
         exclude : ['ID_PICTURE'],
@@ -22,7 +25,16 @@ exports.getAllPictureByUserId = (res, userId, query) => {
         model : userModel,
         attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
       }
-    }
+    },{
+      model : mentionModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
+      }
+    }]
   };
   queryManager.fillAttributesFromQuery(attributes, query);
   orm.findAll(pictureModel, res, attributes);
@@ -44,7 +56,7 @@ exports.getPictureById = (userId, pictureId, res) => {
       'ID_OWNER' : userId,
       'ID_PICTURE' : pictureId
     },
-    include : {
+    include : [{
       model : reactionModel,
       attributes : {
         exclude : ['ID_PICTURE'],
@@ -53,7 +65,16 @@ exports.getPictureById = (userId, pictureId, res) => {
         model : userModel,
         attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
       }
-    }
+    },{
+      model : mentionModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
+      }
+    }]
   });
 }
 

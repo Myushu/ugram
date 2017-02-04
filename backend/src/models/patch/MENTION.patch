@@ -1,0 +1,5 @@
+24c24,25
+<     tableName: 'MENTION'
+---
+>     tableName: 'MENTION',
+>     timestamps : false
