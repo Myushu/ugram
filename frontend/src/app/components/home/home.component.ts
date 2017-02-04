@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
   onPager(event: number): void {
     document.body.scrollTop = 0;
-    this.page = event;
+    this.page = event - 1;
     this.getPicture();
   }
 

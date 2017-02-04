@@ -35,7 +35,6 @@ export class ApiService {
 
         if (req.data)
             request.body = req.data;
-
         return this.http.request(new Request(request))
             .toPromise()
             .then(res => res)
@@ -53,8 +52,11 @@ export class ApiService {
         if (postData.hasOwnProperty(property)) {
           formData.append(property, postData[property]);
         }
+    return this.http.request(new Request(request))
+      .toPromise()
+      .then(res => res)
+      .catch(res => res);
       }
-    }
     var returnReponse = new Promise((resolve, reject) => {
       this.http.post(this.baseUrl + url, formData, {
         headers: headers
@@ -69,18 +71,19 @@ export class ApiService {
   }
 
     getRoute() {
-        return {
-            pictures: {
-                get_pictures: "/pictures",
-                get_user_pictures: "/users/{user_id}/pictures/",
-                get_user_picture: "/users/{user_id}/pictures/{picture_id}",
-                post_pictures: "/users/{userId}/pictures",
-            },
-            user: {
-                get_user: "/users/{user_id}",
-                get_users: "/users/",
-                update_user: "/users/{user_id}"
-            }
-        };
+    return {
+      pictures: {
+        get_pictures: "/pictures",
+        get_user_pictures: "/users/{user_id}/pictures",
+        get_user_picture: "/users/{user_id}/pictures/{picture_id}",
+        delete_user_picture: "/users/{user_id}/pictures/{picture_id}",
+        update_user_picture: "/users/{user_id}/pictures/{picture_id}"
+      },
+      user: {
+        get_user: "/users/{user_id}",
+        get_users: "/users",
+        update_user: "/users/{user_id}"
+
+      }
     }
 }

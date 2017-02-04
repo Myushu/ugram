@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CookieService }    from 'angular2-cookie/services/cookies.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TagInputModule } from 'ng2-tag-input';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -43,7 +44,8 @@ import { PicturesService } from './services/pictures/pictures.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    TagInputModule
   ],
   providers: [
     GlobalEventManagerService,
