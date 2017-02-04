@@ -11,10 +11,10 @@ export class UsersService {
 
   }
 
-  get_users() {
+  get_users(page_size, page) {
     var req = {
       method: "GET",
-      url: this.coreApiService.getRoute().user.get_users
+      url: this.coreApiService.getRoute().user.get_users + '?page=' + page + '&perPage='+page_size
     };
 
     return new Promise((resolve, reject) => {
@@ -61,7 +61,7 @@ export class UsersService {
   who_im_i(token) { //TO DELETE
     var users;
     return new Promise((resolve, reject) => {
-      this.get_users().then(data => {
+      this.get_users(999, 0).then(data => {
         for (var i = 0; i < data['totalEntries']; i++) {
           console.log('u', data['items'][i]);
           var user = {

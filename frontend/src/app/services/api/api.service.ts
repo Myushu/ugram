@@ -42,7 +42,7 @@ export class ApiService {
       },
       user: {
         get_user: "/users/{user_id}",
-        get_users: "/users?perPage=1000",
+        get_users: "/users",
         update_user: "/users/{user_id}"
       }
     };
