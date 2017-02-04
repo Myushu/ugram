@@ -46,7 +46,6 @@ export class ProfileComponent implements OnInit {
         this.nb_image = res['totalEntries'];
         this.totalEntries = res['totalEntries'];
       });
-
     });
   }
 

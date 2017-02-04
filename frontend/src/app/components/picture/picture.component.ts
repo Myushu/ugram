@@ -75,7 +75,8 @@ export class PictureComponent implements OnInit {
       this.userId = params['userid'];
       this.imageId = params['id'];
       this.picturesService.get_picture(this.userId, this.imageId).then(res => {
-        this.image = this.picturesService.format_pucture(res);
+        console.log(res);
+        this.image = this.picturesService.format_picture(res);
         this.tags = this.image['tags'];
         this.mentions = this.image['mentions'];
         this.usersService.get_users(9999, 0).then(res => {
@@ -86,4 +87,6 @@ export class PictureComponent implements OnInit {
       });
     })
   }
+
 }
+
