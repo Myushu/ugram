@@ -60,11 +60,13 @@ exports.build = (model, res, attributes, callbacks) => {
   model.build(attributes).save()
   .then(function(result) {
     res.status(201);
-    for (var i = 0; i < callbacks.length; ++i) {
-      callbacks[i](result.dataValues, attributes, res);
-    }
-    if (callbacks.length == 0)
+    if (callbacks === undefined || callbacks.length == 0) {
       res.send();
+    } else {
+      for (var i = 0; i < callbacks.length; ++i) {
+        callbacks[i](result.dataValues, attributes, res);
+      }
+    }
   }).catch(function(err) {
     errorManager.handle(err, res);
   });
@@ -83,7 +85,7 @@ exports.update = (model, newContent, res, attributes) => {
   });
 }
 
-exports.delete = (model, attributes, res) => {
+exports.delete = (model, res, attributes) => {
   this.find(model, res, attributes, function(resultModel, res) {
     resultModel.destroy({cascade : true}).then(function(result) {
       if (!result)

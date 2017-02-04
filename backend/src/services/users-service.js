@@ -19,9 +19,10 @@ exports.createUser = (req, res) => {
 }
 
 exports.updateUser = (content, idUser, res) => {
+  delete content.ID_USER;
   orm.update(userModel, content, res, { where : {'ID_USER' : idUser}});
 }
 
 exports.deleteUser = (idUser, res) => {
-  orm.delete(userModel, { where : {'ID_USER' : idUser}}, res);
+  orm.delete(userModel, res, { where : {'ID_USER' : idUser}});
 }

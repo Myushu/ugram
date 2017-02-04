@@ -11,7 +11,7 @@ exports.creationMention = (userId, pictureId, mention, res) => {
   orm.build(mentionModel, res, mention);
 }
 
-exports.deleteMention = (userId, pictureId, res) => {
+exports.deleteMention = (userId, pictureId, mention, res) => {
   mention.ID_PICTURE = pictureId;
-  orm.delete(mentionModel, mention, res);
+  orm.delete(mentionModel, res, {where : mention});
 }
