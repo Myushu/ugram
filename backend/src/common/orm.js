@@ -72,13 +72,18 @@ exports.build = (model, res, attributes, callbacks) => {
   });
 }
 
-exports.update = (model, newContent, res, attributes) => {
+exports.update = (model, newContent, res, attributes, callbacks) => {
   this.find(model, res, attributes, function(resultModel, res) {
     resultModel.update(newContent).then(function(result) {
       if (!result)
        res.sendStatus(404)
-     else
-       res.json(result);
+      else if (callbacks === undefined || callbacks.length == 0) {
+        res.json(result);
+      } else {
+        for (var i = 0; i < callbacks.length; ++i) {
+          callbacks[i](result.dataValues, newContent, res);
+        }
+      }
      }).catch(function(err) {
        errorManager.handle(err, res);
      });
