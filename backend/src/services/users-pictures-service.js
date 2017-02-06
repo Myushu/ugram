@@ -2,6 +2,7 @@ const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
 const mentionService = require('./mention-service');
+const hashtagService = require('./hashtag-service');
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 const userModel = orm.getSequelize().import("../models/USER.js");
@@ -53,9 +54,14 @@ exports.createPicture = (userId, picture, res) => {
   picture.ID_OWNER = userId;
   if (picture.MENTIONs != undefined) {
     listCallbacks.push(function(result, picture, res) {
-      for (var i = 0; i < picture.MENTIONs.length; ++i) {
+      for (var i = 0; i < picture.MENTIONs.length; ++i)
         mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], res);
-      }
+    });
+  }
+  if (picture.HASHTAGs != undefined) {
+    listCallbacks.push(function(result, picture, res) {
+      for (var i = 0; i < picture.HASHTAGs.length; ++i)
+        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], res);
     });
   }
   orm.build(pictureModel, res, picture, listCallbacks);
@@ -104,12 +110,27 @@ exports.getPictureById = (userId, pictureId, res) => {
 }
 
 exports.updatePicture = (userId, pictureId, content, res) => {
+  var listCallbacks = [];
   delete content.FILENAME;
   delete content.ID_PICTURE;
   delete content.ID_OWNER;
   delete content.DATE_POSTED;
+  if (content.MENTIONs != undefined) {
+    listCallbacks.push(function(result, content, res) {
+      for (var i = 0; i < content.MENTIONs.length; ++i)
+        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], res);
+    });
+  }
+  if (content.HASHTAGs != undefined) {
+    listCallbacks.push(function(result, content, res) {
+      for (var i = 0; i < content.HASHTAGs.length; ++i) {
+        content.HASHTAGs[i].ID_PICTURE = result.ID_PICTURE;
+        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], res);
+      }
+    });
+  }
   orm.update(pictureModel, content, res, {
     'ID_OWNER' : userId,
     'ID_PICTURE' : pictureId
-  });
+  }, listCallbacks);
 }
