@@ -8,7 +8,6 @@ hashtagModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
 exports.creationHashtag = (userId, pictureId, hahstag, res) => {
   hahstag.ID_PICTURE = pictureId;
-  console.log(hahstag);
   orm.build(hashtagModel, res, hahstag);
 }
 
