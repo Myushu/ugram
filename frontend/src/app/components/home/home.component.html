@@ -12,5 +12,7 @@
         </div>
       </div>
     </div>
+
+    <ngb-pagination style="text-align: center" (pageChange)="onPager($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [collectionSize]="totalEntries" [(pageSize)]="pageSize" [(page)]="page"></ngb-pagination>
   </div>
 </div>

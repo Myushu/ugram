@@ -11,6 +11,9 @@
 ### JetBrain ###
 .idea/
 
+config.yml
+history.lock
+
 ### Mac_OS ###
 
 **/**/.DS_Store

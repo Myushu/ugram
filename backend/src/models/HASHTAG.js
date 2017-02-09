@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     }
   }, {
-    tableName: 'HASHTAG'
+    tableName: 'HASHTAG',
+    timestamps : false
   });
 };

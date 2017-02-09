@@ -38,12 +38,12 @@
       <ul *ngFor="let user of users;" class="discover-feed">
         <li class="infos">
           <ul>
-            <li>Name: {{user.firstName}} {{user.lastName}}</li>
-            <li>id: {{user.id}}</li>
-            <li>e-mail: {{user.email}}</li>
+            <li><a routerLink="/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a></li>
+            <li>@{{user.id}}</li>
           </ul>
         </li>
       </ul>
+      <ngb-pagination style="text-align: center" (pageChange)="onPager($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [collectionSize]="totalEntries" [(pageSize)]="pageSize" [(page)]="page"></ngb-pagination>
     </div>
   </div>
 </div>

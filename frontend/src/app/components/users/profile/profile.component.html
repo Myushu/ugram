@@ -23,7 +23,7 @@
         </div>
       </section>
       <div style="clear:both;"></div>
-      <a class="btn btn-primary update">Update Profile</a>
+      <a routerLink="/update/" class="btn btn-primary update">Update Profile</a>
     </div>
   </div>
 
@@ -35,5 +35,7 @@
         </a>
       </div>
     </div>
+    <ngb-pagination style="text-align: center" (pageChange)="onPager($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [collectionSize]="totalEntries" [(pageSize)]="pageSize" [(page)]="page"></ngb-pagination>
+
   </div>
 </div>

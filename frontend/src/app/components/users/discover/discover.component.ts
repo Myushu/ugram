@@ -13,6 +13,9 @@ import { UsersService }      from 'app/services/users/users.service';
 export class DiscoverComponent implements OnInit {
   public users: Object[] = [];
   public images = [];
+  public page: number = 0;
+  public pageSize: number = 20;
+  public totalEntries: number = 0;
 
   constructor (
     private router: Router,
@@ -22,10 +25,21 @@ export class DiscoverComponent implements OnInit {
   ) {
   }
 
+  onPager(event: number): void {
+    document.body.scrollTop = 0;
+    this.page = event - 1;
+    this.getUser();
+  }
+
   ngOnInit() {
-    this.userService.get_users().then(res => {
+
+  }
+
+  getUser() {
+    this.userService.get_users(this.pageSize, this.page).then(res => {
+      console.log(res);
+      this.totalEntries = res['totalEntries'];
       this.users = res['items'];
-      console.log(this.users);
     });
   }
 }

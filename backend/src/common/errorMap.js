@@ -24,11 +24,17 @@ exports.map = [
     code : 005,
     statusCode : 400,
   },
-    // Http Error
+  // Database Error
+  {
+    name : 'SequelizeDatabaseError',
+    code : 101,
+    statusCode : 400,
+  },
+  // Http Error
   {
     name : 'HttpStatusError',
     type : '',
-    code : 101,
+    code : 201,
     statusCode : 404,
   },
 ];

@@ -7,7 +7,46 @@
       <ul>
         <li class="user"><a routerLink="/user/{{image.userId}}">{{image.userId}}</a></li>
         <li class="time">{{image.timeSince}}</li>
+        <li>
+          {{image.description}}
+        </li>
+        <li>
+          <tag-input [ngModel]="image.tags" [readonly]="true"></tag-input>
+        </li>
+        <li>
+          <tag-input [ngModel]="image.mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
+        </li>
       </ul>
+      <div *ngIf="updated">
+        <div style="width: 90%" class="form-group row">
+          <label class="col-2 col-form-label">Description</label>
+          <div class="col-10">
+            <input [(ngModel)]="image.description" class="form-control" type="text" value='{{image.description}}'>
+          </div>
+        </div>
+
+        <div style="width: 90%" class="form-group row">
+          <label class="col-2 col-form-label">Tag</label>
+          <div class="col-10">
+            <tag-input [(ngModel)]="tags" [theme]="'minimal'"></tag-input>
+          </div>
+        </div>
+
+        <div style="width: 90%" class="form-group row">
+          <label class="col-2 col-form-label">Mention</label>
+          <div class="col-10">
+            <tag-input [(ngModel)]="mentions" [theme]="'minimal'">
+              <tag-input-dropdown [autocompleteItems]="users">
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
+        </div>
+        <button class="btn btn-success" (click)="updateImage()">Update</button>
+      </div>
+      <div *ngIf="image.userId == user.id && updated == 0" style="text-align: center">
+        <button class="btn btn-success" (click)="changeState()">Update</button>
+        <button class="btn btn-danger" (click)="deleteImage()">Delete</button>
+      </div>
     </div>
   </div>
 </div>
