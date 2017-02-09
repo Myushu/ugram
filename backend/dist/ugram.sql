@@ -83,12 +83,13 @@ use UGRAM;
   );
 
   create table COMMENT (
+    ID_COMMENT int not null auto_increment,
     ID_USER int not null,
     ID_PICTURE int not null,
     DATE_CREATION timestamp not null,
     CONTENT text not null,
-    constraint PK_COMMENT primary key (ID_USER, ID_PICTURE, DATE_CREATION),
-    constraint FK_COMMENT_USER foreign key (ID_USER) references USER(ID_USER),
+    constraint PK_COMMENT primary key (ID_COMMENT),
+    constraint FK_COMMENT_USER foreign key (ID_USER) references USER(ID_USER) on delete cascade,
     constraint FK_COMMENT_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 

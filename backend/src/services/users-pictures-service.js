@@ -8,12 +8,16 @@ const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 const userModel = orm.getSequelize().import("../models/USER.js");
 const mentionModel = orm.getSequelize().import("../models/MENTION.js");
 const hashtagModel =  orm.getSequelize().import("../models/HASHTAG.js");
+const commentModel = orm.getSequelize().import("../models/COMMENT.js");
 
 pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
-reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 pictureModel.hasMany(hashtagModel, {foreignKey : 'ID_PICTURE'});
+pictureModel.hasMany(commentModel, {foreignKey : 'ID_PICTURE'});
+pictureModel.belongsTo(userModel, {foreignKey : 'ID_OWNER'});
+reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
+commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictureByUserId = (res, userId, query) => {
   var attributes = {
@@ -42,6 +46,15 @@ exports.getAllPictureByUserId = (res, userId, query) => {
       model : hashtagModel,
       attributes : {
         exclude : ['ID_PICTURE'],
+      }
+    },{
+      model : commentModel,
+      attributes : {
+        exclude : ['ID_PICTURE', 'ID_USER'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
       }
     }]
   };
@@ -104,6 +117,15 @@ exports.getPictureById = (userId, pictureId, res) => {
       model : hashtagModel,
       attributes : {
         exclude : ['ID_PICTURE'],
+      }
+    },{
+      model : commentModel,
+      attributes : {
+        exclude : ['ID_PICTURE', 'ID_USER'],
+      },
+      include : {
+        model : userModel,
+        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
       }
     }]
   });

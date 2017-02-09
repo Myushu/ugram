@@ -2,19 +2,23 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('COMMENT', {
-    ID_USER: {
+    ID_COMMENT: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true
+    },
+    ID_USER: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
       references: {
         model: 'USER',
         key: 'ID_USER'
       }
     },
     ID_PICTURE: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.TIME,
       allowNull: false,
-      primaryKey: true,
       references: {
         model: 'PICTURE',
         key: 'ID_PICTURE'
@@ -23,14 +27,14 @@ module.exports = function(sequelize, DataTypes) {
     DATE_CREATION: {
       type: DataTypes.TIME,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      primaryKey: true
+      defaultValue: DataTypes.NOW,
     },
     CONTENT: {
       type: DataTypes.TEXT,
       allowNull: false
     }
   }, {
-    tableName: 'COMMENT'
+    tableName: 'COMMENT',
+    timestamps : false,
   });
 };
