@@ -44,6 +44,6 @@ require('./controllers/users-pictures-controller')(app);
 require('./controllers/reaction-controller')(app);
 require('./controllers/mention-controller')(app);
 
-//orm.initConnection();
+orm.initConnection();
 app.listen(port);
 logger.info(`App started on port ${port}`);
