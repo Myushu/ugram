@@ -11,6 +11,9 @@
 ### JetBrain ###
 .idea/
 
+config.yml
+history.lock
+
 ### Mac_OS ###
 
 **/**/.DS_Store
@@ -221,5 +224,3 @@ flycheck_*.el
 .dir-locals.el
 
 # End of https://www.gitignore.io/api/git,linux,node,eclipse,netbeans,sublimetext,emacs
-
-frontend/src/**/*.js

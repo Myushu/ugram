@@ -122,7 +122,7 @@ export class PicturesService {
     return Math.floor(seconds) + " seconds ago";
   }
 
-  format_pucture(pics) {
+  format_picture(pics) {
     if (!pics.length)
       pics.timeSince = this.timeSince(pics.createdDate);
     else {

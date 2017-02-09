@@ -47,7 +47,7 @@ export class FeedComponent implements OnInit {
       this.user = res;
       this.picturesService.get_user_picture(this.idUser, this.pageSize, this.page - 1).then(res => {
         this.images = res['items'];
-        this.images = this.picturesService.format_pucture(this.images);
+        this.images = this.picturesService.format_picture(this.images);
         this.nb_image = res['totalEntries'];
         this.totalEntries = res['totalEntries'];
       });

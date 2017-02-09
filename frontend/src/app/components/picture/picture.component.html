@@ -8,6 +8,9 @@
         <li class="user"><a routerLink="/user/{{image.userId}}">{{image.userId}}</a></li>
         <li class="time">{{image.timeSince}}</li>
         <li>
+          {{image.description}}
+        </li>
+        <li>
           <tag-input [ngModel]="image.tags" [readonly]="true"></tag-input>
         </li>
         <li>
