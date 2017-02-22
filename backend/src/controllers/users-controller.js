@@ -8,22 +8,22 @@ module.exports = function(app) {
 
     // Get a user
     app.get('/users/:id', (req, res) => {
-      service.getUsersById(req.param('id') ,res);
+      service.getUsersById(req.param('id'), req.user, res);
     });
 
     // Create a new user
-    app.post('/users', (req, res) => {
+    app.post('/users/signup', (req, res) => {
        service.createUser(req.body, res);
     });
 
     // Update a user
     app.put('/users/:id', (req, res) => {
-      service.updateUser(req.body, req.param('id'), res);
+      service.updateUser(req.body, req.param('id'), req.user, res);
     });
 
     // Delete a user
     app.delete('/users/:id', (req, res) => {
-      service.deleteUser(req.param('id'), res);
+      service.deleteUser(req.param('id'), req.user, res);
     });
 
     // Log in

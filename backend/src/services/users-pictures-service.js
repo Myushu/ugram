@@ -20,8 +20,8 @@ mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictureByUserId = (res, userId, query) => {
-  var attributes = {
-    attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
+    var attributes = {
+    attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
     order : 'DATE_POSTED desc',
     where : {'ID_OWNER' : userId},
     include : [{
@@ -62,34 +62,42 @@ exports.getAllPictureByUserId = (res, userId, query) => {
   orm.findAll(pictureModel, res, attributes);
 }
 
-exports.createPicture = (userId, picture, res) => {
+exports.createPicture = (userId, picture, user, res) => {
   var listCallbacks = [];
-  picture.ID_OWNER = userId;
+  picture.ID_OWNER = user.userId;
   if (picture.MENTIONs != undefined) {
-    listCallbacks.push(function(result, picture, res) {
+    listCallbacks.push(function(result, picture, res, user) {
       for (var i = 0; i < picture.MENTIONs.length; ++i)
-        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], res);
+        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], user, res);
     });
   }
   if (picture.HASHTAGs != undefined) {
-    listCallbacks.push(function(result, picture, res) {
+    listCallbacks.push(function(result, picture, res, user) {
       for (var i = 0; i < picture.HASHTAGs.length; ++i)
-        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], res);
+        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], user, res);
     });
   }
-  orm.build(pictureModel, res, picture, listCallbacks);
+  orm.build(pictureModel, res, picture, listCallbacks, user);
 }
 
-exports.deletePicture = (userId, pictureId, res) => {
-  orm.delete(pictureModel, res, {
+exports.deletePicture = (userId, pictureId, user, res) => {
+  orm.find(pictureModel, res, 403, {
     where : {
-      'ID_PICTURE' : pictureId,
-      'ID_OWNER' : userId}
-    });
+      ID_OWNER : user.userId,
+      ID_PICTURE : pictureId
+    }},
+    function(result, res) {
+      orm.delete(pictureModel, res, {
+      where : {
+        'ID_PICTURE' : pictureId,
+        'ID_OWNER' : userId}
+      });
+    }
+  );
 }
 
 exports.getPictureById = (userId, pictureId, res) => {
-  orm.find(pictureModel, res, {
+  orm.find(pictureModel, res, 404, {
     attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
     where : {
       'ID_OWNER' : userId,
@@ -131,28 +139,36 @@ exports.getPictureById = (userId, pictureId, res) => {
   });
 }
 
-exports.updatePicture = (userId, pictureId, content, res) => {
-  var listCallbacks = [];
-  delete content.FILENAME;
-  delete content.ID_PICTURE;
-  delete content.ID_OWNER;
-  delete content.DATE_POSTED;
-  if (content.MENTIONs != undefined) {
-    listCallbacks.push(function(result, content, res) {
-      for (var i = 0; i < content.MENTIONs.length; ++i)
-        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], res);
-    });
-  }
-  if (content.HASHTAGs != undefined) {
-    listCallbacks.push(function(result, content, res) {
-      for (var i = 0; i < content.HASHTAGs.length; ++i) {
-        content.HASHTAGs[i].ID_PICTURE = result.ID_PICTURE;
-        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], res);
+exports.updatePicture = (userId, pictureId, content, user, res) => {
+  orm.find(pictureModel, res, 403, {
+    where : {
+      ID_OWNER : user.userId,
+      ID_PICTURE : pictureId
+    }},
+    function(result, res) {
+      var listCallbacks = [];
+      delete content.FILENAME;
+      delete content.ID_PICTURE;
+      delete content.ID_OWNER;
+      delete content.DATE_POSTED;
+      if (content.MENTIONs != undefined) {
+        listCallbacks.push(function(result, content, res, user) {
+          for (var i = 0; i < content.MENTIONs.length; ++i)
+          mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], user, res);
+        });
       }
-    });
-  }
-  orm.update(pictureModel, content, res, {
-    'ID_OWNER' : userId,
-    'ID_PICTURE' : pictureId
-  }, listCallbacks);
+      if (content.HASHTAGs != undefined) {
+        listCallbacks.push(function(result, content, res) {
+          for (var i = 0; i < content.HASHTAGs.length; ++i) {
+            content.HASHTAGs[i].ID_PICTURE = result.ID_PICTURE;
+            hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], user, res);
+          }
+        });
+      }
+      orm.update(pictureModel, content, res, {
+        'ID_OWNER' : userId,
+        'ID_PICTURE' : pictureId
+      }, listCallbacks, user);
+    }
+  );
 }

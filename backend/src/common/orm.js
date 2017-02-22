@@ -56,7 +56,7 @@ exports.find = (model, res, errCode, attributes, functionUpdate) => {
  });
 }
 
-exports.build = (model, res, attributes, callbacks) => {
+exports.build = (model, res, attributes, callbacks, user) => {
   model.build(attributes).save()
   .then(function(result) {
     res.status(201);
@@ -64,7 +64,7 @@ exports.build = (model, res, attributes, callbacks) => {
       res.send();
     } else {
       for (var i = 0; i < callbacks.length; ++i) {
-        callbacks[i](result.dataValues, attributes, res);
+        callbacks[i](result.dataValues, attributes, res, user);
       }
     }
   }).catch(function(err) {
@@ -73,7 +73,7 @@ exports.build = (model, res, attributes, callbacks) => {
 }
 
 exports.update = (model, newContent, res, attributes, callbacks) => {
-  this.find(model, res, attributes, function(resultModel, res) {
+  this.find(model, res, 404, attributes, function(resultModel, res) {
     resultModel.update(newContent).then(function(result) {
       if (!result)
        res.sendStatus(404)
@@ -91,7 +91,7 @@ exports.update = (model, newContent, res, attributes, callbacks) => {
 }
 
 exports.delete = (model, res, attributes) => {
-  this.find(model, res, attributes, function(resultModel, resu) {
+  this.find(model, res, 404, attributes, function(resultModel, res) {
     if (!resultModel)
       res.sendStatus(404);
     else {
