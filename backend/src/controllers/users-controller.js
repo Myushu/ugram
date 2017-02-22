@@ -8,7 +8,7 @@ module.exports = function(app) {
 
     // Get a user
     app.get('/users/:id', (req, res) => {
-      service.getUsersById(req.param('id'), req.user, res);
+      service.getUsersById(req.params.id, req.user, res);
     });
 
     // Create a new user
@@ -18,12 +18,12 @@ module.exports = function(app) {
 
     // Update a user
     app.put('/users/:id', (req, res) => {
-      service.updateUser(req.body, req.param('id'), req.user, res);
+      service.updateUser(req.body, req.params.id, req.user, res);
     });
 
     // Delete a user
     app.delete('/users/:id', (req, res) => {
-      service.deleteUser(req.param('id'), req.user, res);
+      service.deleteUser(req.params.id, req.user, res);
     });
 
     // Log in
