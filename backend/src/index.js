@@ -37,6 +37,7 @@ app.use(morgan('combined', {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+require('./common/tokenManager')(app);
 require('./controllers/home-controller')(app);
 require('./controllers/users-controller')(app);
 require('./controllers/pictures-controller')(app);

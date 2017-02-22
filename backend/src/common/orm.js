@@ -44,10 +44,10 @@ exports.findAll = (model, res, attributes) => {
 exports.find = (model, res, attributes, functionUpdate) => {
   model.find(attributes
   ).then(function(result) {
-   if (!result)
-    res.sendStatus(404)
-  else if (functionUpdate != undefined)
+  if (functionUpdate != undefined)
     functionUpdate(result, res);
+  else if (!result)
+      res.sendStatus(404)
   else
     res.json(result);
  }).catch(function(err) {

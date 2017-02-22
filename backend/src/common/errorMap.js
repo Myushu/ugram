@@ -24,6 +24,19 @@ exports.map = [
     code : 005,
     statusCode : 400,
   },
+  // Custom Error
+  {
+    name : 'passwordMissing',
+    message : 'Missing PASSWORD',
+    code : 006,
+    statusCode : 400
+  },
+  {
+    name : 'emailMissing',
+    message : 'Missing EMAIL',
+    code : 007,
+    statusCode : 400
+  },
   // Database Error
   {
     name : 'SequelizeDatabaseError',

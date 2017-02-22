@@ -38,7 +38,7 @@ expressErrorHandler = (error, res) => {
   } else {
     res.status(errorInfo.statusCode).send({
       code : errorInfo.code,
-      message : error.message
+      message : error.message || errorInfo.message
     });
   }
 }
