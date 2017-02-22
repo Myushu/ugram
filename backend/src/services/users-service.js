@@ -5,29 +5,32 @@ const orm = require('../common/orm');
 const errorManager = require('../common/errors');
 const userModel = orm.getSequelize().import("../models/USER.js")
 
-exports.getUsersById = (idUser, res) => {
-  orm.find(userModel, res, {
-    attributes : [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'],
+exports.getUsersById = (idUser, user, res) => {
+  var attributesVar;
+  if (idUser != user.userId)
+    attributesVar = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'];
+  orm.find(userModel, res, 404, {
+    attributes : attributesVar,
     where : { 'ID_USER' : idUser}
   });
 }
 
 exports.getAllUsers = (res) => {
   orm.findAll(userModel, res, {
-          attributes : [ 'ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']});
+    attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']});
 }
 
 exports.createUser = (req, res) => {
   orm.build(userModel, res, req);
 }
 
-exports.updateUser = (content, idUser, res) => {
+exports.updateUser = (content, idUser, user, res) => {
   delete content.ID_USER;
-  orm.update(userModel, content, res, { where : {'ID_USER' : idUser}});
+  orm.update(userModel, content, res, { where : {'ID_USER' : user.userId }});
 }
 
-exports.deleteUser = (idUser, res) => {
-  orm.delete(userModel, res, { where : {'ID_USER' : idUser}});
+exports.deleteUser = (idUser, user, res) => {
+  orm.delete(userModel, res, { where : {'ID_USER' : user.userId }});
 }
 
 exports.checkUserAuthentication = (body, res, callback) => {
@@ -36,19 +39,19 @@ exports.checkUserAuthentication = (body, res, callback) => {
   else if (body.PASSWORD_HASH === undefined)
     errorManager.handle({name : "passwordMissing"}, res);
   else
-    orm.find(userModel, res, {where : body}, callback)
+    orm.find(userModel, res, 401, {where : body}, callback)
 }
 
 exports.authentification = (req, res) => {
   this.checkUserAuthentication(req.body, res, function(result, res) {
     if (!result) {
-      res.sendStatus(401)
+      res.sendStatus(401);
       return ;
     }
 
     var user = {
       email: result.EMAIL,
-      id: result.ID_USER
+      userId: result.ID_USER
     };
 
     var token = jwt.sign(user, config.get('jwt')['secret'], {

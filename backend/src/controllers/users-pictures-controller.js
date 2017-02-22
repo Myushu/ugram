@@ -9,12 +9,12 @@ module.exports = function(app) {
 
     // Create a new picture
     app.post('/users/:userId/pictures', (req, res) => {
-      service.createPicture(req.param('userId'), req.body, res);
+      service.createPicture(req.param('userId'), req.body, req.user, res);
     });
 
     // Delete a picture
     app.delete('/users/:userId/pictures/:pictureId', (req, res) => {
-      service.deletePicture(req.param('userId'), req.param('pictureId'), res);
+      service.deletePicture(req.param('userId'), req.param('pictureId'), req.user, res);
     });
 
     // Get a specific picture
@@ -24,6 +24,6 @@ module.exports = function(app) {
 
     // Update a picture
     app.put('/users/:userId/pictures/:pictureId', (req, res) => {
-      service.updatePicture(req.param('userId'), req.param('pictureId'), req.body, res);
+      service.updatePicture(req.param('userId'), req.param('pictureId'), req.body, req.user, res);
     });
 }

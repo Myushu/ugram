@@ -6,18 +6,18 @@ const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
 reactionModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
-exports.creationReaction = (userId, pictureId, res) => {
+exports.creationReaction = (userId, pictureId, user, res) => {
   var reaction = {
     ID_PICTURE : pictureId,
-    ID_USER : userId // todo : we should be used token
+    ID_USER : user.userId
   };
   orm.build(reactionModel, res, reaction);
 }
 
-exports.deleteReaction = (userId, pictureId, res) => {
+exports.deleteReaction = (userId, pictureId, user, res) => {
   var reaction = {
     ID_PICTURE : pictureId,
-    ID_USER : userId // todo : we should be used token
+    ID_USER : user.userId
   };
   orm.delete(reactionModel, res , { where : reaction});
 }
