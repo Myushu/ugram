@@ -1,8 +1,8 @@
-import { Injectable }       from '@angular/core';
-import {Headers, Http, Request, RequestOptions}    from '@angular/http';
-import { CookieService }                           from 'angular2-cookie/core';
+import { Injectable }                               from "@angular/core";
+import {Headers, Http, Request, RequestOptions}     from "@angular/http";
+import { CookieService }                            from "angular2-cookie/core";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class ApiService {
@@ -17,17 +17,17 @@ export class ApiService {
     req.url = this.baseUrl + req.url;
 
     if (req.header)
-      var headers = new Headers(req.header);
+      let headers = new Headers(req.header);
     else
-      var headers = new Headers();
+      let headers = new Headers();
     if (req.body)
-      var body = req.body;
+      let body = req.body;
     else
-      var body = null;
-    headers.append('Content-Type', 'application/json');
+      let body = null;
+    headers.append("Content-Type", "application/json");
     if (req.token)
-      headers.append('Authorization', 'Bearer ' + req.token);
-    var request = new RequestOptions({
+      headers.append("Authorization", "Bearer " + req.token);
+    let request = new RequestOptions({
       method: req.method,
       url: req.url,
       headers: headers,
@@ -45,17 +45,17 @@ export class ApiService {
   postWithFile(url: string, postData: any, files: File[]) {
 
     let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this._cookieService.getObject('token')['token']);
+    headers.append("Authorization", "Bearer " + this._cookieService.getObject("token")["token"]);
     let formData: FormData = new FormData();
-    formData.append('file', files[0], files[0].name);
+    formData.append("file", files[0], files[0].name);
 
     if (postData !== "" && postData !== undefined && postData !== null) {
-      for (var property in postData) {
+      for (let property in postData) {
         if (postData.hasOwnProperty(property)) {
           formData.append(property, postData[property]);
         }
       }
-      var returnReponse = new Promise((resolve, reject) => {
+      const returnReponse = new Promise((resolve, reject) => {
         this.http.post(this.baseUrl + url, formData, {
           headers: headers
         }).subscribe(
@@ -65,7 +65,6 @@ export class ApiService {
           },
         );
       });
-      return returnReponse;
     }
   }
 
@@ -84,6 +83,6 @@ export class ApiService {
         update_user: "/users/{user_id}"
 
       }
-    }
+    };
   }
 }
