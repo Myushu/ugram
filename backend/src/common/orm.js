@@ -41,13 +41,13 @@ exports.findAll = (model, res, attributes) => {
  });
 }
 
-exports.find = (model, res, attributes, functionUpdate) => {
+exports.find = (model, res, errCode, attributes, functionUpdate) => {
   model.find(attributes
   ).then(function(result) {
   if (functionUpdate != undefined)
     functionUpdate(result, res);
   else if (!result)
-      res.sendStatus(404)
+      res.sendStatus(errCode)
   else
     res.json(result);
  }).catch(function(err) {
@@ -91,14 +91,18 @@ exports.update = (model, newContent, res, attributes, callbacks) => {
 }
 
 exports.delete = (model, res, attributes) => {
-  this.find(model, res, attributes, function(resultModel, res) {
-    resultModel.destroy({cascade : true}).then(function(result) {
-      if (!result)
-       res.sendStatus(404)
-     else
-       res.json(result);
-     }).catch(function(err) {
+  this.find(model, res, attributes, function(resultModel, resu) {
+    if (!resultModel)
+      res.sendStatus(404);
+    else {
+      resultModel.destroy({cascade : true}).then(function(result) {
+        if (!result)
+          res.sendStatus(404)
+        else
+          res.json(result);
+      }).catch(function(err) {
        errorManager.handle(err, res);
      });
+   }
   });
 }

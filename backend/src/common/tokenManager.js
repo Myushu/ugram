@@ -13,8 +13,7 @@ module.exports = function(app) {
       }
       return null;
     }
-  }).unless({path : ['/users/login']}));
-
+  }).unless({path : ['/users/login', '/users/signup']}));
 
   app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
