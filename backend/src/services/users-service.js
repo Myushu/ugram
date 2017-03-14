@@ -57,6 +57,6 @@ exports.authentification = (req, res) => {
     var token = jwt.sign(user, config.get('jwt')['secret'], {
       expiresIn: '24h',
     });
-    res.json(token);
+    res.json({token : token});
   });
 }

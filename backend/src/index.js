@@ -17,7 +17,6 @@ const corsOptions = {
         'GET',
         'PUT',
         'POST',
-        'PATCH',
         'DELETE',
         'UPDATE'
     ],
@@ -36,6 +35,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(morgan('combined', {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cors());
 
 require('./common/tokenManager')(app);
 require('./controllers/home-controller')(app);
