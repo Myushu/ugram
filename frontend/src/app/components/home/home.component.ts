@@ -3,17 +3,21 @@ import { CookieService }              from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
 import { NgbPaginationConfig }        from "@ng-bootstrap/ng-bootstrap";
 
-import { PicturesService }            from "app/services/pictures/pictures.service";
-import { UsersService }               from "app/services/users/users.service";
+import {PicturesService, IResponsePicture, IPicture}            from "app/services/pictures/pictures.service";
+
+// TEST LIB
+import {UsersService, IUser}                 from "app/services/users/users.service";
+import {ResourceModule} from "ng2-resource-rest";
+import {UsersPicturesService, IUserPicture} from "app/services/users-pictures/users-pictures.service";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [CookieService, PicturesService, UsersService, NgbPaginationConfig]
+  providers: [CookieService, NgbPaginationConfig]
 })
 export class HomeComponent implements OnInit {
-  private images = [];
+  public images: IPicture[];
   public page: number = 0;
   public pageSize: number = 20;
   public totalEntries: number = 0;
@@ -23,12 +27,55 @@ export class HomeComponent implements OnInit {
     private _cookieService: CookieService,
     private router: Router,
     private picturesService: PicturesService,
+    // test
+    private usersService: UsersService,
+    private rm: ResourceModule,
+    private usersPicturesService: UsersPicturesService
   ) {
-    if (!this._cookieService.get("token"))
-      this.router.navigate(["/login"]);
+    // if (!this._cookieService.get("token"))
+    //  this.router.navigate(["/login"]);
   }
 
   ngOnInit() {
+    // test
+    this.usersService.loginUser({EMAIL: "aljosha@gmail.com", PASSWORD_HASH: "567i2"}, (res: string ) => {
+      console.log("token", res["token"]);
+      this._cookieService.put("token : ", res["token"]);
+    });
+
+    // this.usersService.getUsers({}, (res: IUserShort[]) => {
+    //  console.log("users : ", res);
+    // });
+
+    // this.usersService.getUser({id: 1}, (res: IUser) => {
+    //  console.log("user :", res);
+    //  res.LASTNAME = "bouscarel";
+    //  res.$save();
+    // });
+
+    // this.usersService.createUser({FIRSTNAME: "antonin", LASTNAME: "bouscarel", PSEUDO: "bousca_a", EMAIL: "antonin.bouscarel@epitech.eu", PASSWORD_HASH: "1234", SEXE: "X"}, (res: IUser) => {
+    //  console.log("created user :", res);
+    // });
+
+    // this.usersService.getUsers({}, (res: IUserShort[]) => {
+    //  console.log("users : ", res);
+    // });
+
+    /*this.usersService.getUser({id: 1}, (res: IUser) => {
+      console.log('r', res);
+      res.LASTNAME = "jean claude";
+      this.usersService.updateUser(res, (res2: IUser) => {
+        console.log('r2', res2);
+        this.usersService.deleteUser({id: 2}, (res3: IUser) => {
+          console.log('r3', res3);
+        });
+      });
+    });*/
+
+    /*this.usersPicturesService.getUserPictures({id: 1}, (res: IUserPicture[]) => {
+      console.log(res);
+    });*/
+
   }
 
   onPager(event: number): void {
@@ -38,10 +85,9 @@ export class HomeComponent implements OnInit {
   }
 
   getPicture() {
-    this.picturesService.get_pictures(this.pageSize, this.page).then(res => {
-      this.totalEntries = res["totalEntries"];
-      this.images = res["items"];
-      this.images = this.picturesService.format_picture(this.images);
+    this.picturesService.getPictures({page: this.page, perPage: this.pageSize}, (res: IResponsePicture) => {
+      this.images = this.picturesService.format_picture(res.items);
+      this.totalEntries = res.totalEntries;
     });
   }
 }

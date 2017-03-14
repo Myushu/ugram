@@ -5,23 +5,24 @@ import { HttpModule } from "@angular/http";
 import { CookieService }    from "angular2-cookie/services/cookies.service";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TagInputModule } from "ng2-tag-input";
+import {ResourceModule} from "ng2-resource-rest";
 
 import { AppRoutingModule } from "./app-routing.module";
 
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./components/nav/nav.component";
 import { HomeComponent } from "./components/home/home.component";
-import { LoginComponent } from "./components/login/login.component";
+/*import { LoginComponent } from "./components/login/login.component";
 import { PictureComponent } from "./components/picture/picture.component";
 import { DiscoverComponent } from "./components/users/discover/discover.component";
 import { FeedComponent } from "./components/users/feed/feed.component";
 import { ProfileComponent } from "./components/users/profile/profile.component";
 import { UpdateComponent } from "./components/users/update/update.component";
-import { UploadComponent } from "./components/users/upload/upload.component";
+import { UploadComponent } from "./components/users/upload/upload.component";*/
 
 // service
-import { ApiService } from "./services/api/api.service";
-import { UsersService } from "./services/users/users.service";
+//import { ApiService } from "./services/api/api.service";
+// import { UsersService } from "./services/users/users.service";
 import { PicturesService } from "./services/pictures/pictures.service";
 
 
@@ -29,14 +30,14 @@ import { PicturesService } from "./services/pictures/pictures.service";
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
+    NavComponent,
+    /*LoginComponent,
     PictureComponent,
     DiscoverComponent,
     FeedComponent,
     ProfileComponent,
     UpdateComponent,
-    UploadComponent,
-    NavComponent,
+    UploadComponent,*/
   ],
   imports: [
     BrowserModule,
@@ -44,13 +45,13 @@ import { PicturesService } from "./services/pictures/pictures.service";
     HttpModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    ResourceModule.forRoot(),
     TagInputModule
   ],
   providers: [
-    ApiService,
+    //ApiService,
     CookieService,
-    UsersService,
-    PicturesService
+
   ],
   bootstrap: [AppComponent]
 })

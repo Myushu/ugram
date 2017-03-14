@@ -1,4 +1,99 @@
-import { Injectable }     from "@angular/core";
+import {Injectable}                                     from "@angular/core";
+import {RequestMethod}                                  from "@angular/http";
+import {Resource, ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
+import {RestClient}                                     from "app/shared/rest-client";
+
+export interface IQueryInput {
+  page?: number;
+  perPage?: number;
+}
+
+export interface IPicture {
+  createdDate: Date;
+  description: string;
+  id: number;
+  mentions: string[];
+  tags: string[];
+  url: string;
+  userId: string;
+}
+
+export interface IResponsePicture {
+  items: IPicture[];
+  totalEntries: number;
+  totalPages: number;
+}
+
+@Injectable()
+@ResourceParams({
+  url: "http://api.ugram.net/pictures"
+})
+export class PicturesService extends Resource {
+
+  @ResourceAction({
+    path: "/"
+  })
+  getPictures: ResourceMethod<IQueryInput, IResponsePicture>;
+
+  @ResourceAction({
+    method: RequestMethod.Post
+  })
+  createPicture: ResourceMethod<IPicture, any>;
+
+  @ResourceAction({
+    method: RequestMethod.Put,
+    path: "/{!id}"
+  })
+  updatePicture: ResourceMethod<IPicture, any>;
+
+  @ResourceAction({
+    method: RequestMethod.Delete,
+    path: "/{!id}"
+  })
+  deletePicture: ResourceMethod<{id: any}, any>;
+
+  timeSince(date) {
+    let seconds = Math.floor((+new Date() - date) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+    if (interval > 1) {
+      return interval + " years ago";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + " months ago";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + " days ago";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + " hours ago";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + " minutes ago";
+    }
+    return Math.floor(seconds) + " seconds ago";
+  }
+
+  format_picture(pics) {
+    if (!pics.length)
+      pics.timeSince = this.timeSince(pics.createdDate);
+    else {
+      for (let i = 0; i < pics.length; i++) {
+        pics[i].timeSince = this.timeSince(pics[i].createdDate);
+      }
+    }
+    return(pics);
+  }
+
+}
+
+
+
+
+/*import { Injectable }     from "@angular/core";
 import { CookieService }  from "angular2-cookie/core";
 import { ApiService }     from "app/services/api/api.service";
 
@@ -131,5 +226,5 @@ export class PicturesService {
     }
     return(pics);
   }
-}
+}*/
 
