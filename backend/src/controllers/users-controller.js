@@ -30,4 +30,9 @@ module.exports = function(app) {
     app.post('/users/login', (req, res) => {
       service.authentification(req, res);
     });
+
+    // Log in Facebook
+    app.post('/users/login/facebook', (req, res) => {
+      service.authentificationFacebook(req, res);
+    });
 }

@@ -18,10 +18,11 @@ use UGRAM;
     EMAIL varchar(255) not null unique,
     COUNTRY_PHONE_CODE int null,
     PHONE_NUMBER varchar(10),
-    PASSWORD_HASH varchar(255) not null,
+    PASSWORD_HASH varchar(255) null,
     PICTURE_PATH varchar(255) null,
     DATE_BIRTHDAY date null,
     SEXE char not null,
+    ID_USER_FACEBOOK varchar(255) null,
     constraint PK_USER primary key (ID_USER),
     constraint FK_PHONE_CODE foreign key (COUNTRY_PHONE_CODE) references PHONE_CODE(ID_COUNTRY)
   );

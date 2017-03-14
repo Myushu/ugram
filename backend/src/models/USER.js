@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     PASSWORD_HASH: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     PICTURE_PATH: {
       type: DataTypes.STRING,
@@ -64,6 +64,10 @@ module.exports = function(sequelize, DataTypes) {
       validate : {
         isIn : [['M', 'F', 'X']]
       }
+    },
+    ID_USER_FACEBOOK: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'USER',

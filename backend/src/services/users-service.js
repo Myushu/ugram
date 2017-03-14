@@ -1,3 +1,4 @@
+const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const logger = require('../common/logger');
@@ -42,13 +43,7 @@ exports.checkUserAuthentication = (body, res, callback) => {
     orm.find(userModel, res, 401, {where : body}, callback)
 }
 
-exports.authentification = (req, res) => {
-  this.checkUserAuthentication(req.body, res, function(result, res) {
-    if (!result) {
-      res.sendStatus(401);
-      return ;
-    }
-
+function tokenGenerator(result, res) {
     var user = {
       email: result.EMAIL,
       userId: result.ID_USER
@@ -58,5 +53,35 @@ exports.authentification = (req, res) => {
       expiresIn: '24h',
     });
     res.json({token : token});
+}
+
+exports.authentification = (req, res) => {
+  this.checkUserAuthentication(req.body, res, function(result, res) {
+    if (!result) {
+      res.sendStatus(401);
+      return ;
+    }
+    tokenGenerator(result, res);
   });
+}
+
+exports.authentificationFacebook = (req, res) => {
+  graph.setAccessToken(req.body.TOKEN);
+  graph.get('me?fields=id,last_name,first_name,email,gender,picture,birthday', function(err, resFacebook) {
+        orm.find(userModel, res, 401, {where : {'ID_USER_FACEBOOK':resFacebook.id}}, function(result, res) {
+          if (!result) {
+            var user = {"FIRSTNAME":resFacebook.first_name,
+                        "LASTNAME":resFacebook.last_name,
+                        "PSEUDO":resFacebook.first_name + '-' + resFacebook.id,
+                        "EMAIL":resFacebook.email,
+                        "PICTURE_PATH":resFacebook.picture.data.url,
+                        "DATE_BIRTHDAY":resFacebook.birthday,
+                        "SEXE":(resFacebook.gender == "male") ? 'M' : 'F',
+                        "ID_USER_FACEBOOK":resFacebook.id};
+            orm.build(userModel, res, user);
+          } else {
+            tokenGenerator(result, res);
+          }
+        });
+    });
 }
