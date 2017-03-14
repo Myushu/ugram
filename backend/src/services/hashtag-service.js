@@ -6,12 +6,28 @@ const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
 hashtagModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
-exports.creationHashtag = (userId, pictureId, hahstag, res) => {
-  hahstag.ID_PICTURE = pictureId;
-  orm.build(hashtagModel, res, hahstag);
+exports.creationHashtag = (userId, pictureId, hahstag, user, res) => {
+  orm.find(pictureModel, res, 403, {
+    where : {
+      ID_OWNER : user.userId,
+      ID_PICTURE : pictureId
+    }},
+    function(result, res) {
+      hahstag.ID_PICTURE = pictureId;
+      orm.build(hashtagModel, res, hahstag);
+    }
+  );
 }
 
-exports.deleteHashtag = (userId, pictureId, hahstag, res) => {
-  hahstag.ID_PICTURE = pictureId;
-  orm.delete(hashtagModel, res, {where : hashtag});
+exports.deleteHashtag = (userId, pictureId, hahstag, user, res) => {
+  orm.find(pictureModel, res, 403, {
+    where : {
+      ID_OWNER : user.userId,
+      ID_PICTURE : pictureId
+    }},
+    function(result, res) {
+      hahstag.ID_PICTURE = pictureId;
+      orm.delete(hashtagModel, res, {where : hashtag});
+    }
+  );
 }
