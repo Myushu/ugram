@@ -5,45 +5,51 @@ import {RestClient}                                     from "app/shared/rest-cl
 import {IUserMini}                                      from "app/services/users/users.service"
 
 //input
-interface IQueryCreateMention {
+interface IQueryCreateComment {
   ID_USER: number;
+  CONTENT: string;
   ID_PICTURE: number;
-  MY_ID_USER: number;
 }
 
-interface IQueryDeleteMention {
+interface IQueryDeleteComment {
   ID_USER: number;
+  CONTENT: string;
   ID_PICTURE: number;
-  ID_MENTION: number;
+  ID_COMMENT: number;
 }
 
 //output
 
-export interface IMention {
+export interface IComment {
   ID_USER: number;
+  CONTENT: string;
   ID_PICTURE: number;
+  ID_COMMENT: number;
+  DATE_CREATION: Date;
 }
 
-export interface IMentionPicture {
-  ID_USER: number;
+export interface ICommentPicture {
   USER: IUserMini;
+  CONTENT: string;
+  ID_COMMENT: number;
+  DATE_CREATION: Date;
 }
 
 @Injectable()
 @ResourceParams({
   url: "/users"
 })
-export class MentionsService extends RestClient {
+export class CommentsService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Post,
-    path:"/{!MY_ID_USER}/pictures/{!ID_PICTURE}/mention"
+    path:"/{!ID_USER}/pictures/{!ID_PICTURE}/comment"
   })
-  createMention: ResourceMethod<IQueryCreateMention, IMention>;
+  createComment: ResourceMethod<IQueryCreateComment, IComment>;
 
   @ResourceAction({
     method: RequestMethod.Delete,
-    path: "/{!MY_ID_USER}/pictures/{!ID_PICTURE}/mention/{!ID_MENTION}"
+    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/comment/{!ID_COMMENT}"
   })
-  deleteMention: ResourceMethod<IQueryDeleteMention, IMention>;
+  deleteComment: ResourceMethod<IQueryDeleteComment, IComment>;
 }
