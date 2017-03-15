@@ -19,3 +19,4 @@ exports.getSqlCredentialsConfig = (param) => {
     logger.error("Invalid config file. Value '" + param + "' not found");
   }
 }
+
