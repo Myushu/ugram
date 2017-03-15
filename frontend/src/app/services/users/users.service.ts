@@ -1,81 +1,93 @@
-import { Injectable } from '@angular/core';
+import {Injectable}                                     from "@angular/core";
+import {RequestMethod}                                  from "@angular/http";
+import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
+import {RestClient}                                     from "app/shared/rest-client";
 
-import { ApiService }        from 'app/services/api/api.service';
+interface IQueryInput {
+  page?: number;
+  perPage?: number;
+}
+
+interface IQueryLogin {
+  EMAIL: string;
+  PASSWORD_HASH: string;
+}
+
+interface IQueryCreateUser {
+  FIRSTNAME?: string;
+  LASTNAME?: string;
+  PSEUDO?: string;
+  EMAIL?: string;
+  PASSWORD_HASH?: string;
+  SEXE?: string;
+  PICTURE_PATH?: string;
+  COUNTRY_PHONE_CODE?: string;
+  PHONE_NUMBER?: string;
+  DATE_BIRTHDAY?: any;
+}
+
+// Output
+interface IUserShort {
+  ID_USER: number;
+  FIRSTNAME: string;
+  LASTNAME: string;
+  PSEUDO: string;
+  PICTURE_PATH: string;
+  SEXE: string;
+}
+
+export interface IUser extends IUserShort {
+  EMAIL: string;
+  COUNTRY_PHONE_CODE?: string;
+  PHONE_NUMBER?: string;
+  DATE_BIRTHDAY: any;
+}
+
+interface IUserMini {
+  ID_USER: number;
+  FIRSTNAME: string;
+  LASTNAME: string;
+  PSEUDO: string;
+}
 
 @Injectable()
-export class UsersService {
+@ResourceParams({
+  url: "/users"
+})
+export class UsersService extends RestClient {
 
-  constructor(
-    private coreApiService: ApiService,
-  ) {
+  @ResourceAction({
+    isArray: true,
+    path: "/"
+  })
+  getUsers: ResourceMethod<IQueryInput, IUserShort[]>;
 
-  }
+  @ResourceAction({
+    path: "/{!id}"
+  })
+  getUser: ResourceMethod<{id: number}, IUser>;
 
-  get_users(page_size, page) {
-    var req = {
-      method: "GET",
-      url: this.coreApiService.getRoute().user.get_users + '?page=' + page + '&perPage='+page_size
-    };
+  @ResourceAction({
+    method: RequestMethod.Post,
+    path: "/signup"
+  })
+  createUser: ResourceMethod<IQueryCreateUser, IUser>;
 
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
+  @ResourceAction({
+    method: RequestMethod.Put,
+    path: "/{!ID_USER}"
+  })
+  updateUser: ResourceMethod<IUser, any>;
 
-  get_user(user_id) {
-    var url = this.coreApiService.getRoute().user.get_user;
-    var url = url.replace("{user_id}", user_id);
-    var req = {
-      method: "GET",
-      url: url
-    };
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
+  @ResourceAction({
+    method: RequestMethod.Delete,
+    path: "/{!id}"
+  })
+  deleteUser: ResourceMethod<{id: number}, IUser>;
 
-  update_user(user_id, user, token) {
-    var url = this.coreApiService.getRoute().user.update_user;
-    var url = url.replace("{user_id}", user_id);
-    var req = {
-      method: "PUT",
-      url: url,
-      data: JSON.stringify(user),
-      token: token
-    };
-
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      })
-    })
-  }
-
-  who_im_i(token) { //TO DELETE
-    var users;
-    return new Promise((resolve, reject) => {
-      this.get_users(999, 0).then(data => {
-        for (var i = 0; i < data['totalEntries']; i++) {
-          console.log('u', data['items'][i]);
-          var user = {
-            "email": data['items'][i]['email'],
-            "firstName": data['items'][i]['firstName'],
-            "lastName": data['items'][i]['lastName'],
-            "phoneNumber": data['items'][i]['phoneNumber']
-          };
-          this.update_user(data['items'][i]['id'], user, token).then(data => {
-            if (data['id'])
-              resolve(data);
-          });
-        }
-      })
-    });
-  }
+  @ResourceAction({
+    method: RequestMethod.Post,
+    path: "/login"
+  })
+  loginUser: ResourceMethod<IQueryLogin, string>;
 }

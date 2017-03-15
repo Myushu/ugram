@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute }               from '@angular/router';
-
-import { PicturesService }  from 'app/services/pictures/pictures.service';
-import { UsersService }      from 'app/services/users/users.service';
+import { Component, OnInit }      from "@angular/core";
+import { ActivatedRoute }         from "@angular/router";
+import { PicturesService }        from "app/services/pictures/pictures.service";
+import { UsersService }           from "app/services/users/users.service";
 
 @Component({
-  selector: 'app-feed',
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.css'],
+  selector: "app-feed",
+  templateUrl: "./feed.component.html",
+  styleUrls: ["./feed.component.scss"],
   providers: [PicturesService, UsersService]
 })
 export class FeedComponent implements OnInit {
@@ -20,11 +19,9 @@ export class FeedComponent implements OnInit {
   public idUser: string = "";
 
   constructor(
-    //private _cookieService:CookieService,
-    private router: Router,
     private picturesService: PicturesService,
     private userService: UsersService,
-    private Route:ActivatedRoute
+    private Route: ActivatedRoute
   ) {
 
   }
@@ -36,20 +33,20 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.Route.params.subscribe(params => {
-      this.idUser = params['userid'];
+      this.idUser = params["userid"];
       console.log(this.page);
       this.getUserPicture();
-    })
+    });
   }
 
   getUserPicture() {
     this.userService.get_user(this.idUser).then(res => {
       this.user = res;
       this.picturesService.get_user_picture(this.idUser, this.pageSize, this.page - 1).then(res => {
-        this.images = res['items'];
+        this.images = res["items"];
         this.images = this.picturesService.format_picture(this.images);
-        this.nb_image = res['totalEntries'];
-        this.totalEntries = res['totalEntries'];
+        this.nb_image = res["totalEntries"];
+        this.totalEntries = res["totalEntries"];
       });
 
     });

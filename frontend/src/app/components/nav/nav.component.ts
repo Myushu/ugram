@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {CookieService}      from 'angular2-cookie/core';
-import { Router }               from '@angular/router';
-
-import { GlobalEventManagerService }  from "app/services/globalEventManager/global-event-manager.service";
-
+import { Component, OnInit }          from "@angular/core";
+import {CookieService}                from "angular2-cookie/core";
+import { Router }                     from "@angular/router";
+import { FacebookLoginComponent }     from "app/components/facebook-login/facebook-login.component";
 
 @Component({
-  selector: 'navbar',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
-  providers: [CookieService, GlobalEventManagerService]
+  selector: "navbar",
+  templateUrl: "./nav.component.html",
+  styleUrls: ["./nav.component.scss"],
+  providers: [CookieService, FacebookLoginComponent]
 })
 export class NavComponent implements OnInit {
   showNavBar: boolean = false;
 
   constructor(
-    private globalEventsManager: GlobalEventManagerService,
-    private _cookieService:CookieService,
-    private router: Router
+    private _cookieService: CookieService,
+    private router: Router,
+    private fb: FacebookLoginComponent
   ) {
   }
 
@@ -25,13 +23,14 @@ export class NavComponent implements OnInit {
 
   }
 
-  showMenu(){
-    return (this._cookieService.get('token'));
+  showMenu() {
+    return (this._cookieService.get("token"));
   }
 
-  logoutAction(): void {
+  logoutAction() {
+    this.fb.onFacebookLogoutClick();
     this._cookieService.removeAll();
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 
 }

@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {CookieService}      from 'angular2-cookie/core';
-import { Router, ActivatedRoute }               from '@angular/router';
-
-import { PicturesService }  from 'app/services/pictures/pictures.service';
-import { UsersService }      from 'app/services/users/users.service';
+import { Component, OnInit }      from "@angular/core";
+import {CookieService}            from "angular2-cookie/core";
+import { PicturesService }        from "app/services/pictures/pictures.service";
+import { UsersService }           from "app/services/users/users.service";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
   providers: [PicturesService, UsersService]
 })
 export class ProfileComponent implements OnInit {
@@ -20,11 +18,9 @@ export class ProfileComponent implements OnInit {
   public totalEntries: number = 0;
 
   constructor(
-    private _cookieService:CookieService,
-    private router: Router,
+    private _cookieService: CookieService,
     private picturesService: PicturesService,
-    private userService: UsersService,
-    private Route:ActivatedRoute
+    private userService: UsersService
   ) {
 
   }
@@ -38,13 +34,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserPicture() {
-    this.userService.get_user(this._cookieService.getObject('token')['id']).then(res => {
+    this.userService.get_user(this._cookieService.getObject("token")["id"]).then(res => {
       this.user = res;
-      this.picturesService.get_user_picture(this._cookieService.getObject('token')['id'], this.pageSize, this.page - 1).then(res => {
-        this.images = res['items'];
+      this.picturesService.get_user_picture(this._cookieService.getObject("token")["id"], this.pageSize, this.page - 1).then(res => {
+        this.images = res["items"];
         this.images = this.picturesService.format_picture(this.images);
-        this.nb_image = res['totalEntries'];
-        this.totalEntries = res['totalEntries'];
+        this.nb_image = res["totalEntries"];
+        this.totalEntries = res["totalEntries"];
       });
     });
   }
