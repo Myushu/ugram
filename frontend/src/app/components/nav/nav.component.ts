@@ -1,19 +1,21 @@
 import { Component, OnInit }          from "@angular/core";
 import {CookieService}                from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
+import { FacebookLoginComponent }     from "app/components/facebook-login/facebook-login.component";
 
 @Component({
   selector: "navbar",
   templateUrl: "./nav.component.html",
   styleUrls: ["./nav.component.scss"],
-  providers: [CookieService]
+  providers: [CookieService, FacebookLoginComponent]
 })
 export class NavComponent implements OnInit {
   showNavBar: boolean = false;
 
   constructor(
     private _cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private fb: FacebookLoginComponent
   ) {
   }
 
@@ -26,6 +28,7 @@ export class NavComponent implements OnInit {
   }
 
   logoutAction() {
+    this.fb.onFacebookLogoutClick();
     this._cookieService.removeAll();
     this.router.navigate(["/login"]);
   }

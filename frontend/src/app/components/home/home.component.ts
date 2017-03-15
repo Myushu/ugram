@@ -29,19 +29,22 @@ export class HomeComponent implements OnInit {
     private picturesService: PicturesService,
     // test
     private usersService: UsersService,
-    private rm: ResourceModule,
     private usersPicturesService: UsersPicturesService
   ) {
-    // if (!this._cookieService.get("token"))
-    //  this.router.navigate(["/login"]);
+    if (!this._cookieService.get("token"))
+      this.router.navigate(["/login"]);
   }
 
   ngOnInit() {
     // test
-    this.usersService.loginUser({EMAIL: "aljosha@gmail.com", PASSWORD_HASH: "567i2"}, (res: string ) => {
-      console.log("token", res["token"]);
-      this._cookieService.put("token : ", res["token"]);
-    });
+    /*this.usersService.loginUser({EMAIL: "aljosha@gmail.com", PASSWORD_HASH: "567i2"}, (res: string ) => {
+      console.log('t', res['token']);
+      this._cookieService.put("token", res["token"]);
+      console.log(this._cookieService.get("token"));
+      this.usersService.getUsers({}, (res: IUser[]) => {
+        console.log("users", res);
+      });
+    });*/
 
     // this.usersService.getUsers({}, (res: IUserShort[]) => {
     //  console.log("users : ", res);

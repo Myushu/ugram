@@ -12,8 +12,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./components/nav/nav.component";
 import { HomeComponent } from "./components/home/home.component";
-/*import { LoginComponent } from "./components/login/login.component";
-import { PictureComponent } from "./components/picture/picture.component";
+import { LoginComponent } from "./components/login/login.component";
+import { FacebookLoginComponent } from "./components/facebook-login/facebook-login.component"
+/*import { PictureComponent } from "./components/picture/picture.component";
 import { DiscoverComponent } from "./components/users/discover/discover.component";
 import { FeedComponent } from "./components/users/feed/feed.component";
 import { ProfileComponent } from "./components/users/profile/profile.component";
@@ -25,14 +26,14 @@ import { UploadComponent } from "./components/users/upload/upload.component";*/
 // import { UsersService } from "./services/users/users.service";
 import { PicturesService } from "./services/pictures/pictures.service";
 
-
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavComponent,
-    /*LoginComponent,
-    PictureComponent,
+    LoginComponent,
+    FacebookLoginComponent,
+    /*PictureComponent,
     DiscoverComponent,
     FeedComponent,
     ProfileComponent,
