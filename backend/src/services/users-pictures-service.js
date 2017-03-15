@@ -1,5 +1,8 @@
+const config = require('config');
+const path = require('path');
 const logger = require('../common/logger');
 const orm = require('../common/orm');
+const errorManager = require('../common/errors');
 const queryManager = require('../common/queryManager');
 const mentionService = require('./mention-service');
 const hashtagService = require('./hashtag-service');
@@ -62,9 +65,26 @@ exports.getAllPictureByUserId = (res, userId, query) => {
   orm.findAll(pictureModel, res, attributes);
 }
 
-exports.createPicture = (userId, picture, user, res) => {
+function checkImage(file, res) {
+  if (!file) {
+    errorManager.handle({name : "missingPicture"}, res);
+    return false;
+  }
+  if (file.size > config.get('picture')['maxSize']) {
+    errorManager.handle({name : "invalidPictureSize"}, res);
+    return false;
+  }
+  // check format
+  return true;
+}
+
+exports.createPicture = (userId, picture, user, file, res) => {
+  if (!checkImage(file, res))
+    return;
+
   var listCallbacks = [];
   picture.ID_OWNER = user.userId;
+  picture.FILENAME =  file.filename;
   if (picture.MENTIONs != undefined) {
     listCallbacks.push(function(result, picture, res, user) {
       for (var i = 0; i < picture.MENTIONs.length; ++i)

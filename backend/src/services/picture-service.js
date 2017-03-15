@@ -61,3 +61,8 @@ exports.getAllPictures = (res, query) => {
     queryManager.fillAttributesFromQuery(attributes, query);
     orm.findAll(pictureModel, res, attributes);
 }
+
+exports.getPicture = (picturePath, res) => {
+  res.type('image/jpeg'); //tmp
+  res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + picturePath));
+}

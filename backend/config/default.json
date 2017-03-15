@@ -16,5 +16,9 @@
     "version": "v2.8",
     "appId": "280735385694809",
     "appSecret": "ee5581a2a91d4aa649285ce097e4891f"
+  },
+  "picture": {
+    "maxSize" : "10000000",
+    "folder" : "./pictures"
   }
 }
