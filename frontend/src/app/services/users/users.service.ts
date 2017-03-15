@@ -43,7 +43,7 @@ export interface IUser extends IUserShort {
   DATE_BIRTHDAY: any;
 }
 
-interface IUserMini {
+export interface IUserMini {
   ID_USER: number;
   FIRSTNAME: string;
   LASTNAME: string;

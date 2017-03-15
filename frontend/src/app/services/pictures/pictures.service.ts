@@ -2,6 +2,11 @@ import {Injectable}                                     from "@angular/core";
 import {RequestMethod}                                  from "@angular/http";
 import {Resource, ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
+import {IUserMini}                                      from "app/services/users/users.service"
+import {IReactionPicture}                               from "app/services/reactions/reactions.service"
+import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service"
+import {ICommentPicture}                                from "app/services/comments/comments.service"
+import {IMentionPicture}                                from "app/services/mentions/mentions.service"
 
 export interface IQueryInput {
   page?: number;
@@ -9,48 +14,27 @@ export interface IQueryInput {
 }
 
 export interface IPicture {
-  createdDate: Date;
-  description: string;
-  id: number;
-  mentions: string[];
-  tags: string[];
-  url: string;
-  userId: string;
-}
-
-export interface IResponsePicture {
-  items: IPicture[];
-  totalEntries: number;
-  totalPages: number;
+  FILENAME: string;
+  DATE_POSTED: Date;
+  DESCRIPTION: string;
+  ID_OWNER: number;
+  USER: IUserMini;
+  REACTIONs: IReactionPicture[];
+  MENTIONs: IMentionPicture[];
+  HASHTAGs: IHashtagPicture[];
+  COMMENTs: ICommentPicture[];
 }
 
 @Injectable()
 @ResourceParams({
-  url: "http://api.ugram.net/pictures"
+  url: "/pictures"
 })
 export class PicturesService extends Resource {
 
   @ResourceAction({
     path: "/"
   })
-  getPictures: ResourceMethod<IQueryInput, IResponsePicture>;
-
-  @ResourceAction({
-    method: RequestMethod.Post
-  })
-  createPicture: ResourceMethod<IPicture, any>;
-
-  @ResourceAction({
-    method: RequestMethod.Put,
-    path: "/{!id}"
-  })
-  updatePicture: ResourceMethod<IPicture, any>;
-
-  @ResourceAction({
-    method: RequestMethod.Delete,
-    path: "/{!id}"
-  })
-  deletePicture: ResourceMethod<{id: any}, any>;
+  getPictures: ResourceMethod<IQueryInput, IPicture[]>;
 
   timeSince(date) {
     let seconds = Math.floor((+new Date() - date) / 1000);
@@ -227,4 +211,3 @@ export class PicturesService {
     return(pics);
   }
 }*/
-

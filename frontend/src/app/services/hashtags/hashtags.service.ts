@@ -5,45 +5,45 @@ import {RestClient}                                     from "app/shared/rest-cl
 import {IUserMini}                                      from "app/services/users/users.service"
 
 //input
-interface IQueryCreateMention {
+interface IQueryCreateHashtag {
   ID_USER: number;
+  HASHTAG: string;
   ID_PICTURE: number;
-  MY_ID_USER: number;
 }
 
-interface IQueryDeleteMention {
+interface IQueryDeleteHashtag {
   ID_USER: number;
+  HASHTAG: string;
   ID_PICTURE: number;
-  ID_MENTION: number;
+  ID_HASHTAG: number;
 }
 
 //output
 
-export interface IMention {
-  ID_USER: number;
+export interface IHashtag {
+  HASTAG: string;
   ID_PICTURE: number;
 }
 
-export interface IMentionPicture {
-  ID_USER: number;
-  USER: IUserMini;
+export interface IHashtagPicture {
+  HASTAG: string;
 }
 
 @Injectable()
 @ResourceParams({
   url: "/users"
 })
-export class MentionsService extends RestClient {
+export class HashtagsService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Post,
-    path:"/{!MY_ID_USER}/pictures/{!ID_PICTURE}/mention"
+    path:"/{!ID_USER}/pictures/{!ID_PICTURE}/hashtag"
   })
-  createMention: ResourceMethod<IQueryCreateMention, IMention>;
+  createHashtag: ResourceMethod<IQueryCreateHashtag, IHashtag>;
 
   @ResourceAction({
     method: RequestMethod.Delete,
-    path: "/{!MY_ID_USER}/pictures/{!ID_PICTURE}/mention/{!ID_MENTION}"
+    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/hashtag/{!ID_HASHTAG}"
   })
-  deleteMention: ResourceMethod<IQueryDeleteMention, IMention>;
+  deleteHashtag: ResourceMethod<IQueryDeleteHashtag, IHashtag>;
 }
