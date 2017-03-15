@@ -50,4 +50,18 @@ exports.map = [
     code : 201,
     statusCode : 404,
   },
+  {
+    name : 'missingPicture',
+    type : '',
+    code : 202,
+    message : 'Missing Picture',
+    statusCode : 400,
+  },
+  {
+    name : 'invalidPictureSize',
+    type : '',
+    code : 203,
+    message : 'The picture is to big',
+    statusCode : 400,
+  }
 ];

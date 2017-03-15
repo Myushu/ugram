@@ -2,29 +2,18 @@ drop database if exists UGRAM;
 create database IF NOT EXISTS UGRAM;
 use UGRAM;
 
-  create table PHONE_CODE (
-    CODE char(2) not null unique,
-    NAME varchar(80) not null unique,
-    PHONE_CODE int not null,
-    ID_COUNTRY int not null auto_increment,
-    constraint PK_PHONE_CODE primary KEY (ID_COUNTRY)
-  );
-
   create table USER (
     ID_USER int not null auto_increment,
     FIRSTNAME varchar(255) not null,
     LASTNAME varchar(255) not null,
     PSEUDO varchar(255) not null unique,
     EMAIL varchar(255) not null unique,
-    COUNTRY_PHONE_CODE int null,
-    PHONE_NUMBER varchar(10),
     PASSWORD_HASH varchar(255) null,
     PICTURE_PATH varchar(255) null,
     DATE_BIRTHDAY date null,
     SEXE char not null,
     ID_USER_FACEBOOK varchar(255) null,
-    constraint PK_USER primary key (ID_USER),
-    constraint FK_PHONE_CODE foreign key (COUNTRY_PHONE_CODE) references PHONE_CODE(ID_COUNTRY)
+    constraint PK_USER primary key (ID_USER)
   );
 
   delimiter //
@@ -52,8 +41,8 @@ use UGRAM;
 
   create table PICTURE (
     ID_PICTURE int not null auto_increment,
-    FILENAME varchar(255) not null unique,
     ID_OWNER int not null,
+    FILENAME varchar(255) not null,
     DATE_POSTED timestamp not null,
     DESCRIPTION varchar(255) not null,
     constraint PK_PICTURE primary key (ID_PICTURE),

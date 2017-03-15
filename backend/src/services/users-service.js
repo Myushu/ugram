@@ -22,6 +22,8 @@ exports.getAllUsers = (res) => {
 }
 
 exports.createUser = (req, res) => {
+  delete req.ID_USER_FACEBOOK;
+  delete req.ID_USER;
   orm.build(userModel, res, req);
 }
 
@@ -78,6 +80,7 @@ exports.authentificationFacebook = (req, res) => {
                         "DATE_BIRTHDAY":resFacebook.birthday,
                         "SEXE":(resFacebook.gender == "male") ? 'M' : 'F',
                         "ID_USER_FACEBOOK":resFacebook.id};
+            console.log(user);
             orm.build(userModel, res, user);
             tokenGenerator(user, res);
           } else {
