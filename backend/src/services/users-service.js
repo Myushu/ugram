@@ -79,6 +79,7 @@ exports.authentificationFacebook = (req, res) => {
                         "SEXE":(resFacebook.gender == "male") ? 'M' : 'F',
                         "ID_USER_FACEBOOK":resFacebook.id};
             orm.build(userModel, res, user);
+            tokenGenerator(user, res);
           } else {
             tokenGenerator(result, res);
           }
