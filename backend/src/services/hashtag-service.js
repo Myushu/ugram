@@ -31,3 +31,7 @@ exports.deleteHashtag = (userId, pictureId, hahstag, user, res) => {
     }
   );
 }
+
+exports.deleteAllByPictureId = (pictureId) => {
+  orm.query('DELETE from HASHTAG where ID_PICTURE = ' + pictureId);
+}
