@@ -1,3 +1,5 @@
+const path = require('path');
+const config = require('config');
 const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
@@ -63,6 +65,12 @@ exports.getAllPictures = (res, query) => {
 }
 
 exports.getPicture = (picturePath, res) => {
-  res.type('image/jpeg'); //tmp
-  res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + picturePath));
+  orm.find(pictureModel, res, 404, {where : {'FILENAME' : picturePath}}, function(result, res) {
+    if (!result)
+      res.status(404).send();
+    else {
+      res.type(result.MIME_TYPE);
+      res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + picturePath));
+    }
+  });
 }

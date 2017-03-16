@@ -13,7 +13,7 @@ module.exports = function(app) {
       }
       return null;
     }
-  }).unless({path : ['/users/login', '/users/signup', '/users/login/facebook']}));
+  }).unless({path : ['/', '/users/login', '/users/signup', '/users/login/facebook']}));
 
   app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {

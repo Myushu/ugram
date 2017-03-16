@@ -45,6 +45,7 @@ use UGRAM;
     FILENAME varchar(255) not null,
     DATE_POSTED timestamp not null,
     DESCRIPTION varchar(255) not null,
+    MIME_TYPE varchar(255) not null,
     constraint PK_PICTURE primary key (ID_PICTURE),
     constraint FK_PICTURE_OWNER foreign key (ID_OWNER) references USER(ID_USER) on delete cascade
   );
