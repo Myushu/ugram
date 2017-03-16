@@ -1,7 +1,7 @@
 import {Component, OnInit}  from "@angular/core";
 import {Router}             from "@angular/router";
 import { CookieService }    from "angular2-cookie/core";
-
+import { UsersService }     from "app/services/users/users.service";
 
 declare const FB: any;
 
@@ -13,7 +13,7 @@ declare const FB: any;
 
 export class FacebookLoginComponent implements OnInit {
 
-  constructor(private router: Router, private _cookieService: CookieService) {
+  constructor(private router: Router, private _cookieService: CookieService, private usersService: UsersService) {
     FB.init({
       appId      : "280735385694809",
       cookie     : false,  // enable cookies to allow the server to access
@@ -26,7 +26,7 @@ export class FacebookLoginComponent implements OnInit {
   onFacebookLoginClick() {
     FB.login(response => {
       this.statusChangeCallback(response);
-    }, {scope: 'public_profile'});
+    }, {scope: 'public_profile,email,user_birthday'});
   }
 
   onFacebookLogoutClick() {
@@ -38,11 +38,12 @@ export class FacebookLoginComponent implements OnInit {
   statusChangeCallback(resp) {
     console.log('fb res', resp);
     if (resp.status === "connected") {
-      this._cookieService.putObject("token", resp.authResponse);
-      FB.api('/me', function(response) {
-        console.log(response);
-      });
+      //this._cookieService.putObject("token", resp.authResponse);
       // this.router.navigate(["/home"]);
+      this.usersService.FBLoginUser({TOKEN: resp['authResponse']['accessToken']}, (res: string) => {
+        this._cookieService.put('token', res['token']);
+        this.router.navigate(['/home']);
+      });
     }else if (resp.status === "not_authorized") {
     }else {
 

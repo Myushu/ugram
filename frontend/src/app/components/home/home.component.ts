@@ -6,7 +6,7 @@ import { NgbPaginationConfig }        from "@ng-bootstrap/ng-bootstrap";
 import {PicturesService, IResponsePicture, IPicture}            from "app/services/pictures/pictures.service";
 
 // TEST LIB
-import {UsersService, IUser}                 from "app/services/users/users.service";
+import {UsersService, IUser, IUserShort}                 from "app/services/users/users.service";
 import {ResourceModule} from "ng2-resource-rest";
 import {UsersPicturesService, IUserPicture} from "app/services/users-pictures/users-pictures.service";
 
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   public page: number = 0;
   public pageSize: number = 20;
   public totalEntries: number = 0;
+  public users: IUserShort[];
 
 
   constructor(
@@ -45,11 +46,6 @@ export class HomeComponent implements OnInit {
         console.log("users", res);
       });
     });*/
-
-    // this.usersService.getUsers({}, (res: IUserShort[]) => {
-    //  console.log("users : ", res);
-    // });
-
     // this.usersService.getUser({id: 1}, (res: IUser) => {
     //  console.log("user :", res);
     //  res.LASTNAME = "bouscarel";
@@ -60,9 +56,9 @@ export class HomeComponent implements OnInit {
     //  console.log("created user :", res);
     // });
 
-    // this.usersService.getUsers({}, (res: IUserShort[]) => {
-    //  console.log("users : ", res);
-    // });
+    /*this.usersService.getUsers({}, (res: IUserShort[]) => {
+      this.user = res;
+     });*/
 
     /*this.usersService.getUser({id: 1}, (res: IUser) => {
       console.log('r', res);
