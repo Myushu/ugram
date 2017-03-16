@@ -30,7 +30,7 @@ exports.getSequelize = () => {
 }
 
 exports.findAll = (model, res, attributes) => {
-  model.findAll(attributes
+  model.findAndCountAll(attributes
   ).then(function(result) {
     if (!result)
       res.sendStatus(404);
