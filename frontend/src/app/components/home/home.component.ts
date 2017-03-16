@@ -3,12 +3,11 @@ import { CookieService }              from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
 import { NgbPaginationConfig }        from "@ng-bootstrap/ng-bootstrap";
 
-import {PicturesService, IResponsePicture, IPicture}            from "app/services/pictures/pictures.service";
+import {PicturesService, IPicture}            from "app/services/pictures/pictures.service";
 
 // TEST LIB
 import {UsersService, IUser, IUserShort}                 from "app/services/users/users.service";
-import {ResourceModule} from "ng2-resource-rest";
-import {UsersPicturesService, IUserPicture} from "app/services/users-pictures/users-pictures.service";
+import {UsersPicturesService} from "app/services/users-pictures/users-pictures.service";
 
 @Component({
   selector: "app-home",
@@ -37,6 +36,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPicture();
     // test
     /*this.usersService.loginUser({EMAIL: "aljosha@gmail.com", PASSWORD_HASH: "567i2"}, (res: string ) => {
       console.log('t', res['token']);
@@ -84,9 +84,13 @@ export class HomeComponent implements OnInit {
   }
 
   getPicture() {
-    this.picturesService.getPictures({page: this.page, perPage: this.pageSize}, (res: IResponsePicture) => {
-      this.images = this.picturesService.format_picture(res.items);
-      this.totalEntries = res.totalEntries;
-    });
+    this.picturesService.getPictures({page: this.page, perPage: this.pageSize}).$observable.subscribe(
+      (res: IPicture[]) => {
+        this.images = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }
