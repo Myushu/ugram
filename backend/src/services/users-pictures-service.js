@@ -121,7 +121,7 @@ exports.deletePicture = (userId, pictureId, user, res) => {
 
 exports.getPictureById = (userId, pictureId, res) => {
   orm.find(pictureModel, res, 404, {
-    attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
+    attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
     where : {
       'ID_OWNER' : userId,
       'ID_PICTURE' : pictureId

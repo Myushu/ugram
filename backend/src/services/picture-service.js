@@ -21,7 +21,7 @@ commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictures = (res, query) => {
     var attributes = {
-      attributes : ['FILENAME', 'DATE_POSTED', 'DESCRIPTION', 'ID_OWNER'],
+      attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION', 'ID_OWNER'],
       order : 'DATE_POSTED desc',
       include : [{
         model : userModel,
@@ -70,7 +70,7 @@ exports.getPicture = (picturePath, res) => {
       res.status(404).send();
     else {
       res.type(result.MIME_TYPE);
-      res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + picturePath));
+      res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
     }
   });
 }
