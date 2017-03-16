@@ -4,6 +4,7 @@ const config = require('config');
 const logger = require('../common/logger');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
+//const redisToken = require('../common/redisToken')
 const userModel = orm.getSequelize().import("../models/USER.js")
 
 exports.getUsersById = (idUser, user, res) => {
@@ -54,7 +55,8 @@ function tokenGenerator(result, res) {
     var token = jwt.sign(user, config.get('jwt')['secret'], {
       expiresIn: '24h',
     });
-    res.json({token : token});
+    //redisToken.addToken(token, user);
+    res.json({token : token, userId : user.userId});
 }
 
 exports.authentification = (req, res) => {
