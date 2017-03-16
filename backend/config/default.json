@@ -9,6 +9,10 @@
       "password" : "root"
     }
   },
+  "redis" : {
+    "hostname" : "localhost",
+    "port": 6379
+  },
   "jwt" : {
     "secret": "mdpsupersecret"
   },
@@ -20,5 +24,8 @@
   "picture": {
     "maxSize" : "10000000",
     "folder" : "./pictures"
+  },
+  "token" : {
+    "expire" : 86400
   }
 }

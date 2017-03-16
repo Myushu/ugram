@@ -1,36 +1,27 @@
 const redis = require('redis');
 const config = require('config');
-// const tokenManager = require('./tokenManger');
+const logger = require('./logger');
 
-// const redisClient = redis.createClient({
-//   "host" : config.get("redis")['hostname'],
-//   "port" : config.get("redis")['port']
-// });
+const redisClient = redis.createClient({
+  "host" : config.get("redis")['hostname'],
+  "port" : config.get("redis")['port'],
+  retry_strategy: function (options) {
+    if (options.error && options.error.code === 'ECONNREFUSED') {
+      logger.error(options.error);
+      redisClient.quit();
+      process.exit();
+    }
+  }
+});
 
-// module.exports = function(app) {
-//   app.use(function (req, res, next) {
-//     if (!req.user)
-//       next();
-//     else if (isTokenOnRedis){
-//
-//     }
-//   });
-// }
-//
-// function isTokenOnRedis (token) {
-
+exports.isTokenOnRedis = (token, user, callback) => {
+    redisClient.get(token, callback);
 }
 
-exports.addTokenToRedis = (token, userId) => {
-  redisClient.multi();
+exports.addToken = (token, userId) => {
+  redisClient.setex(token, config.get('token')['expire'], userId);
 }
 
-// function to add token :
-//  transation on
-//  add token : user_id
-//  set time out
-//  transation off
-
-//
-// // funcftion to remove token
-// // delete token/
+exports.removeToken = (token) => {
+  redisClient.del(token);
+}
