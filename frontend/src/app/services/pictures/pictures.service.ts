@@ -2,11 +2,11 @@ import {Injectable}                                     from "@angular/core";
 import {RequestMethod}                                  from "@angular/http";
 import {Resource, ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
-import {IUserMini}                                      from "app/services/users/users.service"
-import {IReactionPicture}                               from "app/services/reactions/reactions.service"
-import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service"
-import {ICommentPicture}                                from "app/services/comments/comments.service"
-import {IMentionPicture}                                from "app/services/mentions/mentions.service"
+import {IUserMini}                                      from "app/services/users/users.service";
+import {IReactionPicture}                               from "app/services/reactions/reactions.service";
+import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service";
+import {ICommentPicture}                                from "app/services/comments/comments.service";
+import {IMentionPicture}                                from "app/services/mentions/mentions.service";
 
 export interface IQueryInput {
   page?: number;
@@ -17,6 +17,7 @@ export interface IPicture {
   FILENAME: string;
   DATE_POSTED: Date;
   DESCRIPTION: string;
+  ID_PICTURE: number;
   ID_OWNER: number;
   USER: IUserMini;
   REACTIONs: IReactionPicture[];
@@ -29,10 +30,11 @@ export interface IPicture {
 @ResourceParams({
   url: "/pictures"
 })
-export class PicturesService extends Resource {
+export class PicturesService extends RestClient {
 
   @ResourceAction({
-    path: "/"
+    path: "/",
+    isArray: true
   })
   getPictures: ResourceMethod<IQueryInput, IPicture[]>;
 

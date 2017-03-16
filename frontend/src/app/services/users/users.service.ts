@@ -13,6 +13,10 @@ interface IQueryLogin {
   PASSWORD_HASH: string;
 }
 
+interface IQueryLoginFB {
+  TOKEN: string;
+}
+
 interface IQueryCreateUser {
   FIRSTNAME?: string;
   LASTNAME?: string;
@@ -27,7 +31,7 @@ interface IQueryCreateUser {
 }
 
 // Output
-interface IUserShort {
+export interface IUserShort {
   ID_USER: number;
   FIRSTNAME: string;
   LASTNAME: string;
@@ -90,4 +94,10 @@ export class UsersService extends RestClient {
     path: "/login"
   })
   loginUser: ResourceMethod<IQueryLogin, string>;
+
+  @ResourceAction({
+    method: RequestMethod.Post,
+    path: "/login/facebook"
+  })
+  FBLoginUser: ResourceMethod<IQueryLoginFB, string>;
 }
