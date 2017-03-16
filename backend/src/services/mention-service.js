@@ -31,3 +31,7 @@ exports.deleteMention = (userId, pictureId, mention, user, res) => {
     }
   );
 }
+
+exports.deleteAllByPictureId = (pictureId) => {
+  orm.query('DELETE from MENTION where ID_PICTURE = ' + pictureId);
+}

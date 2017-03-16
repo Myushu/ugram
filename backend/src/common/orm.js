@@ -106,3 +106,7 @@ exports.delete = (model, res, attributes) => {
    }
   });
 }
+
+exports.query = (request) => {
+  sequelize.query(request);
+}
