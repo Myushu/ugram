@@ -1,7 +1,7 @@
 import { Component, OnInit }      from "@angular/core";
 import {CookieService}            from "angular2-cookie/core";
 import { PicturesService }        from "app/services/pictures/pictures.service";
-import { UsersService }           from "app/services/users/users.service";
+import {UsersService, IUser}           from "app/services/users/users.service";
 
 @Component({
   selector: "app-profile",
@@ -34,7 +34,16 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserPicture() {
-    this.userService.get_user(this._cookieService.getObject("token")["id"]).then(res => {
+    /*this.userService.get_user(this._cookieService.getObject("token")["id"]).then(res => {
+      this.user = res;
+      this.picturesService.get_user_picture(this._cookieService.getObject("token")["id"], this.pageSize, this.page - 1).then(res => {
+        this.images = res["items"];
+        this.images = this.picturesService.format_picture(this.images);
+        this.nb_image = res["totalEntries"];
+        this.totalEntries = res["totalEntries"];
+      });
+    });*/
+    this.userService.getUser({id: this._cookieService.get('id_user')}, (res: IUser) => {
       this.user = res;
       this.picturesService.get_user_picture(this._cookieService.getObject("token")["id"], this.pageSize, this.page - 1).then(res => {
         this.images = res["items"];

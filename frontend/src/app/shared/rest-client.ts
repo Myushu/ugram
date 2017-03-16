@@ -26,6 +26,6 @@ export class RestClient extends Resource {
 
   getUrl(methodOptions?: any): string | Promise<string> {
     let resPath = super.getUrl();
-    return "http://localhost:3000" + resPath;
+    return "http://10.248.229.159:3000" + resPath;
   }
 }
