@@ -28,6 +28,10 @@ module.exports = function(sequelize, DataTypes) {
     DESCRIPTION: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    MIME_TYPE: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     tableName: 'PICTURE',

@@ -74,17 +74,20 @@ function checkImage(file, res) {
     errorManager.handle({name : "invalidPictureSize"}, res);
     return false;
   }
-  // check format
+  if (!file.mimetype.startsWith('image/')) {
+    errorManager.handle({name : "invalidPictureFormat"}, res);
+    return false;
+  }
   return true;
 }
 
 exports.createPicture = (userId, picture, user, file, res) => {
   if (!checkImage(file, res))
     return;
-
   var listCallbacks = [];
   picture.ID_OWNER = user.userId;
   picture.FILENAME =  file.filename;
+  picture.MIME_TYPE = file.mimetype;
   if (picture.MENTIONs != undefined) {
     listCallbacks.push(function(result, picture, res, user) {
       for (var i = 0; i < picture.MENTIONs.length; ++i)

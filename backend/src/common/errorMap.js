@@ -63,5 +63,12 @@ exports.map = [
     code : 203,
     message : 'The picture is to big',
     statusCode : 400,
+  },
+  {
+    name : 'invalidPictureFormat',
+    type : '',
+    code : 204,
+    message : 'The file is not a valid picture',
+    statusCode : 400,
   }
 ];
