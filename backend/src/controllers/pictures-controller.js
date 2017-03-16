@@ -9,7 +9,7 @@ module.exports = function(app) {
     });
 
     // Get the picture file
-    app.get('/picture/:picturePath', (req, res) => {
-      service.getPicture(req.params.picturePath, res);
+    app.get('/picture', (req, res) => {
+      service.getPicture(req.query.filename, res);
     });
 }
