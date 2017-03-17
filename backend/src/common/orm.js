@@ -41,6 +41,21 @@ exports.findAll = (model, res, attributes) => {
  });
 }
 
+exports.findAllAndCount = (model, res, attributes, attributesCount) => {
+  model.findAndCountAll(attributes
+  ).then(function(result) {
+    if (!result)
+      res.sendStatus(404);
+    model.count(attributesCount).then(function (resultCount) {
+      result['count'] = resultCount;
+      res.json(result);
+    })
+ }).catch(function(err) {
+    logger.error(err.message);
+    res.status(500).send(err.message);
+ });
+}
+
 exports.find = (model, res, errCode, attributes, functionUpdate) => {
   model.find(attributes
   ).then(function(result) {
@@ -105,4 +120,8 @@ exports.delete = (model, res, attributes) => {
      });
    }
   });
+}
+
+exports.query = (request) => {
+  sequelize.query(request);
 }

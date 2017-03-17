@@ -1,5 +1,6 @@
 const jwt = require('express-jwt');
-const config = require('config')
+const config = require('config');
+const redisToken =  require('./redisToken');
 
 module.exports = function(app) {
   app.use(jwt({
@@ -19,5 +20,20 @@ module.exports = function(app) {
     if (err.name === 'UnauthorizedError') {
       res.status(401).send();
     }
+  });
+
+  // check if user's token is on redis database
+  app.use(function (req, res, next) {
+    if (!req.user) {
+      next();
+      return ;
+    }
+    redisToken.isTokenOnRedis(req.headers.authorization.split(' ')[1], req.user, function (err, repplies) {
+      if (repplies == req.user.userId)
+        next();
+      else
+        res.status(401).send();
+      return ;
+    });
   });
 }

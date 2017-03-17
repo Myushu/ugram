@@ -23,7 +23,7 @@ module.exports = function(app) {
 
     // Delete a user
     app.delete('/users/:id', (req, res) => {
-      service.deleteUser(req.params.id, req.user, res);
+      service.deleteUser(req.params.id, req.user, req, res);
     });
 
     // Log in
@@ -34,5 +34,10 @@ module.exports = function(app) {
     // Log in Facebook
     app.post('/users/login/facebook', (req, res) => {
       service.authentificationFacebook(req, res);
+    });
+
+    //Log out
+    app.post('/users/logout', (req, res) => {
+      service.logout(req, res);
     });
 }

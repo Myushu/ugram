@@ -44,7 +44,6 @@ expressErrorHandler = (error, res) => {
 }
 
 exports.handle = (error, res) => {
-  console.log(error); // tmp
   if (error.errors != undefined)
     sequelizeErrorHandler(error, res);
   else if (error.parent != undefined)

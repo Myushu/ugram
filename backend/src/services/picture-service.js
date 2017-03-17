@@ -61,7 +61,7 @@ exports.getAllPictures = (res, query) => {
       }]
     };
     queryManager.fillAttributesFromQuery(attributes, query);
-    orm.findAll(pictureModel, res, attributes);
+    orm.findAllAndCount(pictureModel, res, attributes, {});
 }
 
 exports.getPicture = (picturePath, res) => {
@@ -73,4 +73,29 @@ exports.getPicture = (picturePath, res) => {
       res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
     }
   });
+}
+
+exports.searchPicture = (query, res) => {
+  var attributes = {};
+  if (query.description) {
+    attributes['where'] =  {
+        'DESCRIPTION' : {
+            $like :  '%' + query.description + '%',
+          }
+    };
+  }
+  if (query.hashtag) {
+    attributes['include'] = {
+      model : hashtagModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      where : {
+        'HASHTAG' : query.hashtag
+      }
+    }
+  }
+  var attributesCount = Object.assign({}, attributes);;
+  queryManager.fillAttributesFromQuery(attributes, query);
+  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
 }

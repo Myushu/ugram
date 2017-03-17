@@ -4,7 +4,7 @@ const config = require('config');
 const logger = require('../common/logger');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
-//const redisToken = require('../common/redisToken')
+const redisToken = require('../common/redisToken')
 const userModel = orm.getSequelize().import("../models/USER.js")
 
 exports.getUsersById = (idUser, user, res) => {
@@ -18,8 +18,7 @@ exports.getUsersById = (idUser, user, res) => {
 }
 
 exports.getAllUsers = (res) => {
-  orm.findAll(userModel, res, {
-    attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']});
+  orm.findAllAndCount(userModel, res, {attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']}, {});    
 }
 
 exports.createUser = (req, res) => {
@@ -33,8 +32,14 @@ exports.updateUser = (content, idUser, user, res) => {
   orm.update(userModel, content, res, { where : {'ID_USER' : user.userId }});
 }
 
-exports.deleteUser = (idUser, user, res) => {
+exports.deleteUser = (idUser, user, req, res) => {
   orm.delete(userModel, res, { where : {'ID_USER' : user.userId }});
+  this.logout(req, res);
+}
+
+exports.logout = (req, res) => {
+  redisToken.removeToken(req.headers.authorization.split(' ')[1]);
+  res.status(200).send();
 }
 
 exports.checkUserAuthentication = (body, res, callback) => {
@@ -55,7 +60,7 @@ function tokenGenerator(result, res) {
     var token = jwt.sign(user, config.get('jwt')['secret'], {
       expiresIn: '24h',
     });
-    //redisToken.addToken(token, user);
+    redisToken.addToken(token, user.userId);
     res.json({token : token, userId : user.userId});
 }
 
