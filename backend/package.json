@@ -1,10 +1,11 @@
 {
-  "name": "node-starter",
-  "version": "0.1.0",
-  "description": "Packs de départs pour développement avancé d'application web",
+  "name": "Ugram-backend",
+  "version": "1.0.0",
+  "description": "Backend du projet Ugram de l'équipe 6",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "initialize": "./dist/generate_models.sh",
     "test": "istanbul cover _mocha -- -u exports -R spec test/**/*",
     "coverage": "opn ./coverage/lcov-report/index.html"
   },
