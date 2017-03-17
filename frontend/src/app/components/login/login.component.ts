@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser({EMAIL: this.email, PASSWORD_HASH: this.pwd}).$observable.subscribe(
       res => {
         this._cookieService.put('token', res['token']);
+        this._cookieService.put('user_id', res['userId']);
         this.router.navigate(["/home"]);
       },
       err => {

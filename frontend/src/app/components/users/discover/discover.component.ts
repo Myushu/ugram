@@ -1,15 +1,13 @@
-import { Component, OnInit }        from "@angular/core";
-import { UsersService }             from "app/services/users/users.service";
+import { Component, OnInit }                        from "@angular/core";
+import {UsersService, IUserShort, IUserResponse}    from "app/services/users/users.service";
 
 @Component({
   selector: "app-discover",
   templateUrl: "./discover.component.html",
   styleUrls: ["./discover.component.scss"],
-  providers: [UsersService]
 })
 export class DiscoverComponent implements OnInit {
-  public users: Object[] = [];
-  public images = [];
+  public users: IUserShort[] = [<IUserShort>{}];
   public page: number = 0;
   public pageSize: number = 20;
   public totalEntries: number = 0;
@@ -30,10 +28,11 @@ export class DiscoverComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.get_users(this.pageSize, this.page).then(res => {
-      console.log(res);
-      this.totalEntries = res["totalEntries"];
-      this.users = res["items"];
-    });
+    this.userService.getUsers({page: this.page, perPage: this.pageSize}).$observable.subscribe(
+      (res: IUserResponse) => {
+        this.totalEntries = res.count;
+        this.users = res.rows;
+      }
+    );
   }
 }

@@ -4,7 +4,7 @@ import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest"
 import {RestClient}                                     from "app/shared/rest-client";
 import {IUserMini}                                      from "app/services/users/users.service"
 
-//input
+// input
 interface IQueryCreateReaction {
   ID_USER: number;
   ID_PICTURE: number;
@@ -16,8 +16,7 @@ interface IQueryDeleteReaction {
   ID_REACTION: number;
 }
 
-//output
-
+// output
 export interface IReaction {
   ID_USER: number;
   ID_PICTURE: number;
@@ -36,7 +35,7 @@ export class ReactionsService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Post,
-    path:"/{!ID_USER}/pictures/{!ID_PICTURE}/reaction"
+    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/reaction"
   })
   createReaction: ResourceMethod<IQueryCreateReaction, IReaction>;
 

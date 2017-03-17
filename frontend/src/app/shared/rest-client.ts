@@ -1,10 +1,13 @@
-import { Resource }      from "ng2-resource-rest";
-import { CookieService } from "angular2-cookie/core";
-import {Http}            from "@angular/http";
-import {Injector}      from "@angular/core";
+import { Resource }       from "ng2-resource-rest";
+import { CookieService }  from "angular2-cookie/core";
+import {Http}             from "@angular/http";
+import {Injector}         from "@angular/core";
+
+import { ConfigService } from "app/shared/config";
 
 export class RestClient extends Resource {
   private _cookieService: CookieService;
+  private cs: ConfigService;
 
   constructor(
     http: Http,
@@ -12,6 +15,7 @@ export class RestClient extends Resource {
   ) {
     super(http, injector);
     this._cookieService = new CookieService();
+    this.cs = new ConfigService();
   }
 
   getHeaders(methodOptions?: any): any {
@@ -26,6 +30,6 @@ export class RestClient extends Resource {
 
   getUrl(methodOptions?: any): string | Promise<string> {
     let resPath = super.getUrl();
-    return "http://10.248.229.159:3000" + resPath;
+    return this.cs.getUrl() + resPath;
   }
 }
