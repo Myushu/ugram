@@ -14,17 +14,18 @@ import { NavComponent } from "./components/nav/nav.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
 import { FacebookLoginComponent } from "./components/facebook-login/facebook-login.component"
-/*import { PictureComponent } from "./components/picture/picture.component";
+import { PictureComponent } from "./components/picture/picture.component";
 import { DiscoverComponent } from "./components/users/discover/discover.component";
 import { FeedComponent } from "./components/users/feed/feed.component";
+
 import { ProfileComponent } from "./components/users/profile/profile.component";
 import { UpdateComponent } from "./components/users/update/update.component";
-import { UploadComponent } from "./components/users/upload/upload.component";*/
+import { UploadComponent } from "./components/users/upload/upload.component";
 
 // service
-//import { ApiService } from "./services/api/api.service";
+// import { ApiService } from "./services/api/api.service";
 // import { UsersService } from "./services/users/users.service";
-import { PicturesService } from "./services/pictures/pictures.service";
+// import { PicturesService } from "./services/pictures/pictures.service";
 
 @NgModule({
   declarations: [
@@ -33,12 +34,12 @@ import { PicturesService } from "./services/pictures/pictures.service";
     NavComponent,
     LoginComponent,
     FacebookLoginComponent,
-    /*PictureComponent,
+    PictureComponent,
     DiscoverComponent,
     FeedComponent,
     ProfileComponent,
     UpdateComponent,
-    UploadComponent,*/
+    UploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,7 @@ import { PicturesService } from "./services/pictures/pictures.service";
     TagInputModule
   ],
   providers: [
-    //ApiService,
+    // ApiService,
     CookieService,
 
   ],

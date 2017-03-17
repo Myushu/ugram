@@ -1,13 +1,16 @@
-import { Component, OnInit }        from "@angular/core";
-import {CookieService}              from "angular2-cookie/core";
-import { Router }                   from "@angular/router";
-import { ApiService }               from "app/services/api/api.service";
-import { UsersService }             from "app/services/users/users.service";
+import { Component, OnInit }              from "@angular/core";
+import {CookieService}                    from "angular2-cookie/core";
+import {Router}                           from "@angular/router";
+import {UsersService, IUserResponse}      from "app/services/users/users.service";
+import {Http, Headers, RequestOptions}    from "@angular/http";
+import {Observable}                       from "rxjs";
+import {ConfigService}                    from "app/shared/config";
 
 @Component({
   selector: "app-upload",
   templateUrl: "./upload.component.html",
-  styleUrls: ["./upload.component.scss"]
+  styleUrls: ["./upload.component.scss"],
+  providers: [ConfigService]
 })
 export class UploadComponent implements OnInit {
   public tags = [];
@@ -15,54 +18,65 @@ export class UploadComponent implements OnInit {
   public desc: string = "";
   public users = [];
   public image;
+
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private usersService: UsersService,
-    private apiService: ApiService,
+    private cs: ConfigService,
+    private http: Http
   ) {
-
   }
 
   ngOnInit() {
-    this.usersService.get_users(9999, 0).then(res => {
-      for (let i = 0; i < res["items"].length; i++) {
-        this.users.push(res["items"][i]["id"]);
+    this.usersService.getUsers().$observable.subscribe(
+      (res: IUserResponse) => {
+        for (let i = 0; i < res.rows.length; i++) {
+          this.users.push({display: res.rows[i].PSEUDO, value: res.rows[i].ID_USER});
+        }
       }
-      console.log(this.users);
-    });
+    );
   }
 
   changeActionPic(event) {
     this.image = event;
   }
 
+  fileChange(tags, mentions) {
+    let fileList: FileList = this.image.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+      formData.append('upload', file, file.name);
+      formData.append('DESCRIPTION', this.desc);
+      if (mentions.length > 0)
+        formData.append('MENTIONs', JSON.stringify(mentions));
+      if (tags.length > 0)
+        formData.append('HASHTAGs', JSON.stringify(tags));
+      let headers = new Headers();
+      headers.append('Authorization', 'Bearer ' + this._cookieService.get('token'));
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({ headers: headers });
+      this.http.post(this.cs.getUrl() + '/users/' + this._cookieService.get('user_id') + '/pictures', formData, options)
+        .map(res => res.json())
+        .catch(error => Observable.throw(error))
+        .subscribe(
+          data => this.router.navigate(['home']),
+          error => console.log(error)
+        );
+    }
+  }
+
   uploadPicture() {
-    console.log("coucou2");
-    const user_id = this._cookieService.getObject("token")["id"];
-    let postData = {
-      description: this.desc,
-      mentions: [],
-      tags: []
-    };
+    const user_id = this._cookieService.getObject("user_id");
+    let u_tags = [];
+    let u_mentions = [];
     for (let i = 0; i < this.tags.length; i++) {
-      if (this.tags[i]["value"])
-        postData.tags.push(this.tags[i]["value"]);
-      else
-        postData.tags.push(this.tags[i]);
+      u_tags.push({HASHTAG: this.tags[i]["display"]});
     }
     for (let i = 0; i < this.mentions.length; i++) {
-      if (this.mentions[i]["value"])
-        postData.mentions.push(this.mentions[i]["value"]);
-      else
-        postData.mentions.push(this.mentions[i]);
+      u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }
-    let url = this.apiService.getRoute().pictures.get_user_pictures;
-    let url = url.replace("{user_id}", user_id);
-
-    this.apiService.postWithFile(url, postData, this.image.target.files).then(result => {
-      console.log(result);
-      this.router.navigate(["home"]);
-    });
+    this.fileChange(u_tags, u_mentions);
   }
 }

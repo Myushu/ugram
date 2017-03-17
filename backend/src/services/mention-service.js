@@ -7,6 +7,7 @@ const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 mentionModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
 exports.creationMention = (userId, pictureId, mention, user, res) => {
+  console.log('uuu', user);
   orm.find(pictureModel, res, 403, {
     where : {
       ID_OWNER : user.userId,

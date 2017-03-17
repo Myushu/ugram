@@ -1,27 +1,27 @@
 <div id="page-wrapper">
   <div class="container col-md-12">
     <div class="image col-md-8">
-      <img src="{{image.url}}" width="100%">
+      <img src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
     </div>
     <div class="infos col-md-4">
       <ul>
-        <li class="user"><a routerLink="/user/{{image.userId}}">{{image.userId}}</a></li>
+        <li class="user"><a routerLink="/user/{{user.ID_USER}}">{{user.PSEUDO}}</a></li>
         <li class="time">{{image.timeSince}}</li>
         <li>
-          {{image.description}}
+          {{image.DESCRIPTION}}
         </li>
         <li>
-          <tag-input [ngModel]="image.tags" [readonly]="true"></tag-input>
+          <tag-input [ngModel]="tags" [readonly]="true"></tag-input>
         </li>
         <li>
-          <tag-input [ngModel]="image.mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
+          <tag-input [ngModel]="mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
         </li>
       </ul>
       <div *ngIf="updated">
         <div style="width: 90%" class="form-group row">
           <label class="col-2 col-form-label">Description</label>
           <div class="col-10">
-            <input [(ngModel)]="image.description" class="form-control" type="text" value='{{image.description}}'>
+            <input [(ngModel)]="image.DESCRIPTION" class="form-control" type="text" value='{{image.DESCRIPTION}}'>
           </div>
         </div>
 
@@ -43,10 +43,11 @@
         </div>
         <button class="btn btn-success" (click)="updateImage()">Update</button>
       </div>
-      <div *ngIf="image.userId == user.id && updated == 0" style="text-align: center">
+      <div *ngIf="my_user_id == user.ID_USER && updated == 0" style="text-align: center">
         <button class="btn btn-success" (click)="changeState()">Update</button>
         <button class="btn btn-danger" (click)="deleteImage()">Delete</button>
       </div>
     </div>
   </div>
 </div>
+

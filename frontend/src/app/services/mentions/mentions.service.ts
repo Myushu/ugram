@@ -4,7 +4,7 @@ import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest"
 import {RestClient}                                     from "app/shared/rest-client";
 import {IUserMini}                                      from "app/services/users/users.service"
 
-//input
+// input
 interface IQueryCreateMention {
   ID_USER: number;
   ID_PICTURE: number;
@@ -17,8 +17,7 @@ interface IQueryDeleteMention {
   ID_MENTION: number;
 }
 
-//output
-
+// output
 export interface IMention {
   ID_USER: number;
   ID_PICTURE: number;

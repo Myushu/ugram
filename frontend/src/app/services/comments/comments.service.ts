@@ -4,7 +4,7 @@ import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest"
 import {RestClient}                                     from "app/shared/rest-client";
 import {IUserMini}                                      from "app/services/users/users.service"
 
-//input
+// input
 interface IQueryCreateComment {
   ID_USER: number;
   CONTENT: string;
@@ -18,8 +18,7 @@ interface IQueryDeleteComment {
   ID_COMMENT: number;
 }
 
-//output
-
+// output
 export interface IComment {
   ID_USER: number;
   CONTENT: string;

@@ -175,9 +175,9 @@ exports.updatePicture = (userId, pictureId, content, user, res) => {
       delete content.ID_OWNER;
       delete content.DATE_POSTED;
       if (content.MENTIONs != undefined) {
-        listCallbacks.push(function(result, content, res, user) {
+        listCallbacks.push(function(result, content, res) {
           for (var i = 0; i < content.MENTIONs.length; ++i)
-          mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], user, res);
+            mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], user, res);
         });
       }
       if (content.HASHTAGs != undefined) {

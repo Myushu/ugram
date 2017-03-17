@@ -1,40 +1,59 @@
 import { Component, OnInit }          from "@angular/core";
 import { CookieService }              from "angular2-cookie/core";
 import { Router, ActivatedRoute }     from "@angular/router";
-import { PicturesService }            from "app/services/pictures/pictures.service";
-import { UsersService }               from "app/services/users/users.service";
+import {PicturesService, IPicture}    from "app/services/pictures/pictures.service";
+import {
+  UsersService, IUser,
+  IUserResponse
+}                                     from "app/services/users/users.service";
+import {UsersPicturesService}         from "app/services/users-pictures/users-pictures.service";
+import {IHashtagPicture}              from "app/services/hashtags/hashtags.service";
+import {IMentionPicture}              from "app/services/mentions/mentions.service";
+import {ICommentPicture}              from "app/services/comments/comments.service";
+import {IReactionPicture}             from "app/services/reactions/reactions.service";
+import {ConfigService}                from "app/shared/config";
 
 @Component({
   selector: "app-picture",
   templateUrl: "./picture.component.html",
   styleUrls: ["./picture.component.scss"],
-  providers: [PicturesService, UsersService]
+  providers: [ConfigService]
 })
 export class PictureComponent implements OnInit {
-  public tags = [];
-  public mentions = [];
-  private image: Object[] = [];
-  private userId: number;
-  private imageId: number;
-  public user;
-  public updated: number = 0;
+  public req_userID: number;
+  public req_pictureID: number;
+  public my_user_id: number;
+  public tags: IHashtagPicture[];
+  public mentions: IMentionPicture[];
+  public comments: ICommentPicture[];
+  public reactions: IReactionPicture[];
+  public image: IPicture = <IPicture>{};
+  public user: IUser = <IUser>{};
   public users = [];
+  public updated: number = 0;
+  public picture_url: string;
 
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private picturesService: PicturesService,
     private Route: ActivatedRoute,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private usersPicturesService: UsersPicturesService,
+    private configService: ConfigService,
   ) {
 
   }
 
   deleteImage() {
-    this.picturesService.delete_picture(this.userId, this.imageId).then(res => {
-      if (res["ok"])
+    this.usersPicturesService.deleteUserPicture({ID_USER: this.user.ID_USER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
         this.router.navigate(["home"]);
-    });
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   changeState() {
@@ -42,50 +61,68 @@ export class PictureComponent implements OnInit {
   }
 
   updateImage() {
-    console.log("tags", this.tags);
-    console.log("mentions", this.mentions);
-    let body = {
-      description: this.image["description"],
-      mentions: [],
-      tags: []
-    };
-
+    let u_tags = [];
+    let u_mentions = [];
     for (let i = 0; i < this.tags.length; i++) {
-      if (this.tags[i]["value"])
-        body.tags.push(this.tags[i]["value"]);
-      else
-        body.tags.push(this.tags[i]);
+      u_tags.push({HASHTAG: this.tags[i]["display"]});
     }
     for (let i = 0; i < this.mentions.length; i++) {
-      if (this.mentions[i]["value"])
-        body.mentions.push(this.mentions[i]["value"]);
-      else
-        body.mentions.push(this.mentions[i]);
+      u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }
-    this.picturesService.updateImage(this.userId, this.imageId, body).then(res => {
-      this.image = this.picturesService.format_picture(res);
-      this.updated = 0;
-    });
+    this.usersPicturesService.updateUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID, DESCRIPTION: this.image.DESCRIPTION, MENTIONs: u_mentions, HASHTAGs: u_tags}).$observable.subscribe(
+      res => {
+        console.log('res', res);
+        this.updated = 0;
+      },
+      err => {
+        console.log('err', err);
+      }
+    );
+  }
+
+  format_hashtag(tags) {
+    for (let i = 0; i < tags.length; i++) {
+      tags[i].display = tags[i].HASHTAG;
+    }
+    return(tags);
+  }
+
+  format_mention(ment) {
+    for (let i = 0; i < ment.length; i++) {
+      ment[i].display = ment[i].USER.PSEUDO;
+      ment[i].value = ment[i].USER.ID_USER;
+    }
+    return (ment);
   }
 
   ngOnInit() {
-    this.user = this._cookieService.getObject("token");
-    console.log("user", this.user);
+    this.my_user_id = <number><any>this._cookieService.get('user_id');
+    this.picture_url = this.configService.getUrl();
     this.Route.params.subscribe(params => {
-      this.userId = params["userid"];
-      this.imageId = params["id"];
-      this.picturesService.get_picture(this.userId, this.imageId).then(res => {
-        console.log(res);
-        this.image = this.picturesService.format_picture(res);
-        this.tags = this.image["tags"];
-        this.mentions = this.image["mentions"];
-        this.usersService.get_users(9999, 0).then(res => {
-           for (let i = 0; i < res["items"].length; i++) {
-            this.users.push(res["items"][i]["id"]);
+      this.req_userID = params["userid"];
+      this.req_pictureID = params["id"];
+      this.usersService.getUser({id: this.req_userID}).$observable.subscribe(
+        (res: IUser) => {
+          this.user = res;
+        }
+      );
+      this.usersService.getUsers().$observable.subscribe(
+        (res: IUserResponse) => {
+          for (let i = 0; i < res.rows.length; i++) {
+            this.users.push({display: res.rows[i].PSEUDO, value: res.rows[i].ID_USER});
           }
-        });
-        console.log(this.users);
-      });
+        }
+      );
+      this.usersPicturesService.getUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID}).$observable.subscribe(
+        (res: IPicture) => {
+          this.image = this.picturesService.format_picture(res);
+          this.tags = this.format_hashtag(this.image.HASHTAGs);
+          this.mentions = this.format_mention(this.image.MENTIONs);
+        },
+        err => {
+          console.log('err', err);
+        }
+      );
     });
   }
 

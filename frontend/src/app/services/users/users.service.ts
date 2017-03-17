@@ -3,6 +3,7 @@ import {RequestMethod}                                  from "@angular/http";
 import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
 
+// input
 interface IQueryInput {
   page?: number;
   perPage?: number;
@@ -36,7 +37,7 @@ export interface IUserShort {
   FIRSTNAME: string;
   LASTNAME: string;
   PSEUDO: string;
-  PICTURE_PATH: string;
+  PICTURE_PATH?: string;
   SEXE: string;
 }
 
@@ -44,7 +45,7 @@ export interface IUser extends IUserShort {
   EMAIL: string;
   COUNTRY_PHONE_CODE?: string;
   PHONE_NUMBER?: string;
-  DATE_BIRTHDAY: any;
+  DATE_BIRTHDAY?: any;
 }
 
 export interface IUserMini {
@@ -54,6 +55,11 @@ export interface IUserMini {
   PSEUDO: string;
 }
 
+export interface IUserResponse {
+  count: number;
+  rows: IUserShort[];
+}
+
 @Injectable()
 @ResourceParams({
   url: "/users"
@@ -61,10 +67,9 @@ export interface IUserMini {
 export class UsersService extends RestClient {
 
   @ResourceAction({
-    isArray: true,
     path: "/"
   })
-  getUsers: ResourceMethod<IQueryInput, IUserShort[]>;
+  getUsers: ResourceMethod<IQueryInput, IUserResponse>;
 
   @ResourceAction({
     path: "/{!id}"
