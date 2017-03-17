@@ -62,7 +62,7 @@ exports.getAllPictureByUserId = (res, userId, query) => {
     }]
   };
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAll(pictureModel, res, attributes);
+  orm.findAllAndCount(pictureModel, res, attributes, {where: {'ID_OWNER' : userId}});
 }
 
 function checkImage(file, res) {
@@ -90,14 +90,17 @@ exports.createPicture = (userId, picture, user, file, res) => {
   picture.MIME_TYPE = file.mimetype;
   if (picture.MENTIONs != undefined) {
     listCallbacks.push(function(result, picture, res, user) {
+      picture.MENTIONs = JSON.parse(picture.MENTIONs);
       for (var i = 0; i < picture.MENTIONs.length; ++i)
         mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], user, res);
     });
   }
   if (picture.HASHTAGs != undefined) {
     listCallbacks.push(function(result, picture, res, user) {
-      for (var i = 0; i < picture.HASHTAGs.length; ++i)
-        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], user, res);
+      picture.HASHTAGs = JSON.parse(picture.HASHTAGs);
+        for (var i = 0; i < picture.HASHTAGs.length; ++i) {
+        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, picture.HASHTAGs[i], user, res);
+      }
     });
   }
   orm.build(pictureModel, res, picture, listCallbacks, user);

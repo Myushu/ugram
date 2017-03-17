@@ -30,11 +30,26 @@ exports.getSequelize = () => {
 }
 
 exports.findAll = (model, res, attributes) => {
-  model.findAndCountAll(attributes
+  model.findAll(attributes
   ).then(function(result) {
     if (!result)
       res.sendStatus(404);
     res.json(result);
+ }).catch(function(err) {
+    logger.error(err.message);
+    res.status(500).send(err.message);
+ });
+}
+
+exports.findAllAndCount = (model, res, attributes, attributesCount) => {
+  model.findAndCountAll(attributes
+  ).then(function(result) {
+    if (!result)
+      res.sendStatus(404);
+    model.count(attributesCount).then(function (resultCount) {
+      result['count'] = resultCount;
+      res.json(result);
+    })
  }).catch(function(err) {
     logger.error(err.message);
     res.status(500).send(err.message);
