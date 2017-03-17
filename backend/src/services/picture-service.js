@@ -74,3 +74,28 @@ exports.getPicture = (picturePath, res) => {
     }
   });
 }
+
+exports.searchPicture = (query, res) => {
+  var attributes = {};
+  if (query.description) {
+    attributes['where'] =  {
+        'DESCRIPTION' : {
+            $like :  '%' + query.description + '%',
+          }
+    };
+  }
+  if (query.hashtag) {
+    attributes['include'] = {
+      model : hashtagModel,
+      attributes : {
+        exclude : ['ID_PICTURE'],
+      },
+      where : {
+        'HASHTAG' : query.hashtag
+      }
+    }
+  }
+  var attributesCount = Object.assign({}, attributes);;
+  queryManager.fillAttributesFromQuery(attributes, query);
+  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
+}
