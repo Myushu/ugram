@@ -61,7 +61,7 @@ exports.getAllPictures = (res, query) => {
       }]
     };
     queryManager.fillAttributesFromQuery(attributes, query);
-    orm.findAll(pictureModel, res, attributes);
+    orm.findAllAndCount(pictureModel, res, attributes, {});
 }
 
 exports.getPicture = (picturePath, res) => {
