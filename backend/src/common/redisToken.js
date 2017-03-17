@@ -19,7 +19,8 @@ exports.isTokenOnRedis = (token, user, callback) => {
 }
 
 exports.addToken = (token, userId) => {
-  redisClient.setex(token, config.get('token')['expire'], userId);
+  redisClient.set(token, userId);
+  redisClient.expire(token, config.get('token')['expire']);
 }
 
 exports.removeToken = (token) => {
