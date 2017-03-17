@@ -29,10 +29,18 @@ You must init the SQL database :
 mysql -u [user] -p[password] < backend/dist/ugram.sql
 mysql -u [user] -p[password] < dist/phone_code.sql
 ```
+You also must start the [redis](redis.io) database : 
+```
+sudo service redis start
+```
+If you want ton init the database, you must run : 
+```
+npm run-script initialize
+```
 Then you can start the server :
 ```
 cd backend
-node src/index.js
+npm start
 ```
 
 ### Project implémentation
@@ -40,9 +48,9 @@ node src/index.js
 [git-s3](https://github.com/schickling/git-s3) is used to deploy the project on S3 AWS bucket  
 
 ### Back end
-The server is based on  [express](http://expressjs.com/). The token manager is [jwt](http://jwt.io). The logger is [Winston](https://github.com/lazywithclass/winston-cloudwatch).
+The server is based on  [express](http://expressjs.com/). The token manager is [jwt](http://jwt.io). The logger is [Winston](https://github.com/lazywithclass/winston-cloudwatch). The MySQL driver is [mysql](https://www.npmjs.com/package/mysql). The [Redis](redis.io) driver is [redis](https://www.npmjs.com/package/redis).
 The SQL orm is [sequelize](http://docs.sequelizejs.com/en/v3/). The models are stored on ```backend/src/models```. To regenerate the models, run :
 ```
-backend/dist/generate_models.sh
+backend/dist/generate_models.sh 
 ```
-The services are stored on ```backend/src/services``` and controllers on ```backend/src/controllers```. The common folder contains the services using by other services such as the orm or the configuration file manager.
+The services are stored on ```backend/src/services``` and controllers on ```backend/src/controllers```. The common folder (```backend/src/common```) contains the services using by other services such as the orm or the configuration file manager.
