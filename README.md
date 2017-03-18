@@ -9,7 +9,7 @@
 - back end
 
 **API :**
-- [Documentation API](http://docs.ugram06.apiary.io/)
+- [API documentation](http://docs.ugram06.apiary.io/)
 
 ## Project Configuration
 
