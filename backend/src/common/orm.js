@@ -105,7 +105,7 @@ exports.update = (model, newContent, res, attributes, callbacks) => {
   });
 }
 
-exports.delete = (model, res, attributes) => {
+exports.delete = (model, res, attributes, callback) => {
   this.find(model, res, 404, attributes, function(resultModel, res) {
     if (!resultModel)
       res.sendStatus(404);
@@ -113,8 +113,9 @@ exports.delete = (model, res, attributes) => {
       resultModel.destroy({cascade : true}).then(function(result) {
         if (!result)
           res.sendStatus(404)
-        else
-          res.json(result);
+        else if (callback != undefined)
+          callback(result, res);
+        res.json(result);
       }).catch(function(err) {
        errorManager.handle(err, res);
      });
