@@ -4,62 +4,23 @@ const fs = require('fs');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
 const queryManager = require('../common/queryManager');
+const alias = require('../common/alias')
 const mentionService = require('./mention-service');
 const hashtagService = require('./hashtag-service');
-const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
-const reactionModel = orm.getSequelize().import("../models/REACTION.js");
-const userModel = orm.getSequelize().import("../models/USER.js");
-const mentionModel = orm.getSequelize().import("../models/MENTION.js");
-const hashtagModel =  orm.getSequelize().import("../models/HASHTAG.js");
-const commentModel = orm.getSequelize().import("../models/COMMENT.js");
 
-pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(hashtagModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(commentModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.belongsTo(userModel, {foreignKey : 'ID_OWNER'});
-reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
-mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
-commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
+const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
 exports.getAllPictureByUserId = (res, userId, query) => {
     var attributes = {
-    attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
+    attributes : alias.pictureAttributes,
     order : 'DATE_POSTED desc',
     where : {'ID_OWNER' : userId},
-    include : [{
-      model : reactionModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    },{
-      model : mentionModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    },{
-      model : hashtagModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      }
-    },{
-      model : commentModel,
-      attributes : {
-        exclude : ['ID_PICTURE', 'ID_USER'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    }]
+    include : [
+      alias.reactionInclude,
+      alias.mentionInclude,
+      alias.hashtagInclude,
+      alias.commentInclude
+    ]
   };
   queryManager.fillAttributesFromQuery(attributes, query);
   orm.findAllAndCount(pictureModel, res, attributes, {where: {'ID_OWNER' : userId}});
@@ -114,9 +75,7 @@ exports.deletePicture = (userId, pictureId, user, res) => {
     }},
     function(result, res) {
       orm.delete(pictureModel, res, {
-      where : {
-        'ID_PICTURE' : pictureId,
-        'ID_OWNER' : userId}
+         where : alias.pictureWhereOwner(pictureId, userId)
       }, function (result, res) {
         fs.unlinkSync(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
       });
@@ -126,44 +85,14 @@ exports.deletePicture = (userId, pictureId, user, res) => {
 
 exports.getPictureById = (userId, pictureId, res) => {
   orm.find(pictureModel, res, 404, {
-    attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'],
-    where : {
-      'ID_OWNER' : userId,
-      'ID_PICTURE' : pictureId
-    },
-    include : [{
-      model : reactionModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    },{
-      model : mentionModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    },{
-      model : hashtagModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      }
-    },{
-      model : commentModel,
-      attributes : {
-        exclude : ['ID_PICTURE', 'ID_USER'],
-      },
-      include : {
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      }
-    }]
+    attributes : alias.pictureAttributes,
+    where : alias.pictureWhereOwner(pictureId, userId),
+    include : [
+      alias.reactionInclude,
+      alias.mentionInclude,
+      alias.hashtagInclude,
+      alias.commentInclude
+    ]
   });
 }
 
@@ -199,10 +128,7 @@ exports.updatePicture = (userId, pictureId, content, user, res) => {
           }
         });
       }
-      orm.update(pictureModel, content, res, {
-        'ID_OWNER' : userId,
-        'ID_PICTURE' : pictureId
-      }, listCallbacks, user);
+      orm.update(pictureModel, content, res, alias.pictureWhereOwner(pictureId, userId), listCallbacks, user);
     }
   );
 }

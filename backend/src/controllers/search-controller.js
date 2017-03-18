@@ -7,7 +7,7 @@ module.exports = function(app) {
     })
 
     // Search by hastag
-    app.get('/search/hastag', (req, res) => {
+    app.get('/search/hashtag', (req, res) => {
       service.searchHashtag(req.query, res);
     })
 

@@ -1,4 +1,5 @@
 const orm = require('../common/orm');
+
 const commentModel = orm.getSequelize().import("../models/COMMENT.js");
 
 exports.createComment = (userId, pictureId, comment, res, userWriter) => {

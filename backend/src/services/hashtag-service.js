@@ -1,30 +1,24 @@
 const orm = require('../common/orm');
+const alias = require('../common/alias')
+
 const hashtagModel = orm.getSequelize().import("../models/HASHTAG.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
-hashtagModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
-
-exports.creationHashtag = (userId, pictureId, hahstag, user, res) => {
+exports.creationHashtag = (userId, pictureId, hashtag, user, res) => {
   orm.find(pictureModel, res, 403, {
-    where : {
-      ID_OWNER : user.userId,
-      ID_PICTURE : pictureId
-    }},
-    function(result, res) {
-      hahstag.ID_PICTURE = pictureId;
-      orm.build(hashtagModel, res, hahstag);
+      where : alias.pictureWhereOwner(pictureId, user.userId)
+    }, function(result, res) {
+      hashtag.ID_PICTURE = pictureId;
+      orm.build(hashtagModel, res, hashtag);
     }
   );
 }
 
-exports.deleteHashtag = (userId, pictureId, hahstag, user, res) => {
+exports.deleteHashtag = (userId, pictureId, hashtag, user, res) => {
   orm.find(pictureModel, res, 403, {
-    where : {
-      ID_OWNER : user.userId,
-      ID_PICTURE : pictureId
-    }},
-    function(result, res) {
-      hahstag.ID_PICTURE = pictureId;
+      where : alias.pictureWhereOwner(pictureId, user.userId)
+    }, function(result, res) {
+      hashtag.ID_PICTURE = pictureId;
       orm.delete(hashtagModel, res, {where : hashtag});
     }
   );

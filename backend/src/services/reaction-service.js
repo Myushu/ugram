@@ -1,18 +1,12 @@
 const orm = require('../common/orm');
+const alias = require('../common/alias')
+
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 
 exports.creationReaction = (userId, pictureId, user, res) => {
-  var reaction = {
-    ID_PICTURE : pictureId,
-    ID_USER : user.userId
-  };
-  orm.build(reactionModel, res, reaction);
+  orm.build(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId));
 }
 
 exports.deleteReaction = (userId, pictureId, user, res) => {
-  var reaction = {
-    ID_PICTURE : pictureId,
-    ID_USER : user.userId
-  };
-  orm.delete(reactionModel, res , { where : reaction});
+  orm.delete(reactionModel, res , { where : alias.pictureWhereUser(pictureId, user.userId)});
 }
