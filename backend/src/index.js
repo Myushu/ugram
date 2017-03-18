@@ -46,6 +46,7 @@ require('./controllers/reaction-controller')(app);
 require('./controllers/mention-controller')(app);
 require('./controllers/hashtag-controller')(app);
 require('./controllers/comment-controller')(app);
+require('./controllers/search-controller')(app);
 
 orm.initConnection();
 app.listen(port);
