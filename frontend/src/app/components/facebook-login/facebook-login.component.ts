@@ -24,7 +24,7 @@ export class FacebookLoginComponent implements OnInit {
   onFacebookLoginClick() {
     FB.login(response => {
       this.statusChangeCallback(response);
-    }, {scope: 'public_profile,email,user_birthday'});
+    }, {scope: 'public_profile,email'});
   }
 
   onFacebookLogoutClick() {
