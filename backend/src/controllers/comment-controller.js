@@ -1,5 +1,4 @@
 const service = require('../services/comment-service');
-const orm = require('../common/orm');
 
 module.exports = function(app) {
     // Create a new hashtag

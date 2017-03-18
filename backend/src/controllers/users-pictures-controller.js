@@ -1,9 +1,9 @@
 const config = require('config');
 const multer = require('multer');
 const service = require('../services/users-pictures-service');
-const orm = require('../common/orm');
-var uploadFolder = config.get('picture')['folder'];
-var upload = multer({ dest: uploadFolder})
+
+const uploadFolder = config.get('picture')['folder'];
+const upload = multer({ dest: uploadFolder})
 
 module.exports = function(app) {
 

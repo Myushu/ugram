@@ -64,7 +64,14 @@ exports.getAllPictures = (res, query) => {
     orm.findAllAndCount(pictureModel, res, attributes, {});
 }
 
+function defaultImage (res) {
+  res.type("image/png");
+  res.sendfile(path.resolve(config.get('picture')['folder'] + '/default'));
+}
+
 exports.getPicture = (picturePath, res) => {
+  if (picturePath === 'default')
+    return defaultImage(res);
   orm.find(pictureModel, res, 404, {where : {'FILENAME' : picturePath}}, function(result, res) {
     if (!result)
       res.status(404).send();
@@ -73,29 +80,4 @@ exports.getPicture = (picturePath, res) => {
       res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
     }
   });
-}
-
-exports.searchPicture = (query, res) => {
-  var attributes = {};
-  if (query.description) {
-    attributes['where'] =  {
-        'DESCRIPTION' : {
-            $like :  '%' + query.description + '%',
-          }
-    };
-  }
-  if (query.hashtag) {
-    attributes['include'] = {
-      model : hashtagModel,
-      attributes : {
-        exclude : ['ID_PICTURE'],
-      },
-      where : {
-        'HASHTAG' : query.hashtag
-      }
-    }
-  }
-  var attributesCount = Object.assign({}, attributes);;
-  queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
 }
