@@ -12,6 +12,7 @@ import { UsersService }               from "app/services/users/users.service";
 })
 export class NavComponent implements OnInit {
   showNavBar: boolean = false;
+  private search: string;
 
   constructor(
     private _cookieService: CookieService,
@@ -22,7 +23,10 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
 
+  searchAction() {
+    this.router.navigate(['/search', this.search]);
   }
 
   showMenu() {

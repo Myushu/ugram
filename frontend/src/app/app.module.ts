@@ -20,6 +20,7 @@ import { ProfileComponent }       from "./components/users/profile/profile.compo
 import { UpdateComponent }        from "./components/users/update/update.component";
 import { UploadComponent }        from "./components/users/upload/upload.component";
 import { RegisterComponent }      from './components/register/register.component';
+import { SearchComponent }        from './components/search/search.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { RegisterComponent }      from './components/register/register.component
     UpdateComponent,
     UploadComponent,
     RegisterComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
