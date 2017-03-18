@@ -45,6 +45,8 @@ export class FeedComponent implements OnInit {
     this.userService.getUser({id: this.user_id}).$observable.subscribe(
       (res: IUser) => {
         this.user = res;
+        if (this.user.PICTURE_PATH === 'default')
+          this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
         console.log(this.user);
       }
     );

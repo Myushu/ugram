@@ -41,6 +41,8 @@ export class ProfileComponent implements OnInit {
     this.userService.getUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
       (res: IUser) => {
         this.user = res;
+        if (this.user.PICTURE_PATH === 'default')
+          this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
         console.log(this.user);
       }
     );
