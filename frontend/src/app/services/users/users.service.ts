@@ -18,7 +18,7 @@ interface IQueryLoginFB {
   TOKEN: string;
 }
 
-interface IQueryCreateUser {
+export interface IQueryCreateUser {
   FIRSTNAME?: string;
   LASTNAME?: string;
   PSEUDO?: string;
@@ -105,4 +105,10 @@ export class UsersService extends RestClient {
     path: "/login/facebook"
   })
   FBLoginUser: ResourceMethod<IQueryLoginFB, string>;
+
+  @ResourceAction({
+    method: RequestMethod.Post,
+    path: "/logout"
+  })
+  logoutUser: ResourceMethod<any, any>;
 }

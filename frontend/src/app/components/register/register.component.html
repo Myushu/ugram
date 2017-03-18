@@ -1,0 +1,48 @@
+<div id="page-wrapper" class="register">
+  <div class="login-container">
+    <h1>UGRAM</h1>
+    <h2>Register</h2>
+    <div *ngIf="error">
+      <div class="alert alert-danger" role="alert">{{error_message}}</div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input [(ngModel)]="email" required type="text" class="form-control" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="pseudo">Pseudo</label>
+      <input [(ngModel)]="pseudo" required type="text" class="form-control" id="pseudo" placeholder="Pseudo">
+    </div>
+    <div class="form-group">
+      <label for="firstname">Firstname</label>
+      <input [(ngModel)]="firstname" required type="text" class="form-control" id="firstname" placeholder="Firstname">
+    </div>
+    <div class="form-group">
+      <label for="lastname">Lastname</label>
+      <input [(ngModel)]="lastname" required type="text" class="form-control" id="lastname" placeholder="Lastname">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input [(ngModel)]="password" required type="password" class="form-control" id="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="password_conf">Confirm Password</label>
+      <input [(ngModel)]="password_conf" required type="password" class="form-control" id="password_conf" placeholder="Confirm password">
+    </div>
+    <div class="form-group row">
+      <label for="user-tel-update" class="col-2 col-form-label">Gender</label>
+      <div class="col-10">
+        <label class="radio-inline">
+          <input type="radio" name="sexe" id="inlineRadio1" value="M" [(ngModel)]="gender"> Male
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="sexe" id="inlineRadio2" value="F" [(ngModel)]="gender"> Female
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="sexe" id="inlineRadio3" value="X" [(ngModel)]="gender"> Other
+        </label>
+      </div>
+    </div>
+    <button (click)="register()" type="submit" class="btn btn-default">Submit</button>
+  </div>
+</div>
