@@ -1,0 +1,66 @@
+#page-wrapper {
+  .search {
+    .row {
+      .users {
+        text-align: center;
+        ul {
+          padding: 0;
+          li {
+            list-style: none;
+            ul {
+              padding: 15px;
+              //text-align: start;
+              li {
+                list-style: none;
+
+                &.name {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+      .desc {
+        text-align: center;
+        ul {
+          padding: 0;
+          li {
+            list-style: none;
+            ul {
+              padding: 15px;
+              li {
+                list-style: none;
+                &:last-child {
+                  font-weight: bold;
+                  font-size: 14px;
+                  margin-top: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .tags {
+        text-align: center;
+        ul {
+          padding: 0;
+          li {
+            list-style: none;
+            ul {
+              padding: 15px;
+              li {
+                list-style: none;
+                &:last-child {
+                  font-weight: bold;
+                  font-size: 14px;
+                  margin-top: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

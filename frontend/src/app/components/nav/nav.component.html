@@ -15,6 +15,14 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
+            <div class="input-group">
+              <input [(ngModel)]="search" type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="searchAction()">Go!</button>
+              </span>
+            </div>
+        </li>
+        <li>
           <a routerLink="/home/"><i class="fa fa-home" aria-hidden="true"></i> FEED</a>
         </li>
         <li>
