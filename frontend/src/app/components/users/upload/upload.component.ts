@@ -16,7 +16,6 @@ export class UploadComponent implements OnInit {
   public tags = [];
   public mentions = [];
   public desc: string = "";
-  public users = [];
   public image;
 
   constructor(
@@ -29,13 +28,6 @@ export class UploadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usersService.getUsers().$observable.subscribe(
-      (res: IUserResponse) => {
-        for (let i = 0; i < res.rows.length; i++) {
-          this.users.push({display: res.rows[i].PSEUDO, value: res.rows[i].ID_USER});
-        }
-      }
-    );
   }
 
   changeActionPic(event) {
@@ -58,7 +50,7 @@ export class UploadComponent implements OnInit {
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
       this.http.post(this.cs.getUrl() + '/users/' + this._cookieService.get('user_id') + '/pictures', formData, options)
-        .map(res => res.json())
+        .map(res => res)
         .catch(error => Observable.throw(error))
         .subscribe(
           data => this.router.navigate(['home']),

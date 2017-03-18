@@ -1,0 +1,39 @@
+<div id="page-wrapper">
+  <div class="search">
+    <div class="row">
+      <div class="col-md-4 users">
+        <h3>Search users for "{{search}}"</h3>
+        <ul>
+          <li *ngFor="let user of searchUser.rows"> <!-- NG FOR -->
+            <ul>
+              <li class="name"><a routerLink="/user/{{user.ID_USER}}">{{user.FIRSTNAME}} {{user.LASTNAME}}</a></li>
+              <li>@{{user.PSEUDO}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4 desc">
+        <h3>Search description for "{{search}}"</h3>
+        <ul>
+          <li *ngFor="let dpic of searchDesc.rows">
+            <ul>
+              <li class="name"><a routerLink="/picture/{{dpic.ID_OWNER}}/{{dpic.ID_PICTURE}}"><img width="500px" src="{{picture_url}}/picture?filename={{dpic.FILENAME}}"></a></li>
+              <li>{{dpic.DESCRIPTION}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4 tags">
+        <h3>Search hashtags for "{{search}}"</h3>
+        <ul>
+          <li *ngFor="let hpic of searchHashtag.rows">
+            <ul>
+              <li class="name"><a routerLink="/picture/{{hpic.ID_OWNER}}/{{hpic.ID_PICTURE}}"><img width="500px" src="{{picture_url}}/picture?filename={{hpic.FILENAME}}"></a></li>
+              <li>{{hpic.DESCRIPTION}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

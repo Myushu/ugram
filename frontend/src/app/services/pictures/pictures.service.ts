@@ -27,6 +27,15 @@ export interface IPicture {
   COMMENTs: ICommentPicture[];
 }
 
+export interface IPictureShort {
+  ID_PICTURE: number;
+  ID_OWNER: number;
+  FILENAME: string;
+  DATE_POSTED: Date;
+  DESCRIPTION: string;
+  MIME_TYPE: string;
+}
+
 export interface IPictureResponse {
   count: number;
   rows: IPicture[];
