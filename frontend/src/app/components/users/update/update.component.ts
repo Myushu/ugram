@@ -14,6 +14,7 @@ export class UpdateComponent implements OnInit {
   public email;
   public gender;
   public pseudo;
+  public picturePath;
   public error: boolean = false;
   public error_message: string = "";
   private user: IUser = <IUser>{};
@@ -35,13 +36,14 @@ export class UpdateComponent implements OnInit {
         this.firstname = this.user.FIRSTNAME;
         this.gender = this.user.SEXE;
         this.pseudo = this.user.PSEUDO;
+        this.picturePath = this.user.PICTURE_PATH;
         console.log(this.user);
       }
     );
   }
 
   submitUpdate() {
-    this.userService.updateUser({LASTNAME: this.lastname, FIRSTNAME: this.firstname, EMAIL: this.email, SEXE: this.gender, PSEUDO: this.pseudo, ID_USER: this.user.ID_USER}).$observable.subscribe(
+    this.userService.updateUser({LASTNAME: this.lastname, FIRSTNAME: this.firstname, EMAIL: this.email, SEXE: this.gender, PSEUDO: this.pseudo, ID_USER: this.user.ID_USER, PICTURE_PATH: this.picturePath}).$observable.subscribe(
       res => {
         this.router.navigate(['/profile']);
       },
