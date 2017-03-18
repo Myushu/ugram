@@ -8,7 +8,7 @@
 - [front end](http://laval-ugram-team-06.s3-website-us-east-1.amazonaws.com/)
 - back end
 
-**API Link :**
+**API :**
 - [Documentation API](http://docs.ugram06.apiary.io/)
 
 ## Project Configuration
