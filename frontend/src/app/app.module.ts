@@ -19,6 +19,7 @@ import { FeedComponent }          from "./components/users/feed/feed.component";
 import { ProfileComponent }       from "./components/users/profile/profile.component";
 import { UpdateComponent }        from "./components/users/update/update.component";
 import { UploadComponent }        from "./components/users/upload/upload.component";
+import { RegisterComponent }      from './components/register/register.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { UploadComponent }        from "./components/users/upload/upload.compone
     ProfileComponent,
     UpdateComponent,
     UploadComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

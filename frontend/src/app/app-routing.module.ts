@@ -9,6 +9,7 @@ import { UpdateComponent }      from "./components/users/update/update.component
 import { ProfileComponent }     from "./components/users/profile/profile.component";
 import { UploadComponent }      from "./components/users/upload/upload.component";
 import { DiscoverComponent }    from "./components/users/discover/discover.component";
+import {RegisterComponent}      from "./components/register/register.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: "update", component: UpdateComponent},
   { path: "profile", component: ProfileComponent },
   { path: "upload", component: UploadComponent},
-  { path: "discover", component: DiscoverComponent }
+  { path: "discover", component: DiscoverComponent },
+  { path: "register", component: RegisterComponent }
 ];
 
 

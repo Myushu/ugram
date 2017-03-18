@@ -18,7 +18,7 @@ interface IQueryLoginFB {
   TOKEN: string;
 }
 
-interface IQueryCreateUser {
+export interface IQueryCreateUser {
   FIRSTNAME?: string;
   LASTNAME?: string;
   PSEUDO?: string;
