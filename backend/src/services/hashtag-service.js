@@ -1,6 +1,4 @@
-const logger = require('../common/logger');
 const orm = require('../common/orm');
-const queryManager = require('../common/queryManager');
 const hashtagModel = orm.getSequelize().import("../models/HASHTAG.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 

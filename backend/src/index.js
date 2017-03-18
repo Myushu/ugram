@@ -1,14 +1,14 @@
 const express = require('express');
+const config = require('config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const winston = require('winston');
 const winstonCloudWatch = require('winston-cloudwatch');
-const errors = require('./common/errors');
 const logger = require('./common/logger');
 const orm = require('./common/orm');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || config.get('server')['port'];
 const app = express();
 
 const corsOptions = {
@@ -18,7 +18,6 @@ const corsOptions = {
         'PUT',
         'POST',
         'DELETE',
-        'UPDATE'
     ],
     credentials: true
 };

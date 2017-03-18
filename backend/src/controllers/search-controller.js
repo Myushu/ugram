@@ -1,7 +1,6 @@
 const service = require('../services/search-service');
 
 module.exports = function(app) {
-
     // Search by description
     app.get('/search/description', (req, res) => {
       service.searchDescription(req.query, res);

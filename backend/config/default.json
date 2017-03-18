@@ -27,5 +27,8 @@
   },
   "token" : {
     "expire" : 86400
+  },
+  "server" : {
+    "port" : 3000
   }
 }

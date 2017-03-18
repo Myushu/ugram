@@ -1,7 +1,6 @@
 const service = require('../services/picture-service');
 
 module.exports = function(app) {
-
   // Get all pictures
     app.get('/pictures', (req, res) => {
       service.getAllPictures(res, req.query);

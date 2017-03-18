@@ -1,7 +1,6 @@
 const config = require('config');
 const path = require('path');
 const fs = require('fs');
-const logger = require('../common/logger');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
 const queryManager = require('../common/queryManager');

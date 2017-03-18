@@ -1,7 +1,6 @@
 const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const logger = require('../common/logger');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
 const redisToken = require('../common/redisToken')
@@ -18,7 +17,7 @@ exports.getUsersById = (idUser, user, res) => {
 }
 
 exports.getAllUsers = (res) => {
-  orm.findAllAndCount(userModel, res, {attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']}, {});    
+  orm.findAllAndCount(userModel, res, {attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']}, {});
 }
 
 exports.createUser = (req, res) => {

@@ -6,7 +6,6 @@ const uploadFolder = config.get('picture')['folder'];
 const upload = multer({ dest: uploadFolder})
 
 module.exports = function(app) {
-
     // Get all pictures of a user
     app.get('/users/:userId/pictures', (req, res) => {
       service.getAllPictureByUserId(res, req.params.userId, req.query);

@@ -1,6 +1,5 @@
 const path = require('path');
 const config = require('config');
-const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
 const userModel = orm.getSequelize().import("../models/USER.js");
