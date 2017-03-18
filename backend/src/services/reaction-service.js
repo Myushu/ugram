@@ -1,23 +1,12 @@
-const logger = require('../common/logger');
 const orm = require('../common/orm');
-const queryManager = require('../common/queryManager');
-const reactionModel = orm.getSequelize().import("../models/REACTION.js");
-const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
+const alias = require('../common/alias')
 
-reactionModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
+const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 
 exports.creationReaction = (userId, pictureId, user, res) => {
-  var reaction = {
-    ID_PICTURE : pictureId,
-    ID_USER : user.userId
-  };
-  orm.build(reactionModel, res, reaction);
+  orm.build(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId));
 }
 
 exports.deleteReaction = (userId, pictureId, user, res) => {
-  var reaction = {
-    ID_PICTURE : pictureId,
-    ID_USER : user.userId
-  };
-  orm.delete(reactionModel, res , { where : reaction});
+  orm.delete(reactionModel, res , { where : alias.pictureWhereUser(pictureId, user.userId)});
 }

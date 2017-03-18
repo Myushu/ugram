@@ -1,16 +1,17 @@
 const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const logger = require('../common/logger');
 const orm = require('../common/orm');
+const alias = require('../common/alias');
 const errorManager = require('../common/errors');
 const redisToken = require('../common/redisToken')
+
 const userModel = orm.getSequelize().import("../models/USER.js")
 
 exports.getUsersById = (idUser, user, res) => {
   var attributesVar;
   if (idUser != user.userId)
-    attributesVar = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'];
+    attributesVar = alias.userAttributesFull;
   orm.find(userModel, res, 404, {
     attributes : attributesVar,
     where : { 'ID_USER' : idUser}
@@ -18,7 +19,7 @@ exports.getUsersById = (idUser, user, res) => {
 }
 
 exports.getAllUsers = (res) => {
-  orm.findAllAndCount(userModel, res, {attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE']}, {});    
+  orm.findAllAndCount(userModel, res, {attributes : alias.userAttributesFull}, {});
 }
 
 exports.createUser = (req, res) => {

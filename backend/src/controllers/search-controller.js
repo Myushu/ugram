@@ -1,14 +1,13 @@
 const service = require('../services/search-service');
 
 module.exports = function(app) {
-
     // Search by description
     app.get('/search/description', (req, res) => {
       service.searchDescription(req.query, res);
     })
 
     // Search by hastag
-    app.get('/search/hastag', (req, res) => {
+    app.get('/search/hashtag', (req, res) => {
       service.searchHashtag(req.query, res);
     })
 

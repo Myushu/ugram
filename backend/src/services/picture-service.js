@@ -1,6 +1,5 @@
 const path = require('path');
 const config = require('config');
-const logger = require('../common/logger');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
 const userModel = orm.getSequelize().import("../models/USER.js");
@@ -66,7 +65,7 @@ exports.getAllPictures = (res, query) => {
 
 function defaultImage (res) {
   res.type("image/png");
-  res.sendfile(path.resolve(config.get('picture')['folder'] + '/default'));
+  res.sendFile(path.resolve(config.get('picture')['folder'] + '/default'));
 }
 
 exports.getPicture = (picturePath, res) => {
@@ -77,7 +76,7 @@ exports.getPicture = (picturePath, res) => {
       res.status(404).send();
     else {
       res.type(result.MIME_TYPE);
-      res.sendfile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
+      res.sendFile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
     }
   });
 }
