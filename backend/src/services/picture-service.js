@@ -64,7 +64,14 @@ exports.getAllPictures = (res, query) => {
     orm.findAllAndCount(pictureModel, res, attributes, {});
 }
 
+function defaultImage (res) {
+  res.type("image/png");
+  res.sendfile(path.resolve(config.get('picture')['folder'] + '/default'));
+}
+
 exports.getPicture = (picturePath, res) => {
+  if (picturePath === 'default')
+    return defaultImage(res);
   orm.find(pictureModel, res, 404, {where : {'FILENAME' : picturePath}}, function(result, res) {
     if (!result)
       res.status(404).send();

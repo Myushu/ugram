@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "initialize": "./dist/generate_models.sh",
+    "initialize": "./dist/scripts/init.sh",
     "test": "istanbul cover _mocha -- -u exports -R spec test/**/*",
     "coverage": "opn ./coverage/lcov-report/index.html"
   },
