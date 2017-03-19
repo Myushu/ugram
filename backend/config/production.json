@@ -1,16 +1,16 @@
 {
   "sql" : {
-    "host" : "localhost",
+    "host" : "ugram-06.cyx3fuxkmrrb.us-east-1.rds.amazonaws.com",
     "port" : 3306,
     "database" : "UGRAM",
     "maxRetries" : 5,
     "credentials" : {
       "user" : "root",
-      "password" : "root"
+      "password" : "rootroot"
     }
   },
   "redis" : {
-    "hostname" : "localhost",
+    "hostname" : "ugram-redis.i7hi8q.0001.use1.cache.amazonaws.com",
     "port": 6379
   },
   "jwt" : {
@@ -32,7 +32,7 @@
     "port" : 3000
   },
   "winston" : {
-    "enable" : false,
+    "enable" : true,
     "logGroupName" : "ugram-team-06",
     "logStreamName" : "production",
     "awsRegion" : "us-east-1",
