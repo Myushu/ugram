@@ -26,7 +26,7 @@ var configuration = {
   }
 }
 
-if (config.get('winston')['enable'])
+if (config.get('winston')['enable'] == true)
   logger.add(CloudWatchTransport, configuration);
 logger.level = config.get('winston')['level'],
 logger.stream = {
