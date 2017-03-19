@@ -68,7 +68,7 @@ function tokenGenerator(result, res) {
 exports.authentification = (req, res) => {
   this.checkUserAuthentication(req.body, res, function(result, res) {
     if (!result) {
-      res.sendStatus(401);
+      res.sendStatus(403);
       return ;
     }
     tokenGenerator(result, res);
