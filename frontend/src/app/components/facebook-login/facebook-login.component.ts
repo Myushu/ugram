@@ -34,7 +34,6 @@ export class FacebookLoginComponent implements OnInit {
   }
 
   statusChangeCallback(resp) {
-    console.log('fb res', resp);
     if (resp.status === "connected") {
       this.usersService.FBLoginUser({TOKEN: resp['authResponse']['accessToken']}, (res: string) => {
         this._cookieService.put('token', res['token']);

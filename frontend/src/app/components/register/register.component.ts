@@ -47,7 +47,6 @@ export class RegisterComponent implements OnInit {
         },
         err => {
           let error = JSON.parse(err._body);
-          console.log(error);
           this.error = true;
           this.error_message = "Error with the field  " + error['path'];
         }

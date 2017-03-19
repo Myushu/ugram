@@ -30,19 +30,16 @@ export class SearchComponent implements OnInit {
       this.searchService.searchUsers({INPUT: this.search}).$observable.subscribe(
         (res: ISearchUsers) => {
           this.searchUser = res;
-          console.log('User : ', this.searchUser);
         }
       );
       this.searchService.searchDescription({INPUT: this.search}).$observable.subscribe(
         (res: ISearchPictures) => {
           this.searchDesc = res;
-          console.log('Desc : ', this.searchDesc);
         }
       );
       this.searchService.searchHashtag({INPUT: this.search}).$observable.subscribe(
         (res: ISearchPictures) => {
           this.searchHashtag = res;
-          console.log('Tag : ', this.searchHashtag);
         }
       );
     });

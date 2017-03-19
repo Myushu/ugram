@@ -71,7 +71,6 @@ export class PictureComponent implements OnInit {
     }
     this.usersPicturesService.updateUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID, DESCRIPTION: this.image.DESCRIPTION, MENTIONs: u_mentions, HASHTAGs: u_tags}).$observable.subscribe(
       res => {
-        console.log('res', res);
         this.updated = 0;
       },
       err => {
