@@ -225,4 +225,7 @@ flycheck_*.el
 .dir-locals.el
 
 # End of https://www.gitignore.io/api/git,linux,node,eclipse,netbeans,sublimetext,emacs
+
+#ugram
 backend/pictures
+backend/ugram*.zip

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "initialize": "./dist/scripts/init.sh",
+    "zipper": "./dist/scripts/zipper.sh",
     "test": "istanbul cover _mocha -- -u exports -R spec test/**/*",
     "coverage": "opn ./coverage/lcov-report/index.html"
   },
