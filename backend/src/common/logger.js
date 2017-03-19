@@ -1,27 +1,37 @@
-const winston = require('winston');
-// const WinstonCloudwatch = require('winston-cloudwatch');
+const config = require('config');
+var winston = require('winston');
+var CloudWatchTransport = require('winston-aws-cloudwatch');
 
 const logger = new winston.Logger({
-    transports: [
-      // new WinstonCloudwatch({
-      //       logGroupName: 'laval-ugram-team-06',
-      //       logStreamName: 'sample',
-      //       awsRegion: 'us-west-2',
-      //       jsonMessage: true
-      //   }),
-        new winston.transports.Console({
-            level: 'debug',
-            handleExceptions: true,
-            json: false,
-            colorize: true
-        })
-    ],
-    exitOnError: false
+  transports: [
+    new (winston.transports.Console)({
+      timestamp: true,
+      colorize: true,
+    })
+  ]
 });
 
-module.exports = logger;
-module.exports.stream = {
-    write: function(message, encoding){
-        logger.info(message);
-    }
+var configuration = {
+  logGroupName: config.get('winston')['logGroupName'],
+  logStreamName: config.get('winston')['logStreamName'],
+  createLogGroup: false,
+  createLogStream: true,
+  awsConfig: {
+    accessKeyId: process.env.CLOUDWATCH_ACCESS_KEY_ID,
+    secretAccessKey: process.env.CLOUDWATCH_SECRET_ACCESS_KEY,
+    region: config.get('winston')['awsRegion'],
+  },
+  formatLog: function (item) {
+    return item.level + ': ' + item.message + ' ' + JSON.stringify(item.meta)
+  }
+}
+
+if (config.get('winston')['enable'])
+  logger.add(CloudWatchTransport, configuration);
+logger.level = config.get('winston')['level'],
+logger.stream = {
+  write: function(message, encoding) {
+    logger.info(message);
+  }
 };
+module.exports = logger;
