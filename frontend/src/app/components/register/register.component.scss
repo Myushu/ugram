@@ -1,0 +1,12 @@
+#page-wrapper {
+  &.register {
+    text-align: center;
+    .login-container {
+      width: 40%;
+      background-color: #fff;
+      padding: 40px;
+      display: inline-block;
+      border: 1px solid #e6e6e6;
+    }
+  }
+}

@@ -38,13 +38,12 @@ expressErrorHandler = (error, res) => {
   } else {
     res.status(errorInfo.statusCode).send({
       code : errorInfo.code,
-      message : error.message
+      message : error.message || errorInfo.message
     });
   }
 }
 
 exports.handle = (error, res) => {
-  console.log(error); // tmp
   if (error.errors != undefined)
     sequelizeErrorHandler(error, res);
   else if (error.parent != undefined)

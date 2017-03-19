@@ -5,14 +5,7 @@
 >       validate : {
 >         isEmail : true,
 >       }
-37c40,43
-<       allowNull: true
----
->       allowNull: true,
->       validate : {
->         isNumeric : true,
->       }
-49c55,59
+37c40,44
 <       allowNull: true
 ---
 >       allowNull: true,
@@ -20,14 +13,14 @@
 >         isAfter : '1970-01-01',
 >         IsBefore : DataTypes.NOW
 >       }
-53c63,66
+41c48,51
 <       allowNull: false
 ---
 >       allowNull: false,
 >       validate : {
 >         isIn : [['M', 'F', 'X']]
 >       }
-56c69,70
+48c58,59
 <     tableName: 'USER'
 ---
 >     tableName: 'USER',

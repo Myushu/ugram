@@ -9,7 +9,34 @@
       "password" : "root"
     }
   },
+  "redis" : {
+    "hostname" : "localhost",
+    "port": 6379
+  },
   "jwt" : {
     "secret": "mdpsupersecret"
+  },
+  "fb" : {
+    "version": "v2.8",
+    "appId": "280735385694809",
+    "appSecret": "ee5581a2a91d4aa649285ce097e4891f"
+  },
+  "picture": {
+    "maxSize" : "10000000",
+    "folder" : "./pictures"
+  },
+  "token" : {
+    "expire" : 86400
+  },
+  "server" : {
+    "port" : 3000
+  },
+  "winston" : {
+    "enable" : false,
+    "logGroupName" : "ugram-team-06",
+    "logStreamName" : "production",
+    "awsRegion" : "us-east-1",
+    "jsonMessage" : true,
+    "level" : "silly"
   }
 }

@@ -1,10 +1,23 @@
 <div id="page-wrapper" class="login">
   <div class="login-container">
     <h1>UGRAM</h1>
+    <div *ngIf="error">
+      <div class="alert alert-danger" role="alert">{{error_message}}</div>
+    </div>
+    <facebook-login></facebook-login>
+    <h3>OR</h3>
     <div class="form-group">
-      <label for="token">Token</label>
-      <input value="353aac98-0fed-42aa-afcf-e7228f06ed53" [(ngModel)]="token" type="text" class="form-control" id="token" placeholder="Token">
+      <label for="email">Email</label>
+      <input [(ngModel)]="email" type="text" class="form-control" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password</label>
+      <input [(ngModel)]="pwd" type="password" class="form-control" id="pwd" placeholder="Password">
     </div>
     <button (click)="login()" type="submit" class="btn btn-default">Submit</button>
+    <br>
+    <div style="margin-top: 20px">
+      <a routerLink="/register">Register</a>
+    </div>
   </div>
 </div>

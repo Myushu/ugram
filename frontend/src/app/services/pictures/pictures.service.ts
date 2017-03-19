@@ -1,105 +1,60 @@
-import { Injectable } from '@angular/core';
-import {CookieService}      from 'angular2-cookie/core';
+import {Injectable}                                     from "@angular/core";
+import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
+import {RestClient}                                     from "app/shared/rest-client";
+import {IUserMini}                                      from "app/services/users/users.service";
+import {IReactionPicture}                               from "app/services/reactions/reactions.service";
+import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service";
+import {ICommentPicture}                                from "app/services/comments/comments.service";
+import {IMentionPicture}                                from "app/services/mentions/mentions.service";
 
-import { ApiService }        from 'app/services/api/api.service';
+// input
+export interface IQueryInput {
+  page?: number;
+  perPage?: number;
+}
+
+// output
+export interface IPicture {
+  FILENAME: string;
+  DATE_POSTED: Date;
+  DESCRIPTION: string;
+  ID_PICTURE: number;
+  ID_OWNER: number;
+  USER: IUserMini;
+  REACTIONs: IReactionPicture[];
+  MENTIONs: IMentionPicture[];
+  HASHTAGs: IHashtagPicture[];
+  COMMENTs: ICommentPicture[];
+}
+
+export interface IPictureShort {
+  ID_PICTURE: number;
+  ID_OWNER: number;
+  FILENAME: string;
+  DATE_POSTED: Date;
+  DESCRIPTION: string;
+  MIME_TYPE: string;
+}
+
+export interface IPictureResponse {
+  count: number;
+  rows: IPicture[];
+}
 
 @Injectable()
-export class PicturesService {
+@ResourceParams({
+  url: "/pictures"
+})
+export class PicturesService extends RestClient {
 
-  constructor(
-    private coreApiService: ApiService,
-    private _cookieService: CookieService,
-  ) {
-
-  }
-
-  get_pictures(page_size, page) {
-    var req = {
-      method: "GET",
-      url: this.coreApiService.getRoute().pictures.get_pictures + '?page=' + page + '&perPage='+page_size ,
-    };
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-
-
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      })
-    })
-
-  }
-
-  get_picture(user_id, image_id) {
-    var url = this.coreApiService.getRoute().pictures.get_user_picture;
-    var url = url.replace("{user_id}", user_id);
-    var url = url.replace("{picture_id}", image_id);
-    var req = {
-      method: "GET",
-      url: url,
-    };
-
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
-
-  get_user_picture(user_id, page_size, page) {
-    var url = this.coreApiService.getRoute().pictures.get_user_pictures + '?page=' + page + '&perPage='+page_size;
-    var url = url.replace("{user_id}", user_id);
-    var req = {
-      method: "GET",
-      url: url
-    };
-
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
-
-  delete_picture(user_id, image_id) {
-    var url = this.coreApiService.getRoute().pictures.delete_user_picture;
-    var url = url.replace("{user_id}", user_id);
-    var url = url.replace("{picture_id}", image_id);
-    var req = {
-      method: "DELETE",
-      url: url,
-      token: this._cookieService.getObject('token')['token']
-    };
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
-
-  updateImage(user_id, image_id, body) {
-    var url = this.coreApiService.getRoute().pictures.update_user_picture;
-    var url = url.replace("{user_id}", user_id);
-    var url = url.replace("{picture_id}", image_id);
-    var req = {
-      method: "PUT",
-      url: url,
-      token: this._cookieService.getObject('token')['token'],
-      data: JSON.stringify(body)
-    };
-    return new Promise((resolve, reject) => {
-      this.coreApiService.request(req).then(data => {
-        var json = JSON.parse(<string>((<any>data)._body));
-        resolve(json);
-      });
-    });
-  }
+  @ResourceAction({
+    path: "/",
+  })
+  getPictures: ResourceMethod<IQueryInput, IPictureResponse>;
 
   timeSince(date) {
-    var seconds = Math.floor((+new Date() - date) / 1000);
-    var interval = Math.floor(seconds / 31536000);
+    let seconds = Math.floor((+new Date() - date) / 1000);
+    let interval = Math.floor(seconds / 31536000);
     if (interval > 1) {
       return interval + " years ago";
     }
@@ -123,14 +78,15 @@ export class PicturesService {
   }
 
   format_picture(pics) {
-    if (!pics.length)
-      pics.timeSince = this.timeSince(pics.createdDate);
+    if (!pics.length) {
+      let datum = Date.parse(pics.DATE_POSTED);
+      pics.timeSince = this.timeSince(datum);
+    }
     else {
-      for(var i = 0; i < pics.length; i++){
-        pics[i].timeSince = this.timeSince(pics[i].createdDate);
+      for (let i = 0; i < pics.length; i++) {
+        pics[i].timeSince = this.timeSince(pics[i].DATE_POSTED);
       }
     }
-    return(pics);
+    return (pics);
   }
 }
-

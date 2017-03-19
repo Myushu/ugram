@@ -1,15 +1,14 @@
 <div id="page-wrapper">
   <div class="header_profile">
-    <!--<img src="{{user.pictureUrl}}" class="profile-img">-->
-    <img src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-39025.jpg" class="profile-img">
+    <img src="{{user.PICTURE_PATH}}" class="profile-img">
     <div class="main_profile1">
-      <h1 class="profile-name">{{user.firstName}} {{user.lastName}}</h1>
-      <h2>@{{user.id}}</h2>
+      <h1 class="profile-name">{{user.FIRSTNAME}} {{user.LASTNAME}}</h1>
+      <h2>@{{user.PSEUDO}}</h2>
       <section class="buttons">
         <div class="container">
           <div class="btn btn-3" style="width:33%;">posts
             <div style="clear:both;"></div>
-            <span style="font-size:20px; font-weight:bold;">{{nb_image}}</span>
+            <span style="font-size:20px; font-weight:bold;">{{totalEntries}}</span>
           </div>
           <div class="btn btn-3" style="width:36%; border-right:1px solid rgba(0, 0, 0, 0.1); border-left:1px solid rgba(0, 0, 0, 0.1)">followers
 
@@ -24,14 +23,15 @@
       </section>
       <div style="clear:both;"></div>
       <a routerLink="/update/" class="btn btn-primary update">Update Profile</a>
+      <a (click)="deleteProfileAction()" class="btn btn-primary update" style="background-color:#FE2E2E">Delete Profile</a>
     </div>
   </div>
 
   <div class="image-container" style="text-align: center">
     <div class="row">
       <div *ngFor="let image of images;" class="col-xs-6 col-md-4" style="width: 350px;height: 350px;">
-        <a routerLink="/picture/{{image.userId}}/{{image.id}}" class="thumbnail">
-          <div class="img"><img  src="{{image.url}}"></div>
+        <a routerLink="/picture/{{user.ID_USER}}/{{image.ID_PICTURE}}" class="thumbnail">
+          <div class="img"><img  src="{{picture_url}}/picture?filename={{image.FILENAME}}"></div>
         </a>
       </div>
     </div>

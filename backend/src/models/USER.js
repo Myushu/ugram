@@ -27,24 +27,9 @@ module.exports = function(sequelize, DataTypes) {
         isEmail : true,
       }
     },
-    COUNTRY_PHONE_CODE: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      references: {
-        model: 'PHONE_CODE',
-        key: 'ID_COUNTRY'
-      }
-    },
-    PHONE_NUMBER: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate : {
-        isNumeric : true,
-      }
-    },
     PASSWORD_HASH: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     PICTURE_PATH: {
       type: DataTypes.STRING,
@@ -64,6 +49,10 @@ module.exports = function(sequelize, DataTypes) {
       validate : {
         isIn : [['M', 'F', 'X']]
       }
+    },
+    ID_USER_FACEBOOK: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'USER',

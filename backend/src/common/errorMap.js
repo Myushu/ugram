@@ -24,6 +24,19 @@ exports.map = [
     code : 005,
     statusCode : 400,
   },
+  // Custom Error
+  {
+    name : 'passwordMissing',
+    message : 'Missing PASSWORD',
+    code : 006,
+    statusCode : 400
+  },
+  {
+    name : 'emailMissing',
+    message : 'Missing EMAIL',
+    code : 007,
+    statusCode : 400
+  },
   // Database Error
   {
     name : 'SequelizeDatabaseError',
@@ -37,4 +50,25 @@ exports.map = [
     code : 201,
     statusCode : 404,
   },
+  {
+    name : 'missingPicture',
+    type : '',
+    code : 202,
+    message : 'Missing Picture',
+    statusCode : 400,
+  },
+  {
+    name : 'invalidPictureSize',
+    type : '',
+    code : 203,
+    message : 'The picture is to big',
+    statusCode : 413,
+  },
+  {
+    name : 'invalidPictureFormat',
+    type : '',
+    code : 204,
+    message : 'The file is not a valid picture',
+    statusCode : 400,
+  }
 ];

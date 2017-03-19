@@ -1,31 +1,54 @@
 <div id="page-wrapper">
   <div class="update-container">
     <div class="update">
+      <div *ngIf="error">
+        <div class="alert alert-danger" role="alert">{{error_message}}</div>
+      </div>
       <h2>Edit Profile</h2>
-      <h3>@{{user.id}}</h3>
+      <h3>@{{user.PSEUDO}}</h3>
       <div class="form-group row">
-        <label for="user-surname-update" class="col-2 col-form-label">Surname</label>
+        <label for="user-surname-update" class="col-2 col-form-label">Firstname</label>
         <div class="col-10">
-          <input [(ngModel)]="UserSurName" class="form-control" type="text" value='{{UserSurName}}'
+          <input [(ngModel)]="firstname" class="form-control" type="text" value='{{firstname}}'
                  id="user-surname-update">
         </div>
       </div>
       <div class="form-group row">
-        <label for="user-name-update" class="col-2 col-form-label">Name</label>
+        <label for="user-name-update" class="col-2 col-form-label">Lastname</label>
         <div class="col-10">
-          <input [(ngModel)]="UserName" class="form-control" type="text" value='{{UserName}}' id="user-name-update">
+          <input [(ngModel)]="lastname" class="form-control" type="text" value='{{lastname}}' id="user-name-update">
         </div>
       </div>
       <div class="form-group row">
         <label for="user-email-update" class="col-2 col-form-label">Email</label>
         <div class="col-10">
-          <input [(ngModel)]="UserEmail" class="form-control" type="email" value='{{UserEmail}}' id="user-email-update">
+          <input [(ngModel)]="email" class="form-control" type="email" value='{{email}}' id="user-email-update">
         </div>
       </div>
       <div class="form-group row">
-        <label for="user-tel-update" class="col-2 col-form-label">Telephone</label>
+        <label for="user-pseudo-update" class="col-2 col-form-label">Pseudo</label>
         <div class="col-10">
-          <input [(ngModel)]="UserTel" class="form-control" type="tel" value='{{UserTel}}' id="user-tel-update">
+          <input [(ngModel)]="pseudo" class="form-control" type="email" value='{{pseudo}}' id="user-email-update">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="user-picture-update" class="col-2 col-form-label">Picture link</label>
+        <div class="col-10">
+          <input [(ngModel)]="picturePath" class="form-control" type="text" value='{{picturePath}}' id="user-email-update">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="user-tel-update" class="col-2 col-form-label">Gender</label>
+        <div class="col-10">
+          <label class="radio-inline">
+            <input type="radio" name="sexe" id="inlineRadio1" value="M" [(ngModel)]="gender"> Male
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="sexe" id="inlineRadio2" value="F" [(ngModel)]="gender"> Female
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="sexe" id="inlineRadio3" value="X" [(ngModel)]="gender"> Other
+          </label>
         </div>
       </div>
       <div class="form-group row">

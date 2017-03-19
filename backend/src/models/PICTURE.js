@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    FILENAME: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     ID_OWNER: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -20,12 +16,20 @@ module.exports = function(sequelize, DataTypes) {
         key: 'ID_USER'
       }
     },
+    FILENAME: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     DATE_POSTED: {
       type: DataTypes.TIME,
       allowNull: false,
       defaultValue: DataTypes.NOW
     },
     DESCRIPTION: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    MIME_TYPE: {
       type: DataTypes.STRING,
       allowNull: false
     }
