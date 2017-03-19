@@ -57,14 +57,12 @@ export class ProfileComponent implements OnInit {
         this.user = res;
         if (this.user.PICTURE_PATH === 'default')
           this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
-        console.log(this.user);
       }
     );
     this.usersPicturesService.getUserPictures({ID_USER: <number><any>this._cookieService.get('user_id'), page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
         this.totalEntries = res.count;
-        console.log(this.images);
       }
     );
   }

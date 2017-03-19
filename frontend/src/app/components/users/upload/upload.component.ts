@@ -18,6 +18,9 @@ export class UploadComponent implements OnInit {
   public desc: string = "";
   public image;
 
+  public error: boolean = false;
+  public error_message: string = "";
+
   constructor(
     private _cookieService: CookieService,
     private router: Router,
@@ -54,7 +57,10 @@ export class UploadComponent implements OnInit {
         .catch(error => Observable.throw(error))
         .subscribe(
           data => this.router.navigate(['home']),
-          error => console.log(error)
+          error => {
+            this.error_message = JSON.parse(error._body)['message'];
+            this.error = true;
+          }
         );
     }
   }

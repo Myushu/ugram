@@ -37,7 +37,6 @@ export class UpdateComponent implements OnInit {
         this.gender = this.user.SEXE;
         this.pseudo = this.user.PSEUDO;
         this.picturePath = this.user.PICTURE_PATH;
-        console.log(this.user);
       }
     );
   }
@@ -49,7 +48,6 @@ export class UpdateComponent implements OnInit {
       },
       err => {
         let error = JSON.parse(err._body);
-        console.log(error);
         this.error = true;
         this.error_message = "Error with the field  " + error['path'];
       }

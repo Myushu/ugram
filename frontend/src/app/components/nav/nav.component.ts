@@ -39,5 +39,4 @@ export class NavComponent implements OnInit {
     this.userServices.logoutUser();
     this.router.navigate(["/login"]);
   }
-
 }
