@@ -34,4 +34,14 @@ logger.stream = {
     logger.info(message);
   }
 };
+logger.format = function (tokens, req, res) {
+  return [
+    '\nmethod:      ', tokens.method(req, res),
+    '\nurl:         ', tokens.url(req, res),
+    '\nstatusCode:  ', tokens.status(req, res),
+    '\nuserId:      ', req.user.userId,
+    '\nreponse-time:', tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+};
+
 module.exports = logger;
