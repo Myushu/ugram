@@ -3,8 +3,6 @@ const config = require('config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-const winston = require('winston');
-const winstonCloudWatch = require('winston-cloudwatch');
 const logger = require('./common/logger');
 const orm = require('./common/orm');
 
@@ -22,16 +20,11 @@ const corsOptions = {
     credentials: true
 };
 
-winston.add(winstonCloudWatch, {
-    logGroupName: 'glo3012',
-    logStreamName: 'sample'
-});
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
-app.use(morgan('combined', {'stream': logger.stream}));
+app.use(morgan(logger.format, {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
