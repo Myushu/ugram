@@ -5,6 +5,8 @@ import {NgbPaginationConfig}                          from "@ng-bootstrap/ng-boo
 import {PicturesService, IPicture, IPictureResponse}  from "app/services/pictures/pictures.service";
 import {ConfigService}                                from "app/shared/config";
 
+import {Http, Response, Request}             from "@angular/http";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -18,11 +20,15 @@ export class HomeComponent implements OnInit {
   public totalEntries: number = 0;
   public picture_url: string;
 
+
+
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private picturesService: PicturesService,
     private configService: ConfigService,
+
+    private http: Http,
 
   ) {
     if (!this._cookieService.get("token"))
@@ -31,6 +37,44 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.picture_url = this.configService.getUrl();
+
+    /*this.socket = io.connect(this.configService.getWSUrl());
+    this.socket.on("connect", function() {
+      this.socket.emit("authenticate", {token: this._cookieService.get('token')})
+        .on('authenticated', function() {
+          console.log('okkkkk');
+        })
+        .on('unauthorized', function(message) {
+          console.log('error', message);
+        });
+    });*/
+
+
+
+
+
+
+    /*socket.on('connect', function () {
+      socket
+        .emit('authenticate', {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFudG9uaW5AZ21haWwuY29tIiwidXNlcklkIjoxNCwiaWF0IjoxNDkwMTIxMzA5LCJleHAiOjE0OTAyMDc3MDl9.p3hzQhYyKDMtB6POwNJbqMm_7bqQqusaz1kz7NECVXo"}) //send the jwt
+        .on('authenticated', function () {
+          socket.emit('message', {name: 'test'}, function(data) {
+            console.log('dataaa', data);
+          });
+        })
+        .on('unauthorized', function(msg) {
+          console.log("unauthorized: " + JSON.stringify(msg.data));
+          throw new Error(msg.data.type);
+        });
+    });*/
+
+    /*this.socket.on("messages", (data) => console.log('plop', data));
+    this.socket.emit('connection', 'tobi', function (data) {
+      console.log('ws', data); // data will be 'woot'
+    });
+    this.socket.emit('join', JSON.stringify({token: this._cookieService.get('token')}), function(data) {
+      console.log('data', data);
+    });*/
   }
 
   onPager(event: number): void {

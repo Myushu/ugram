@@ -22,6 +22,7 @@ import { UploadComponent }        from "./components/users/upload/upload.compone
 import { RegisterComponent }      from './components/register/register.component';
 import { SearchComponent }        from './components/search/search.component';
 
+import { ConfigService }       from "./shared/config";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { SearchComponent }        from './components/search/search.component';
   ],
   providers: [
     CookieService,
-
+    ConfigService
   ],
   bootstrap: [AppComponent]
 })

@@ -80,7 +80,7 @@ export class UsersService extends RestClient {
     method: RequestMethod.Post,
     path: "/signup"
   })
-  createUser: ResourceMethod<IQueryCreateUser, IUser>;
+  createUser: ResourceMethod<IQueryCreateUser, any>;
 
   @ResourceAction({
     method: RequestMethod.Put,

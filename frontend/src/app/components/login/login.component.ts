@@ -3,6 +3,7 @@ import { CookieService }              from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
 import { UsersService }               from "app/services/users/users.service";
 import {Md5}                          from "ts-md5/dist/md5";
+import {SocketIoService}             from "../../shared/SocketIoService";
 
 @Component({
   selector: "app-login",
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
     private _cookieService: CookieService,
     private router: Router,
     private userService: UsersService,
+    private socketIoService: SocketIoService
   ) {
     if (this._cookieService.get("token"))
       this.router.navigate(["/home"]);
@@ -34,9 +36,11 @@ export class LoginComponent implements OnInit {
       res => {
         this._cookieService.put('token', res['token']);
         this._cookieService.put('user_id', res['userId']);
+        this.socketIoService.connectWS();
         this.router.navigate(["/home"]);
       },
       err => {
+        console.log('err', err);
         this.error = true;
         this.error_message = "Account not found";
       }
