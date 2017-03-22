@@ -50,6 +50,14 @@ use UGRAM;
     constraint FK_PICTURE_OWNER foreign key (ID_OWNER) references USER(ID_USER) on delete cascade
   );
 
+  create table FOLLOWING (
+    ID_USER int not null,
+    ID_FOLLOWER int not null,
+    constraint PK_FOLLOWING primary key (ID_USER, ID_FOLLOWER),
+    constraint FK_FOLLOWING_USER foreign key (ID_USER) references USER(ID_USER) on delete cascade,
+    constraint FK_FOLLOWING_FOLLOWER foreign key (ID_FOLLOWER) references USER(ID_USER) on delete cascade    
+  );
+
   create table MENTION (
     ID_USER int not null,
     ID_PICTURE int not null,

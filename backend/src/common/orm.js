@@ -108,3 +108,13 @@ exports.delete = (model, res, attributes) => {
     return result;
   })
 }
+
+exports.count = (model, res, attributes) => {
+  return sequelizeCall(model.count(attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.status(200).send();
+    return result;
+  })
+}
