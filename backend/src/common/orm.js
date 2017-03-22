@@ -9,6 +9,7 @@ var sequelize = new Sequelize({
   database : config.get('sql')['database'],
   host : config.get('sql')['host'],
   port : config.get('sql')['post'],
+  logging : logger.info,
   options : {
     retry : {
       max : config.get('sql')['maxRetries'],

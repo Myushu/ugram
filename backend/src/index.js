@@ -1,14 +1,17 @@
 const express = require('express');
 const config = require('config');
 const bodyParser = require('body-parser');
+const http = require('http');
 const morgan = require('morgan');
+const socket = require('socket.io');
 const cors = require('cors');
 const logger = require('./common/logger');
 const orm = require('./common/orm');
 
-const port = process.env.PORT || config.get('server')['port'];
 const app = express();
-
+const server = http.createServer(app);
+const io = socket(server, { path: '/socket.io'});
+const port = process.env.PORT || config.get('server')['port'];
 const corsOptions = {
     origin: '*',
     methods: [
@@ -20,10 +23,6 @@ const corsOptions = {
     credentials: true
 };
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-app.use(express.static(__dirname + '/public'));
 app.use(morgan(logger.format, {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -39,7 +38,9 @@ require('./controllers/mention-controller')(app);
 require('./controllers/hashtag-controller')(app);
 require('./controllers/comment-controller')(app);
 require('./controllers/search-controller')(app);
+require('./controllers/socket-controller')(io)
+
 
 orm.initConnection();
-app.listen(port);
+server.listen(port);
 logger.info(`App started on port ${port}`);

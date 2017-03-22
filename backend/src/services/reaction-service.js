@@ -5,6 +5,8 @@ const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 
 exports.creationReaction = (userId, pictureId, user, res) => {
   orm.build(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId));
+  if (userId != user.userId)
+    notification.notifyReaction(userId, user.pseudo, comment.ID_PICTURE)
 }
 
 exports.deleteReaction = (userId, pictureId, user, res) => {

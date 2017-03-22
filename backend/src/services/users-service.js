@@ -54,8 +54,8 @@ exports.checkUserAuthentication = (body, res, callback) => {
 
 function tokenGenerator(result, res) {
     var user = {
-      email: result.EMAIL,
-      userId: result.ID_USER
+      userId: result.ID_USER,
+      pseudo: result.PSEUDO
     };
 
     var token = jwt.sign(user, config.get('jwt')['secret'], {

@@ -84,6 +84,18 @@ use UGRAM;
     constraint FK_COMMENT_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 
+  create table NOTIFICATION (
+    ID_NOTIFICATION int not null auto_increment,
+    MESSAGE varchar(255) not null,
+    ID_USER int not null,
+    ID_PICTURE int not null,
+    ID_OWNER int not null,
+    constraint PK_NOTIFICATION primary key (ID_NOTIFICATION),
+    constraint FK_NOTIFICATION_USER foreign key (ID_USER) references USER(ID_USER) on delete cascade,
+    constraint FK_NOTIFICATION_OWNER foreign key (ID_OWNER) references USER(ID_USER) on delete cascade,
+    constraint FK_NOTIFICATION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
+  );
+
   create table CHAT (
     ID_CHAT int not null auto_increment,
     NAME_CHAT varchar(255) not null,
