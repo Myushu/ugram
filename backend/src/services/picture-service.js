@@ -2,6 +2,7 @@ const path = require('path');
 const config = require('config');
 const orm = require('../common/orm');
 const queryManager = require('../common/queryManager');
+
 const userModel = orm.getSequelize().import("../models/USER.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
@@ -60,7 +61,7 @@ exports.getAllPictures = (res, query) => {
       }]
     };
     queryManager.fillAttributesFromQuery(attributes, query);
-    orm.findAllAndCount(pictureModel, res, attributes, {});
+    orm.findAllAndCount(pictureModel, res, attributes);
 }
 
 function defaultImage (res) {
@@ -69,9 +70,10 @@ function defaultImage (res) {
 }
 
 exports.getPicture = (picturePath, res) => {
+  var attributes = { where : {'FILENAME' : picturePath }};
   if (picturePath === 'default')
     return defaultImage(res);
-  orm.find(pictureModel, res, 404, {where : {'FILENAME' : picturePath}}, function(result, res) {
+  orm.find(pictureModel, undefined, attributes).then(function(result) {
     if (!result)
       res.status(404).send();
     else {
