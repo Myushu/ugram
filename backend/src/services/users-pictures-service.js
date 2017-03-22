@@ -7,6 +7,7 @@ const queryManager = require('../common/queryManager');
 const alias = require('../common/alias')
 const mentionService = require('./mention-service');
 const hashtagService = require('./hashtag-service');
+const notification = require('../common/notificationManager');
 
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
@@ -59,6 +60,7 @@ exports.createPicture = (userId, picture, user, file, res) => {
       for (var i = 0; i < picture.HASHTAGs.length; ++i)
         hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, picture.HASHTAGs[i], user, undefined);
     }
+    notification.notifyFollowers(user, result.ID_PICTURE);
   });
 }
 

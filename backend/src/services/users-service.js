@@ -1,3 +1,4 @@
+const extend = require('util')._extend
 const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -7,16 +8,54 @@ const errorManager = require('../common/errors');
 const redisToken = require('../common/redisToken')
 const queryManager = require('../common/queryManager');
 
+
 const userModel = orm.getSequelize().import("../models/USER.js")
+const followModel = orm.getSequelize().import("../models/FOLLOWING.js")
+
+function resultToJson(result) {
+  return JSON.parse(JSON.stringify(result));
+}
+
+function doYouFollowHim(idUser, user) {
+  var attributes = {
+    where : {
+      ID_USER : idUser,
+      ID_FOLLOWER : user.userId
+  }}
+  return orm.count(followModel, undefined, attributes).then(function(countResult) {
+    return countResult == 0 ? false : true;
+ })
+}
+
+function getCountFollowers(user) {
+  return orm.count(followModel, undefined, {where : {ID_FOLLOWER : user.userId}}).then(function(countFollowingResult) {
+     return orm.count(followModel, undefined, {where : {ID_USER : user.userId}}).then(function(countFollowerResult) {
+      return {
+        countFollower : countFollowerResult,
+        countFollowing : countFollowingResult};
+    })
+  })
+}
 
 exports.getUsersById = (idUser, user, res) => {
-  var attributesVar;
+  var attributes = { where : { 'ID_USER' : idUser}};
   if (idUser != user.userId)
-    attributesVar = alias.userAttributesFull;
-  orm.find(userModel, res, {
-    attributes : attributesVar,
-    where : { 'ID_USER' : idUser}
-  });
+    attributes['attributes'] = alias.userAttributesFull;
+  orm.find(userModel, undefined, attributes).then(function(result) {
+    if (!result) {
+      res.status(404).send();
+      return ;
+    }
+    getCountFollowers(user).then(function (followResult) {
+      var json = extend(followResult, resultToJson(result));
+      if (idUser != user.userId)
+        doYouFollowHim(idUser, user).then(function (followResult) {
+          res.json(extend({isFollowd : followResult}, json));
+        })
+      else
+        res.json(json);
+    })
+ });
 }
 
 exports.getAllUsers = (query, res) => {
