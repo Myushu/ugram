@@ -60,7 +60,7 @@ exports.getAllPictures = (res, query) => {
       }]
     };
     queryManager.fillAttributesFromQuery(attributes, query);
-    orm.findAllAndCount(pictureModel, res, attributes, {});
+    orm.findAllAndCount(pictureModel, res, attributes);
 }
 
 function defaultImage (res) {
@@ -69,14 +69,11 @@ function defaultImage (res) {
 }
 
 exports.getPicture = (picturePath, res) => {
+  var attributes = { where : {'FILENAME' : picturePath }};
   if (picturePath === 'default')
     return defaultImage(res);
-  orm.find(pictureModel, res, 404, {where : {'FILENAME' : picturePath}}, function(result, res) {
-    if (!result)
-      res.status(404).send();
-    else {
-      res.type(result.MIME_TYPE);
-      res.sendFile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
-    }
+  orm.find(pictureModel, undefined, attributes).then(function(result) {
+    res.type(result.MIME_TYPE);
+    res.sendFile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
   });
 }

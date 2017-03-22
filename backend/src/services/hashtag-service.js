@@ -5,25 +5,27 @@ const hashtagModel = orm.getSequelize().import("../models/HASHTAG.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
 exports.creationHashtag = (userId, pictureId, hashtag, user, res) => {
-  orm.find(pictureModel, res, 403, {
-      where : alias.pictureWhereOwner(pictureId, user.userId)
-    }, function(result, res) {
-      hashtag.ID_PICTURE = pictureId;
-      orm.build(hashtagModel, res, hashtag);
-    }
-  );
+  var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
+  hashtag.ID_PICTURE = pictureId;
+  orm.find(pictureModel, undefined, attributes).then(function(result) {
+    if (!result && res != undefined)
+      res.sendStatus(403);
+    else
+      orm.create(hashtagModel, res, hashtag);
+  });
 }
 
 exports.deleteHashtag = (userId, pictureId, hashtag, user, res) => {
-  orm.find(pictureModel, res, 403, {
-      where : alias.pictureWhereOwner(pictureId, user.userId)
-    }, function(result, res) {
-      hashtag.ID_PICTURE = pictureId;
+  var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
+  hashtag.ID_PICTURE = pictureId;
+  orm.find(pictureModel, undefined, attributes).then(function(result) {
+    if (!result)
+      res.sendStatus(403);
+    else
       orm.delete(hashtagModel, res, {where : hashtag});
-    }
-  );
+  })
 }
 
 exports.deleteAllByPictureId = (pictureId) => {
-  orm.query('DELETE from HASHTAG where ID_PICTURE = ' + pictureId);
+  orm.delete(hashtagModel, undefined, {where : {ID_PICTURE : pictureId}})
 }

@@ -3,7 +3,7 @@
 module.exports = function(app) {
     // Get all users
     app.get('/users', (req, res) => {
-      service.getAllUsers(res);
+      service.getAllUsers(req.query, res);
     });
 
     // Get a user

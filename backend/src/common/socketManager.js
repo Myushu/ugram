@@ -1,4 +1,13 @@
 const logger = require("../common/logger");
+const orm = require("../common/orm");
+
+const notificationModel = orm.getSequelize().import("../models/NOTIFICATION.js");
+const chatMessageModel = orm.getSequelize().import("../models/CHAT_MESSAGE.js");
+
+const typeToModel = {
+  'notification' : notificationModel,
+  'message' : chatMessageModel
+}
 
 const clients = [];
 const sockets = [];
@@ -29,5 +38,5 @@ function sendMessageToClient(clientId, messageType, message) {
 module.exports.notifyClient = (clientId, messageType, message) => {
   if (clients[clientId] != undefined)
     sendMessageToClient(clientId, messageType, message)
-  // add to database
+  //orm.create(typeToModel[messageType], undefined, message);
 }
