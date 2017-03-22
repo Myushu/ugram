@@ -5,12 +5,12 @@ module.exports = function(io) {
 
     // Init the connection
     client.on('join', function(data) {
-      service.join(data);
+      service.join(data, client);
     });
 
     // Disconnect
     client.on('disconnect', function () {
-      service.join(client);
+      service.disconnect(client);
     });
 
     // Send a message

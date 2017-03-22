@@ -9,7 +9,7 @@ exports.creationHashtag = (userId, pictureId, hashtag, user, res) => {
   hashtag.ID_PICTURE = pictureId;
   orm.find(pictureModel, undefined, attributes).then(function(result) {
     if (!result && res != undefined)
-      res.sendStatus(403);
+      res.status(403).send();
     else
       orm.create(hashtagModel, res, hashtag);
   });
@@ -20,7 +20,7 @@ exports.deleteHashtag = (userId, pictureId, hashtag, user, res) => {
   hashtag.ID_PICTURE = pictureId;
   orm.find(pictureModel, undefined, attributes).then(function(result) {
     if (!result)
-      res.sendStatus(403);
+      res.status(403).send();
     else
       orm.delete(hashtagModel, res, {where : hashtag});
   })

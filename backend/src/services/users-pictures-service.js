@@ -66,11 +66,11 @@ exports.deletePicture = (userId, pictureId, user, res) => {
   var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
   orm.find(pictureModel, undefined, attributes).then(function (result) {
     if (!result)
-      res.sendStatus(403);
+      res.status(403).send();
     else
       orm.delete(pictureModel, undefined, attributes).then(function (resultDelete) {
         fs.unlinkSync(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
-        res.sendStatus(200);
+        res.status(200).send();
     });
   });
 }
@@ -96,7 +96,7 @@ exports.updatePicture = (userId, pictureId, content, user, res) => {
   delete content.DATE_POSTED;
   orm.find(pictureModel, undefined, attributes).then(function (result) {
     if (!result)
-      res.sendStatus(403);
+      res.status(403).send();
     else {
       orm.update(pictureModel, content, res, attributes).then(function (r) {
         mentionService.deleteAllByPictureId(result.ID_PICTURE);

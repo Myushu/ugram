@@ -73,7 +73,7 @@ function tokenGenerator(result, res) {
 exports.authentification = (req, res) => {
   this.checkUserAuthentication(req.body, res).then(function(result) {
     if (!result)
-      res.sendStatus(403);
+      res.status(403).send();
     else
       tokenGenerator(result, res);
   });
@@ -82,18 +82,20 @@ exports.authentification = (req, res) => {
 exports.authentificationFacebook = (req, res) => {
   graph.setAccessToken(req.body.TOKEN);
   graph.get('me?fields=id,last_name,first_name,email,gender,picture,birthday', function(err, resFacebook) {
-    if (!result) {
-      var user = {"FIRSTNAME":resFacebook.first_name,
-                  "LASTNAME":resFacebook.last_name,
-                  "PSEUDO":resFacebook.first_name + '-' + resFacebook.id,
-                  "EMAIL":resFacebook.email,
-                  "PICTURE_PATH":resFacebook.picture.data.url,
-                  "DATE_BIRTHDAY":resFacebook.birthday,
-                  "SEXE":(resFacebook.gender == "male") ? 'M' : 'F',
-                  "ID_USER_FACEBOOK":resFacebook.id};
-        orm.create(userModel, undefined, user);
-        tokenGenerator(user, res);
-      } else
-        tokenGenerator(result, res);
-    });
+    orm.find(userModel, undefined, {where : {'ID_USER_FACEBOOK':resFacebook.id}}).then(function (result) {
+      if (!result) {
+        var user = {"FIRSTNAME":resFacebook.first_name,
+                    "LASTNAME":resFacebook.last_name,
+                    "PSEUDO":resFacebook.first_name + '-' + resFacebook.id,
+                    "EMAIL":resFacebook.email,
+                    "PICTURE_PATH":resFacebook.picture.data.url,
+                    "DATE_BIRTHDAY":resFacebook.birthday,
+                    "SEXE":(resFacebook.gender == "male") ? 'M' : 'F',
+                    "ID_USER_FACEBOOK":resFacebook.id};
+          orm.create(userModel, undefined, user);
+          tokenGenerator(user, res);
+        } else
+          tokenGenerator(result, res);
+      });
+  });
 }

@@ -32,7 +32,7 @@ exports.getSequelize = () => {
 
 function setResult(result, res) {
   if (res && !result)
-    res.sendStatus(404);
+    res.status(404).send();
   else if (res && result.error != undefined)
     errorManager.handle(result.error, res);
   else
@@ -42,8 +42,6 @@ function setResult(result, res) {
 
 function sequelizeCall (request)  {
   return request.then(function (result) {
-    if (!result)
-      return false;
     return result;
   }).catch(function(err) {
      logger.error(err.message);
@@ -62,7 +60,7 @@ exports.findAllAndCount = (model, res, attributes) => {
   return this.findAll(model, res, attributes).then(function (result) {
     sequelizeCall(model.count({where : attributes.where})).then(function (resultCount) {
       var json = {};
-      json['count'] = resultCount  == false ? 0 : resultCount;
+      json['count'] = resultCount  == undefined ? 0 : resultCount;
       json['rows'] = result;
       if (res)
         res.send(json);
@@ -72,7 +70,7 @@ exports.findAllAndCount = (model, res, attributes) => {
 }
 
 exports.find = (model, res, attributes) => {
-  return sequelizeCall(model.find(attributes), res).then(function (result) {
+  return sequelizeCall(model.find(attributes)).then(function (result) {
     if (setResult(result, res))
       return result;
     if (res)
@@ -86,7 +84,7 @@ exports.create = (model, res, attributes) => {
     if (setResult(result, res))
       return result;
     if (res)
-      res.sendStatus(201);
+      res.status(201).send();
     return result;
   });
 }
@@ -96,7 +94,7 @@ exports.update = (model, newContent, res, attributes) => {
     if (setResult(result, res))
       return result;
     if (res)
-      res.sendStatus(200);
+      res.status(200).send();
     return result;
   });
 }
@@ -106,7 +104,7 @@ exports.delete = (model, res, attributes) => {
     if (setResult(result, res))
       return result;
     if (res)
-      res.sendStatus(200);
+      res.status(200).send();
     return result;
   })
 }

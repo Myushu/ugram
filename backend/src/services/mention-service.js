@@ -10,7 +10,7 @@ exports.creationMention = (userId, pictureId, mention, user, res) => {
   mention.ID_PICTURE = pictureId;
   orm.find(pictureModel, undefined, attributes).then(function (result) {
     if (!result && res != undefined)
-      res.sendStatus(403);
+      res.status(403).send();
     else {
       orm.create(mentionModel, res, mention).then(function (result) {
         if (userId != user.idUser)
@@ -25,7 +25,7 @@ exports.deleteMention = (userId, pictureId, mention, user, res) => {
   mention.ID_PICTURE = pictureId;
   orm.find(pictureModel, res, undefined, attributes).then(function(result) {
     if (!result)
-      res.sendStatus(403);
+      res.status(403).send();
     else
       orm.delete(mentionModel, res, {where : mention});
   });

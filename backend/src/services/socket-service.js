@@ -3,7 +3,7 @@ const logger = require("../common/logger");
 const jwtDecode = require('jwt-decode');
 const socketManager = require("../common/socketManager");
 
-exports.join = (data) => {
+exports.join = (data, client) => {
   try {
     var userId = jwtDecode(data).userId;
     //      console.log(jwtDecode(data),.);
