@@ -1,6 +1,7 @@
 const path = require('path');
 const config = require('config');
 const orm = require('../common/orm');
+const alias = require('../common/alias');
 const queryManager = require('../common/queryManager');
 
 const userModel = orm.getSequelize().import("../models/USER.js");
@@ -21,44 +22,15 @@ commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictures = (res, query) => {
     var attributes = {
-      attributes : ['ID_PICTURE', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION', 'ID_OWNER'],
+      attributes : alias.pictureAttributes,
       order : 'DATE_POSTED desc',
-      include : [{
-        model : userModel,
-        attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-      },{
-        model : reactionModel,
-        attributes : {
-          exclude : ['ID_PICTURE'],
-        },
-        include : {
-          model : userModel,
-          attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-        }
-      },{
-        model : mentionModel,
-        attributes : {
-          exclude : ['ID_PICTURE'],
-        },
-        include : {
-          model : userModel,
-          attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-        }
-      },{
-        model : hashtagModel,
-        attributes : {
-          exclude : ['ID_PICTURE'],
-        }
-      },{
-        model : commentModel,
-        attributes : {
-          exclude : ['ID_PICTURE', 'ID_USER'],
-        },
-        include : {
-          model : userModel,
-          attributes : ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO']
-        }
-      }]
+      include : [
+        alias.userInclude,
+        alias.reactionInclude,
+        alias.mentionInclude,
+        alias.hashtagInclude,
+        alias.commentInclude
+      ]
     };
     queryManager.fillAttributesFromQuery(attributes, query);
     orm.findAllAndCount(pictureModel, res, attributes);

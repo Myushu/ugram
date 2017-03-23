@@ -45,7 +45,7 @@ exports.reactionAttributes = {exclude : ['ID_PICTURE']};
 exports.reactionInclude = {
   model : reactionModel,
   attributes : this.reactionAttributes,
-  include : this.userInclude
+  include : Object.assign({}, this.userInclude)
 };
 
 // Mention
@@ -70,3 +70,6 @@ exports.commentInclude = {
   attributes : this.commentAttributes,
   include : Object.assign({}, this.userInclude)
 };
+
+// Message
+exports.messageAttributes = ['ID_SENDER', 'ID_RECEIVER', 'DATE_SENDED', 'MESSAGE'];
