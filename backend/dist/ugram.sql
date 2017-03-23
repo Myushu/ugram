@@ -55,7 +55,7 @@ use UGRAM;
     ID_FOLLOWER int not null,
     constraint PK_FOLLOWING primary key (ID_USER, ID_FOLLOWER),
     constraint FK_FOLLOWING_USER foreign key (ID_USER) references USER(ID_USER) on delete cascade,
-    constraint FK_FOLLOWING_FOLLOWER foreign key (ID_FOLLOWER) references USER(ID_USER) on delete cascade    
+    constraint FK_FOLLOWING_FOLLOWER foreign key (ID_FOLLOWER) references USER(ID_USER) on delete cascade
   );
 
   create table MENTION (
@@ -104,26 +104,13 @@ use UGRAM;
     constraint FK_NOTIFICATION_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
   );
 
-  create table CHAT (
-    ID_CHAT int not null auto_increment,
-    NAME_CHAT varchar(255) not null,
-    constraint PK_CHAT primary key (ID_CHAT)
-  );
-
-  create table CHAT_USER (
-    ID_CHAT int not null,
-    ID_USER int not null,
-    constraint PK_CHAT_USER primary key (ID_CHAT, ID_USER),
-    constraint FK_CHAT_USER_ID_CHAT foreign key (ID_CHAT) references CHAT(ID_CHAT) on delete cascade,
-    constraint FK_CHAT_USER_ID_USER foreign key (ID_USER) references USER(ID_USER) on delete cascade
-  );
-
-  create table CHAT_MESSAGE (
+  create table MESSAGE (
     ID_MESSAGE int not null auto_increment,
-    ID_CHAT int not null,
     ID_SENDER int not null,
+    ID_RECEIVER int not null,
+    DATE_SENDED timestamp not null,
     MESSAGE text not null,
-    constraint PK_CHAT_MESSAGE primary key (ID_MESSAGE),
-    constraint FK_CHAT_MESSAGE_ID_CHAT foreign key (ID_CHAT) references CHAT(ID_CHAT) on delete cascade,
-    constraint FK_CHAT_MESSAGE_ID_USER foreign key (ID_SENDER) references USER(ID_USER) on delete cascade
+    constraint PK_MESSAGE primary key (ID_MESSAGE),
+    constraint FK_MESSAGE_ID_SENDER foreign key (ID_SENDER) references USER(ID_USER) on delete cascade,
+    constraint FK_MESSAGE_ID_RECEIVER foreign key (ID_RECEIVER) references USER(ID_USER) on delete cascade
   );

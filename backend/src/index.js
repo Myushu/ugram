@@ -39,6 +39,7 @@ require('./controllers/hashtag-controller')(app);
 require('./controllers/comment-controller')(app);
 require('./controllers/follow-controller')(app);
 require('./controllers/search-controller')(app);
+require('./controllers/message-controller')(app);
 require('./controllers/notification-controller')(app);
 require('./controllers/socket-controller')(io);
 

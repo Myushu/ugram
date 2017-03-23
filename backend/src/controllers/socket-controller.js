@@ -15,7 +15,7 @@ module.exports = function(io) {
 
     // Send a message
     client.on('message', function(data) {
-      service.message(client, data);
+      service.message(io, client, data);
     });
   });
 }
