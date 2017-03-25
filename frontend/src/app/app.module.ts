@@ -6,6 +6,7 @@ import { CookieService }          from "angular2-cookie/services/cookies.service
 import { NgbModule }              from "@ng-bootstrap/ng-bootstrap";
 import { TagInputModule }         from "ng2-tag-input";
 import {ResourceModule}           from "ng2-resource-rest";
+import {ImageCropperComponent} from 'ng2-img-cropper';
 
 import { AppRoutingModule }       from "./app-routing.module";
 import { AppComponent }           from "./app.component";
@@ -42,6 +43,7 @@ import {SocketIoService} from "./shared/SocketIoService";
     RegisterComponent,
     SearchComponent,
     ChatComponent,
+    ImageCropperComponent
   ],
   imports: [
     BrowserModule,
