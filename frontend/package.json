@@ -26,7 +26,6 @@
     "@types/socket.io-client": "^1.4.29",
     "angular2-cookie": "^1.2.6",
     "angular2-jwt": "^0.1.28",
-    "angular2-websocket": "^0.9.1",
     "auth0-lock": "^10.13.0",
     "core-js": "^2.4.1",
     "ng-spin-kit": "^5.1.1",
