@@ -5,6 +5,8 @@ import {NgbPaginationConfig}                          from "@ng-bootstrap/ng-boo
 import {PicturesService, IPicture, IPictureResponse}  from "app/services/pictures/pictures.service";
 import {ConfigService}                                from "app/shared/config";
 
+import {Http, Response, Request}             from "@angular/http";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -18,11 +20,15 @@ export class HomeComponent implements OnInit {
   public totalEntries: number = 0;
   public picture_url: string;
 
+
+
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private picturesService: PicturesService,
     private configService: ConfigService,
+
+    private http: Http,
 
   ) {
     if (!this._cookieService.get("token"))
