@@ -1,6 +1,6 @@
 import { BrowserModule }          from "@angular/platform-browser";
 import { NgModule }               from "@angular/core";
-import { FormsModule }            from "@angular/forms";
+import { FormsModule,ReactiveFormsModule }            from "@angular/forms";
 import { HttpModule }             from "@angular/http";
 import { CookieService }          from "angular2-cookie/services/cookies.service";
 import { NgbModule }              from "@ng-bootstrap/ng-bootstrap";
@@ -23,6 +23,8 @@ import { RegisterComponent }      from './components/register/register.component
 import { SearchComponent }        from './components/search/search.component';
 
 import { ConfigService }       from "./shared/config";
+import { ChatComponent } from './components/chat/chat.component';
+import {SocketIoService} from "./shared/SocketIoService";
 
 @NgModule({
   declarations: [
@@ -39,19 +41,22 @@ import { ConfigService }       from "./shared/config";
     UploadComponent,
     RegisterComponent,
     SearchComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     ResourceModule.forRoot(),
-    TagInputModule
+    TagInputModule,
   ],
   providers: [
     CookieService,
-    ConfigService
+    ConfigService,
+    SocketIoService
   ],
   bootstrap: [AppComponent]
 })

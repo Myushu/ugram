@@ -1,0 +1,23 @@
+<div class="chat_box">
+  <div class="chat_head">ChatBox</div>
+  <div class="chat_body">
+    <div class="user" *ngFor="let user of users" (click)="messageBox(user)">{{user.PSEUDO}}</div>
+  </div>
+</div>
+<div *ngIf="display">
+  <div class="msg_box" style="right:290px">
+    <div class="msg_head">{{user.PSEUDO}}
+      <div class="close" (click)="closeChatBox()">x</div>
+    </div>
+    <div class="msg_wrap">
+      <div class="msg_body">
+        <div *ngFor="let c of chat" class="{{c.div}}">{{c.mess}}</div>
+        <div class="msg_push"></div>
+      </div>
+      <div class="msg_footer">
+        <input type="text" [(ngModel)]="message" class="msg_input">
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

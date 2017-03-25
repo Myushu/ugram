@@ -34,12 +34,13 @@ export class UploadComponent implements OnInit {
   }
 
   changeActionPic(event) {
+    console.log('event', event);
     this.image = event;
   }
 
   fileChange(tags, mentions) {
     let fileList: FileList = this.image.target.files;
-    if(fileList.length > 0) {
+    if (fileList.length > 0) {
       let file: File = fileList[0];
       let formData:FormData = new FormData();
       formData.append('upload', file, file.name);
@@ -75,6 +76,7 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }
+    //console.log('file', this.image);
     this.fileChange(u_tags, u_mentions);
   }
 }
