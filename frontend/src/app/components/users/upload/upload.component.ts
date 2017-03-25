@@ -47,7 +47,7 @@ export class UploadComponent implements OnInit {
         this.cropperSettings1.minHeight = 100;
 
         this.cropperSettings1.rounded = false;
-        //this.cropperSettings1.preserveSize = true;
+        this.cropperSettings1.preserveSize = true;
         this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
         this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 
@@ -82,7 +82,6 @@ export class UploadComponent implements OnInit {
     // if(fileList.length > 0) {
       let file: File = this.image;//fileList[0];
       let formData:FormData = new FormData();
-      console.log("looool :",file);
       formData.append('upload', file, file.name);
       formData.append('DESCRIPTION', this.desc);
       if (mentions.length > 0)
@@ -107,7 +106,7 @@ export class UploadComponent implements OnInit {
   }
 
   getBase64Image(base64string) {
-    return base64string.replace(/^data:image\/(png|jpg);base64,/, "");
+    return base64string.replace(/^data:image\/(.+);base64,/, "");
 }
 
   uploadPicture() {
@@ -120,17 +119,13 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }
-    //let imageBase64 = this.data1.image;
-    //let blob = new Blob([this.data1.image], {type: 'image/png'});
-    //console.log(this.data1);
-    //this.image = new File([blob], 'imageFileName.png',{type: 'image/png'});
+
     let byte = atob(this.getBase64Image(this.data1.image));
     let byteN = new Array(byte.length);
     for (let i = 0; i < byte.length; i++)
         byteN[i] = byte.charCodeAt(i);
     var byteArray = new Uint8Array(byteN);
-    var blop = new Blob([byteArray], {type: 'image/png'});
-    console.log(this.data1);
+    var blop = new Blob([byteArray], {type: this.data1.image.substring(this.data1.image.indexOf(":")+1, this.data1.image.indexOf(";"))});
     this.image = blop;
     this.fileChange(u_tags, u_mentions);
   }
