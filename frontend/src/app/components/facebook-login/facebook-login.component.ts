@@ -2,6 +2,7 @@ import {Component, OnInit}  from "@angular/core";
 import {Router}             from "@angular/router";
 import {CookieService}      from "angular2-cookie/core";
 import {UsersService}       from "app/services/users/users.service";
+import {ConfigService}      from "app/shared/config";
 
 declare const FB: any;
 
@@ -12,9 +13,14 @@ declare const FB: any;
 
 export class FacebookLoginComponent implements OnInit {
 
-  constructor(private router: Router, private _cookieService: CookieService, private usersService: UsersService) {
+  constructor(
+    private router: Router,
+    private _cookieService: CookieService,
+    private usersService: UsersService,
+    private configService: ConfigService
+  ) {
     FB.init({
-      appId      : "280735385694809",
+      appId      : configService.getApiIdFB(),
       cookie     : false,
       xfbml      : true,
       version    : "v2.5"

@@ -7,6 +7,7 @@ const queryManager = require('../common/queryManager');
 const alias = require('../common/alias')
 const mentionService = require('./mention-service');
 const hashtagService = require('./hashtag-service');
+const notification = require('../common/notificationManager');
 
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
 
@@ -23,7 +24,7 @@ exports.getAllPictureByUserId = (res, userId, query) => {
     ]
   };
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, {where: {'ID_OWNER' : userId}});
+  orm.findAllAndCount(pictureModel, res, attributes);
 }
 
 function checkImage(file, res) {
@@ -45,46 +46,39 @@ function checkImage(file, res) {
 exports.createPicture = (userId, picture, user, file, res) => {
   if (!checkImage(file, res))
     return;
-  var listCallbacks = [];
   picture.ID_OWNER = user.userId;
   picture.FILENAME =  file.filename;
   picture.MIME_TYPE = file.mimetype;
-  if (picture.MENTIONs != undefined) {
-    listCallbacks.push(function(result, picture, res, user) {
+  orm.create(pictureModel, res, picture).then(function(result) {
+    if (picture.MENTIONs != undefined) {
       picture.MENTIONs = JSON.parse(picture.MENTIONs);
       for (var i = 0; i < picture.MENTIONs.length; ++i)
-        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], user, res);
-    });
-  }
-  if (picture.HASHTAGs != undefined) {
-    listCallbacks.push(function(result, picture, res, user) {
+        mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, picture.MENTIONs[i], user, undefined);
+    }
+    if (picture.HASHTAGs != undefined) {
       picture.HASHTAGs = JSON.parse(picture.HASHTAGs);
-        for (var i = 0; i < picture.HASHTAGs.length; ++i) {
-        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, picture.HASHTAGs[i], user, res);
-      }
-    });
-  }
-  orm.build(pictureModel, res, picture, listCallbacks, user);
+      for (var i = 0; i < picture.HASHTAGs.length; ++i)
+        hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, picture.HASHTAGs[i], user, undefined);
+    }
+    notification.notifyFollowers(user, result.ID_PICTURE);
+  });
 }
 
 exports.deletePicture = (userId, pictureId, user, res) => {
-  orm.find(pictureModel, res, 403, {
-    where : {
-      ID_OWNER : user.userId,
-      ID_PICTURE : pictureId
-    }},
-    function(result, res) {
-      orm.delete(pictureModel, res, {
-         where : alias.pictureWhereOwner(pictureId, userId)
-      }, function (result, res) {
+  var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
+  orm.find(pictureModel, undefined, attributes).then(function (result) {
+    if (!result)
+      res.status(403).send();
+    else
+      orm.delete(pictureModel, undefined, attributes).then(function (resultDelete) {
         fs.unlinkSync(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
-      });
-    }
-  );
+        res.status(200).send();
+    });
+  });
 }
 
 exports.getPictureById = (userId, pictureId, res) => {
-  orm.find(pictureModel, res, 404, {
+  orm.find(pictureModel, res, {
     attributes : alias.pictureAttributes,
     where : alias.pictureWhereOwner(pictureId, userId),
     include : [
@@ -97,38 +91,31 @@ exports.getPictureById = (userId, pictureId, res) => {
 }
 
 exports.updatePicture = (userId, pictureId, content, user, res) => {
-  orm.find(pictureModel, res, 403, {
-    where : {
-      ID_OWNER : user.userId,
-      ID_PICTURE : pictureId
-    }},
-    function(result, res) {
-      var listCallbacks = [];
-      delete content.FILENAME;
-      delete content.ID_PICTURE;
-      delete content.ID_OWNER;
-      delete content.DATE_POSTED;
-      listCallbacks.push(function(result, picture, res) {
+  var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
+  delete content.FILENAME;
+  delete content.ID_PICTURE;
+  delete content.ID_OWNER;
+  delete content.DATE_POSTED;
+  orm.find(pictureModel, undefined, attributes).then(function (result) {
+    if (!result)
+      res.status(403).send();
+    else {
+      orm.update(pictureModel, content, res, attributes).then(function (r) {
         mentionService.deleteAllByPictureId(result.ID_PICTURE);
         hashtagService.deleteAllByPictureId(result.ID_PICTURE);
-      })
-      if (content.MENTIONs != undefined) {
-        listCallbacks.push(function(result, content, res) {
+        if (content.MENTIONs != undefined) {
           for (var i = 0; i < content.MENTIONs.length; ++i) {
             content.MENTIONs[i].ID_PICTURE = result.ID_PICTURE;
-            mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], user, res);
+            mentionService.creationMention(result.ID_OWNER, result.ID_PICTURE, content.MENTIONs[i], user, undefined);
           }
-        });
-      }
-      if (content.HASHTAGs != undefined) {
-        listCallbacks.push(function(result, content, res) {
+        }
+        if (content.HASHTAGs != undefined) {
           for (var i = 0; i < content.HASHTAGs.length; ++i) {
             content.HASHTAGs[i].ID_PICTURE = result.ID_PICTURE;
-            hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], user, res);
+             hashtagService.creationHashtag(result.ID_OWNER, result.ID_PICTURE, content.HASHTAGs[i], user, undefined);
           }
-        });
-      }
-      orm.update(pictureModel, content, res, alias.pictureWhereOwner(pictureId, userId), listCallbacks, user);
+        }
+      });
     }
-  );
+  });
 }

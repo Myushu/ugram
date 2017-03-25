@@ -1,0 +1,5 @@
+40c40,41
+<     tableName: 'NOTIFICATION'
+---
+>     tableName: 'NOTIFICATION',
+>     timestamps : false

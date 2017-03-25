@@ -55,6 +55,7 @@ export class UploadComponent implements OnInit {
   }
 
   changeActionPic(event) {
+    console.log('event', event);
     this.image = event;
   }
 

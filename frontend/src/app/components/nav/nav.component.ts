@@ -3,6 +3,7 @@ import {CookieService}                from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
 import { FacebookLoginComponent }     from "app/components/facebook-login/facebook-login.component";
 import { UsersService }               from "app/services/users/users.service";
+import {SocketIoService}              from "app/shared/SocketIoService";
 
 @Component({
   selector: "navbar",
@@ -11,18 +12,26 @@ import { UsersService }               from "app/services/users/users.service";
   providers: [CookieService, FacebookLoginComponent]
 })
 export class NavComponent implements OnInit {
-  showNavBar: boolean = false;
   private search: string;
+  private socket;
 
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private fb: FacebookLoginComponent,
-    private userServices: UsersService
+    private userServices: UsersService,
   ) {
   }
 
   ngOnInit() {
+    /*this.socket = this.socketIoService.getNotification().subscribe(message => {
+      console.log('message', message);
+    })*/
+
+    this.socket = SocketIoService.getInstance().getNotification().subscribe(message => {
+      console.log('message', message);
+    })
+
   }
 
   searchAction() {

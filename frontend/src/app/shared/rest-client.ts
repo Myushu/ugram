@@ -44,11 +44,11 @@ export class RestClient extends Resource {
           subscriber.next((<any>res)._body ? res.json() : null);
         },
         (error: Response) => {
-          console.log('error', error);
-          if (error.status == 401) {
+          if (error.status === 401) {
             this._cookieService.removeAll();
             this.router.navigate(["/login"]);
           }
+          subscriber.error(error);
         },
         () => subscriber.complete()
       );
