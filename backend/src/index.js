@@ -27,7 +27,7 @@ app.use(morgan(logger.format, {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
-
+require('./common/headerManager')(app);
 require('./common/tokenManager')(app);
 require('./controllers/home-controller')(app);
 require('./controllers/users-controller')(app);
