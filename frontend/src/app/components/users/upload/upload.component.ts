@@ -79,8 +79,7 @@ export class UploadComponent implements OnInit {
       }
 
   fileChange(tags, mentions) {
-    // let fileList: FileList = this.image.target.files;
-    // if(fileList.length > 0) {
+
       let file: File = this.image;//fileList[0];
       let formData:FormData = new FormData();
       formData.append('upload', file, file.name);
@@ -103,7 +102,6 @@ export class UploadComponent implements OnInit {
             this.error = true;
           }
         );
-    //}
   }
 
   getBase64Image(base64string) {
