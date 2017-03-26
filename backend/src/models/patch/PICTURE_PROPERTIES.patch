@@ -1,0 +1,5 @@
+55c55,56
+<     tableName: 'PICTURE_PROPERTIES'
+---
+>     tableName: 'PICTURE_PROPERTIES',
+>     timestamps : false

@@ -6,4 +6,4 @@
 <     tableName: 'MESSAGE'
 ---
 >     tableName: 'MESSAGE',
->     timestamps: false,
+>     timestamps : false

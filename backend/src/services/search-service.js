@@ -34,6 +34,9 @@ exports.searchUser = (query, res) => {
 exports.searchDescription = (query, res) => {
   var attributes = {
     attributes : alias.pictureAttributes,
+    include : [
+      alias.picturePropertiesInclude
+    ],
     where : {
       'DESCRIPTION' : {
         $like : '%' + query.input + '%'
@@ -47,12 +50,14 @@ exports.searchDescription = (query, res) => {
 exports.searchHashtag = (query, res) => {
   var attributes = {
     attributes : alias.pictureAttributes,
-    include : [{
-      model : hashtagModel,
-      attributes : [],
-      where : {
-        'HASHTAG' : {
-          $like : query.input
+    include : [
+      alias.picturePropertiesInclude,
+      {
+        model : hashtagModel,
+        attributes : [],
+        where : {
+          'HASHTAG' : {
+            $like : query.input
         }
       }
     }]

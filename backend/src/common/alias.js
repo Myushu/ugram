@@ -6,16 +6,19 @@ const userModel = orm.getSequelize().import("../models/USER.js");
 const mentionModel = orm.getSequelize().import("../models/MENTION.js");
 const hashtagModel =  orm.getSequelize().import("../models/HASHTAG.js");
 const commentModel = orm.getSequelize().import("../models/COMMENT.js");
+const picturePropertiesModel = orm.getSequelize().import("../models/PICTURE_PROPERTIES.js");
 
 pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(hashtagModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(commentModel, {foreignKey : 'ID_PICTURE'});
+pictureModel.hasOne(picturePropertiesModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.belongsTo(userModel, {foreignKey : 'ID_OWNER'});
 reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 hashtagModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
+picturePropertiesModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
 // Pictures
 exports.pictureAttributes = ['ID_PICTURE', 'ID_OWNER', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'];
@@ -73,3 +76,8 @@ exports.commentInclude = {
 
 // Message
 exports.messageAttributes = ['ID_SENDER', 'ID_RECEIVER', 'DATE_SENDED', 'MESSAGE'];
+
+// Pictures Properties
+exports.picturePropertiesInclude = {
+  model : picturePropertiesModel
+}
