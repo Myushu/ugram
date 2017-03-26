@@ -4,21 +4,7 @@ const orm = require('../common/orm');
 const alias = require('../common/alias');
 const queryManager = require('../common/queryManager');
 
-const userModel = orm.getSequelize().import("../models/USER.js");
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
-const reactionModel = orm.getSequelize().import("../models/REACTION.js");
-const mentionModel = orm.getSequelize().import("../models/MENTION.js");
-const hashtagModel =  orm.getSequelize().import("../models/HASHTAG.js");
-const commentModel = orm.getSequelize().import("../models/COMMENT.js");
-
-pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(hashtagModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.hasMany(commentModel, {foreignKey : 'ID_PICTURE'});
-pictureModel.belongsTo(userModel, {foreignKey : 'ID_OWNER'});
-reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
-mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
-commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 
 exports.getAllPictures = (res, query) => {
     var attributes = {
@@ -29,7 +15,8 @@ exports.getAllPictures = (res, query) => {
         alias.reactionInclude,
         alias.mentionInclude,
         alias.hashtagInclude,
-        alias.commentInclude
+        alias.commentInclude,
+       alias.picturePropertiesInclude
       ]
     };
     queryManager.fillAttributesFromQuery(attributes, query);

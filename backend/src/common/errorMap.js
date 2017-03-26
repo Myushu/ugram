@@ -37,6 +37,12 @@ exports.map = [
     code : 007,
     statusCode : 400
   },
+  {
+    name : 'missingProperties',
+    message : 'Missing Picture Properties',
+    code : 008,
+    statusCode : 400
+  },
   // Database Error
   {
     name : 'SequelizeDatabaseError',

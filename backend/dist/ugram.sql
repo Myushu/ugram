@@ -50,6 +50,20 @@ use UGRAM;
     constraint FK_PICTURE_OWNER foreign key (ID_OWNER) references USER(ID_USER) on delete cascade
   );
 
+  create table PICTURE_PROPERTIES (
+    ID_PICTURE int not null,
+    BLUR int not null default 0,
+    BRIGTHNESS int not null default 100,
+    CONTRAST int not null default 100,
+    GRAYSCALE int not null default 0,
+    INVERT int not null default 0,
+    OPACITY int not null default 100,
+    SATURATE int not null default 100,
+    SEPIA int not null default 0,
+    constraint PK_PICTURE_PROPERTIES primary key (ID_PICTURE),
+    constraint FK_PICTURE_PROPERTIES_ID_PICTURE foreign key (ID_PICTURE) references PICTURE(ID_PICTURE) on delete cascade
+  );
+
   create table FOLLOWING (
     ID_USER int not null,
     ID_FOLLOWER int not null,

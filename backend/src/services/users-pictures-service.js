@@ -1,12 +1,14 @@
 const config = require('config');
 const path = require('path');
 const fs = require('fs');
+const alias = require('../common/alias')
+
+const mentionService = require('./mention-service');
+const hashtagService = require('./hashtag-service');
+const picturePropertiesService  = require('./picture-properties-service');
 const orm = require('../common/orm');
 const errorManager = require('../common/errors');
 const queryManager = require('../common/queryManager');
-const alias = require('../common/alias')
-const mentionService = require('./mention-service');
-const hashtagService = require('./hashtag-service');
 const notification = require('../common/notificationManager');
 
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
@@ -20,14 +22,15 @@ exports.getAllPictureByUserId = (res, userId, query) => {
       alias.reactionInclude,
       alias.mentionInclude,
       alias.hashtagInclude,
-      alias.commentInclude
+      alias.commentInclude,
+     alias.picturePropertiesInclude
     ]
   };
   queryManager.fillAttributesFromQuery(attributes, query);
   orm.findAllAndCount(pictureModel, res, attributes);
 }
 
-function checkImage(file, res) {
+function checkImage(file, picture, res) {
   if (!file) {
     errorManager.handle({name : "missingPicture"}, res);
     return false;
@@ -40,16 +43,21 @@ function checkImage(file, res) {
     errorManager.handle({name : "invalidPictureFormat"}, res);
     return false;
   }
+  if (picture.PICTURE_PROPERTIES === undefined) {
+    errorManager.handle({name : "missingProperties"}, res);
+    return false;
+  }
   return true;
 }
 
 exports.createPicture = (userId, picture, user, file, res) => {
-  if (!checkImage(file, res))
+  if (!checkImage(file, picture, res))
     return;
   picture.ID_OWNER = user.userId;
   picture.FILENAME =  file.filename;
   picture.MIME_TYPE = file.mimetype;
   orm.create(pictureModel, res, picture).then(function(result) {
+    picturePropertiesService.createPictureProperties(result.ID_PICTURE, JSON.parse(picture.PICTURE_PROPERTIES));
     if (picture.MENTIONs != undefined) {
       picture.MENTIONs = JSON.parse(picture.MENTIONs);
       for (var i = 0; i < picture.MENTIONs.length; ++i)
@@ -85,7 +93,8 @@ exports.getPictureById = (userId, pictureId, res) => {
       alias.reactionInclude,
       alias.mentionInclude,
       alias.hashtagInclude,
-      alias.commentInclude
+      alias.commentInclude,
+      alias.picturePropertiesInclude
     ]
   });
 }
@@ -103,6 +112,11 @@ exports.updatePicture = (userId, pictureId, content, user, res) => {
       orm.update(pictureModel, content, res, attributes).then(function (r) {
         mentionService.deleteAllByPictureId(result.ID_PICTURE);
         hashtagService.deleteAllByPictureId(result.ID_PICTURE);
+        picturePropertiesService.deletePictureProperties(result.ID_PICTURE);
+        if (content.PICTURE_PROPERTIES != undefined)
+          picturePropertiesService.createPictureProperties(result.ID_PICTURE, content.PICTURE_PROPERTIES);
+        else
+          picturePropertiesService.createPictureProperties(result.ID_PICTURE, {});
         if (content.MENTIONs != undefined) {
           for (var i = 0; i < content.MENTIONs.length; ++i) {
             content.MENTIONs[i].ID_PICTURE = result.ID_PICTURE;

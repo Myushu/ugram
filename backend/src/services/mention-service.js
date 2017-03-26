@@ -23,7 +23,7 @@ exports.creationMention = (userId, pictureId, mention, user, res) => {
 exports.deleteMention = (userId, pictureId, mention, user, res) => {
   var attributes = { where : alias.pictureWhereOwner(pictureId, user.userId) };
   mention.ID_PICTURE = pictureId;
-  orm.find(pictureModel, res, undefined, attributes).then(function(result) {
+  orm.find(pictureModel, undefined, attributes).then(function(result) {
     if (!result)
       res.status(403).send();
     else
