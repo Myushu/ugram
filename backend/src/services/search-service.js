@@ -27,10 +27,8 @@ exports.searchUser = (query, res) => {
       ]
     }
   }
-  var attributesCount = Object.assign({}, attributes);
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(userModel, res, attributes, attributesCount);
+  orm.findAllAndCount(userModel, res, attributes);
 }
 
 exports.searchDescription = (query, res) => {
@@ -42,10 +40,8 @@ exports.searchDescription = (query, res) => {
       }
     }
   }
-  var attributesCount = Object.assign({}, attributes);;
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
+  orm.findAllAndCount(pictureModel, res, attributes);
 }
 
 exports.searchHashtag = (query, res) => {
@@ -61,8 +57,6 @@ exports.searchHashtag = (query, res) => {
       }
     }]
   }
-  var attributesCount = Object.assign({}, attributes);;
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
+  orm.findAllAndCount(pictureModel, res, attributes);
 }

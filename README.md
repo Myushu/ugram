@@ -6,7 +6,10 @@
 
 **AWS Links :**
 - [front end](http://laval-ugram-team-06.s3-website-us-east-1.amazonaws.com/)
-- back end
+- [back end](http://default-environment.u3jmahpz8n.us-east-1.elasticbeanstalk.com)
+
+**API :**
+- [API documentation](http://docs.ugram06.apiary.io/)
 
 ## Project Configuration
 
@@ -14,11 +17,11 @@
 The compressed and minified files are in frontend/src/dist  
 Generate minified files:
 ``````
-ng build
+ng build --prod
 ``````
 Running project locally (localhost:4200):
 ```
-ng serve
+npm start
 ```
 
 ### Back end
@@ -45,10 +48,12 @@ npm start
 
 ### Project implémentation
 ### Front end
-[git-s3](https://github.com/schickling/git-s3) is used to deploy the project on S3 AWS bucket  
+The frontend is based on [Angular 2](https://angular.io). 
+The rest library is [ng2-resource-rest](https://github.com/troyanskiy/ng2-resource-rest).
+The guideline is the [Angular 2 official](https://angular.io/styleguide).
 
 ### Back end
-The server is based on  [express](http://expressjs.com/). The token manager is [jwt](http://jwt.io). The logger is [Winston](https://github.com/lazywithclass/winston-cloudwatch). The MySQL driver is [mysql](https://www.npmjs.com/package/mysql). The [Redis](redis.io) driver is [redis](https://www.npmjs.com/package/redis).
+The server is based on [express](http://expressjs.com/). The token manager is [jwt](http://jwt.io). The logger is [Winston](https://github.com/lazywithclass/winston-cloudwatch). The MySQL driver is [mysql](https://www.npmjs.com/package/mysql). The [Redis](redis.io) driver is [redis](https://www.npmjs.com/package/redis).
 The SQL orm is [sequelize](http://docs.sequelizejs.com/en/v3/). The models are stored on ```backend/src/models```. To regenerate the models, run :
 ```
 backend/dist/generate_models.sh 

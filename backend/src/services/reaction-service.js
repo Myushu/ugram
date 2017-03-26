@@ -4,7 +4,10 @@ const alias = require('../common/alias')
 const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 
 exports.creationReaction = (userId, pictureId, user, res) => {
-  orm.build(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId));
+  orm.create(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId)).then(function(result) {
+    if (userId != user.userId)
+      notification.notifyReaction(userId, user.pseudo, comment.ID_PICTURE)
+  });
 }
 
 exports.deleteReaction = (userId, pictureId, user, res) => {

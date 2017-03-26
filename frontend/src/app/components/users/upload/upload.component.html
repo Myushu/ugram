@@ -9,9 +9,8 @@
                 <label for="description">Description</label>
                 <textarea [(ngModel)]="desc" class="form-control" id="description" placeholder="Description"></textarea>
             </div>
-            <div class="form-group">
-                <input (change)="changeActionPic($event)" type="file" name="file" id="file" class="inputfile" />
-                <label for="file">Choose a file</label>
+            <div>
+                 <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
             </div>
             <div class="form-group">
               <label>Hashtags</label>

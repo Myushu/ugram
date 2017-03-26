@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const logger = require('./logger');
 const config = require('config')
-const errorManager  = require('./errors')
+const errorManager  = require('./errors');
 
 var sequelize = new Sequelize({
   username : config.get('sql')['credentials']['user'],
@@ -9,6 +9,7 @@ var sequelize = new Sequelize({
   database : config.get('sql')['database'],
   host : config.get('sql')['host'],
   port : config.get('sql')['post'],
+  logging : logger.info,
   options : {
     retry : {
       max : config.get('sql')['maxRetries'],
@@ -29,100 +30,91 @@ exports.getSequelize = () => {
   return sequelize;
 }
 
-exports.findAll = (model, res, attributes) => {
-  model.findAll(attributes
-  ).then(function(result) {
-    if (!result)
-      res.sendStatus(404);
-    res.json(result);
- }).catch(function(err) {
-    logger.error(err.message);
-    res.status(500).send(err.message);
- });
-}
-
-exports.findAllAndCount = (model, res, attributes, attributesCount) => {
-  model.findAndCountAll(attributes
-  ).then(function(result) {
-    if (!result)
-      res.sendStatus(404);
-    model.count(attributesCount).then(function (resultCount) {
-      result['count'] = resultCount;
-      res.json(result);
-    })
- }).catch(function(err) {
-    logger.error(err.message);
-    res.status(500).send(err.message);
- });
-}
-
-exports.find = (model, res, errCode, attributes, functionUpdate) => {
-  model.find(attributes
-  ).then(function(result) {
-  if (functionUpdate != undefined)
-    functionUpdate(result, res);
-  else if (!result)
-      res.sendStatus(errCode)
+function setResult(result, res) {
+  if (res && !result)
+    res.status(404).send();
+  else if (res && result.error != undefined)
+    errorManager.handle(result.error, res);
   else
-    res.json(result);
- }).catch(function(err) {
-   logger.error(err.message);
-   res.status(500).send(err.message);
- });
+    return false;
+  return true;
 }
 
-exports.build = (model, res, attributes, callbacks, user) => {
-  model.build(attributes).save()
-  .then(function(result) {
-    res.status(201);
-    if (callbacks === undefined || callbacks.length == 0) {
-      res.send();
-    } else {
-      for (var i = 0; i < callbacks.length; ++i) {
-        callbacks[i](result.dataValues, attributes, res, user);
-      }
-    }
+function sequelizeCall (request)  {
+  return request.then(function (result) {
+    return result;
   }).catch(function(err) {
-    errorManager.handle(err, res);
+     logger.error(err.message);
+     return {error : err};
   });
 }
 
-exports.update = (model, newContent, res, attributes, callbacks) => {
-  this.find(model, res, 404, attributes, function(resultModel, res) {
-    resultModel.update(newContent).then(function(result) {
-      if (!result)
-       res.sendStatus(404)
-      else if (callbacks === undefined || callbacks.length == 0) {
-        res.json(result);
-      } else {
-        for (var i = 0; i < callbacks.length; ++i) {
-          callbacks[i](result.dataValues, newContent, res);
-        }
-      }
-     }).catch(function(err) {
-       errorManager.handle(err, res);
-     });
+exports.findAll = (model, res, attributes) => {
+  return sequelizeCall(model.findAll(attributes)).then(function (result) {
+    setResult(result, res)
+    return result;
+  })
+}
+
+exports.findAllAndCount = (model, res, attributes) => {
+  return this.findAll(model, res, attributes).then(function (result) {
+    sequelizeCall(model.count({where : attributes.where})).then(function (resultCount) {
+      var json = {};
+      json['count'] = resultCount  == undefined ? 0 : resultCount;
+      json['rows'] = result;
+      if (res)
+        res.send(json);
+      return json;
+    })
   });
 }
 
-exports.delete = (model, res, attributes, callback) => {
-  this.find(model, res, 404, attributes, function(resultModel, res) {
-    if (!resultModel)
-      res.sendStatus(404);
-    else {
-      resultModel.destroy({cascade : true}).then(function(result) {
-        if (!result)
-          res.sendStatus(404)
-        else if (callback != undefined)
-          callback(result, res);
-        res.json(result);
-      }).catch(function(err) {
-       errorManager.handle(err, res);
-     });
-   }
+exports.find = (model, res, attributes) => {
+  return sequelizeCall(model.find(attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.json(result);
+    return result;
+  })
+}
+
+exports.create = (model, res, attributes) => {
+  return sequelizeCall(model.create(attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.status(201).send();
+    return result;
   });
 }
 
-exports.query = (request) => {
-  sequelize.query(request);
+exports.update = (model, newContent, res, attributes) => {
+  return sequelizeCall(model.update(newContent, attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.status(200).send();
+    return result;
+  });
+}
+
+exports.delete = (model, res, attributes) => {
+  return sequelizeCall(model.destroy(attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.status(200).send();
+    return result;
+  })
+}
+
+exports.count = (model, res, attributes) => {
+  return sequelizeCall(model.count(attributes)).then(function (result) {
+    if (setResult(result, res))
+      return result;
+    if (res)
+      res.status(200).send();
+    return result;
+  })
 }
