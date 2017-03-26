@@ -25,6 +25,8 @@ import { SearchComponent }        from './components/search/search.component';
 import { ConfigService }       from "./shared/config";
 import { ChatComponent } from './components/chat/chat.component';
 import {SocketIoService} from "./shared/SocketIoService";
+import { Ng2CameraComponent } from './components/ng2-camera/ng2-camera.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import {SocketIoService} from "./shared/SocketIoService";
     RegisterComponent,
     SearchComponent,
     ChatComponent,
+    Ng2CameraComponent,
   ],
   imports: [
     BrowserModule,
