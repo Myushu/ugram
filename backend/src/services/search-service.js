@@ -13,15 +13,15 @@ exports.searchUser = (query, res) => {
       $or : [
         {
           'FIRSTNAME' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           },
         }, {
           'LASTNAME' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           },
         }, {
           'PSEUDO' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           }
         }
       ]
@@ -48,6 +48,8 @@ exports.searchDescription = (query, res) => {
 }
 
 exports.searchHashtag = (query, res) => {
+  if (query.absolute == false)
+    query.input = query.input + '%';
   var attributes = {
     attributes : alias.pictureAttributes,
     include : [
