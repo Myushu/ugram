@@ -32,11 +32,6 @@
     "port" : 3000
   },
   "winston" : {
-    "enable" : false,
-    "logGroupName" : "ugram-team-06",
-    "logStreamName" : "production",
-    "awsRegion" : "us-east-1",
-    "jsonMessage" : true,
-    "level" : "silly"
+    "enable" : false
   }
 }
