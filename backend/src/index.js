@@ -1,19 +1,19 @@
 const express = require('express');
-const config = require('config');
 const bodyParser = require('body-parser');
 const http = require('http');
 const morgan = require('morgan');
 const socket = require('socket.io');
 const cors = require('cors');
+const config = require('./common/configManager');
 const logger = require('./common/logger');
 const orm = require('./common/orm');
 
 const app = express();
 const server = http.createServer(app);
 const io = socket(server, { path: '/socket.io'});
-const port = process.env.PORT || config.get('server')['port'];
+const port = config.get('PORT', 'server.port', 3000);
 const corsOptions = {
-    origin: '*',
+    origin: config.get('CORS_ORIGIN', 'server.cors'),
     methods: [
         'GET',
         'PUT',

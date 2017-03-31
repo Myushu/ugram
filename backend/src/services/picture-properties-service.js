@@ -10,7 +10,6 @@ const picturePropertiesModel = orm.getSequelize().import("../models/PICTURE_PROP
 
 exports.createPictureProperties = (pictureId, properties) => {
   properties.ID_PICTURE = pictureId;
-  console.log('create', properties);
   orm.create(picturePropertiesModel, undefined, properties);
 }
 

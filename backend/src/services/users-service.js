@@ -1,13 +1,12 @@
 const extend = require('util')._extend
 const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+const config = require('../common/configManager');
 const orm = require('../common/orm');
 const alias = require('../common/alias');
 const errorManager = require('../common/errors');
 const redisToken = require('../common/redisToken')
 const queryManager = require('../common/queryManager');
-
 
 const userModel = orm.getSequelize().import("../models/USER.js")
 const followModel = orm.getSequelize().import("../models/FOLLOWING.js")
@@ -102,7 +101,7 @@ function tokenGenerator(result, res) {
       pseudo: result.PSEUDO
     };
 
-    var token = jwt.sign(user, config.get('jwt')['secret'], {
+    var token = jwt.sign(user, config.get('JWT_SECRET', 'jwt.secret'), {
       expiresIn: '24h',
     });
     redisToken.addToken(token, user.userId);
