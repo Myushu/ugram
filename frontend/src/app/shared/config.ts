@@ -14,8 +14,8 @@ export class ConfigService {
       this.FBApiId = "280735385694809";
     }
     else {
-      this.baseUrl = "http://10.248.31.193:3000";
-      this.baseSocketIoUrl = "ws://10.248.229.159:3000/";
+      this.baseUrl = "http://10.248.172.36:3000";
+      this.baseSocketIoUrl = "ws://10.248.172.36:3000/";
       this.FBApiId = "755385831298927";
     }
   }

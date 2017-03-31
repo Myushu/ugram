@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   public user: IUserShort = <IUserShort>{};
 
   public display: boolean = false;
+  public display_body: boolean = false;
 
   constructor(
     private userService: UsersService,
@@ -66,5 +67,9 @@ export class ChatComponent implements OnInit {
 
   closeChatBox() {
     this.display = false;
+  }
+
+  collapseBox() {
+    this.display_body = !this.display_body;
   }
 }

@@ -30,11 +30,13 @@ export class NavComponent implements OnInit {
 
     this.socket = SocketIoService.getInstance().getNotification().subscribe(message => {
       console.log('message', message);
-    })
+    });
 
   }
 
   searchAction() {
+    console.log('bonjour');
+    console.log('search', this.search);
     this.router.navigate(['/search', this.search]);
   }
 
