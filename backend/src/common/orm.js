@@ -1,18 +1,18 @@
 const Sequelize = require('sequelize');
 const logger = require('./logger');
-const config = require('config')
+const config = require('../common/configManager');
 const errorManager  = require('./errors');
 
 var sequelize = new Sequelize({
-  username : config.get('sql')['credentials']['user'],
-  password : config.get('sql')['credentials']['password'],
-  database : config.get('sql')['database'],
-  host : config.get('sql')['host'],
-  port : config.get('sql')['post'],
+  username : config.get('SQL_USERNAME', 'sql.credentials.username', 'root'),
+  password : config.get('SQL_PASSWORD', 'sql.credentials.password', 'root'),
+  database : config.get('SQL_DATABASE', 'sql.database', 'UGRAM'),
+  host : config.get('SQL_HOSTNAME', 'sql.hostname', 'localhost'),
+  port : config.get('SQL_PORT', 'sql.port', 3306),
   logging : logger.info,
   options : {
     retry : {
-      max : config.get('sql')['maxRetries'],
+      max : config.get('SQL_MAX_RETRIES', 'sql.maxRetries', 3),
       },
     },
   dialect: 'mysql',

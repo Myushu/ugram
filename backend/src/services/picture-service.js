@@ -1,10 +1,12 @@
 const path = require('path');
-const config = require('config');
+const config = require('../common/configManager');
 const orm = require('../common/orm');
 const alias = require('../common/alias');
 const queryManager = require('../common/queryManager');
 
 const pictureModel = orm.getSequelize().import("../models/PICTURE.js");
+
+const pictureFolder = config.get('PICTURE_FOLDER', 'picture.folder', './pictures');
 
 exports.getAllPictures = (res, query) => {
     var attributes = {
@@ -25,7 +27,7 @@ exports.getAllPictures = (res, query) => {
 
 function defaultImage (res) {
   res.type("image/png");
-  res.sendFile(path.resolve(config.get('picture')['folder'] + '/default'));
+  res.sendFile(path.resolve(pictureFolder + '/default'));
 }
 
 exports.getPicture = (picturePath, res) => {
@@ -37,7 +39,7 @@ exports.getPicture = (picturePath, res) => {
       res.status(404).send();
     else {
       res.type(result.MIME_TYPE);
-      res.sendFile(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
+      res.sendFile(path.resolve(pictureFolder + '/' + result.FILENAME));
     }
   });
 }

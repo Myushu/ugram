@@ -1,5 +1,4 @@
 const path = require('path');
-const config = require('config');
 const orm = require('../common/orm');
 const alias = require('../common/alias')
 const queryManager = require('../common/queryManager');

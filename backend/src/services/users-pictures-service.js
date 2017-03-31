@@ -1,8 +1,7 @@
-const config = require('config');
 const path = require('path');
 const fs = require('fs');
 const alias = require('../common/alias')
-
+const config = require('../common/configManager');
 const mentionService = require('./mention-service');
 const hashtagService = require('./hashtag-service');
 const picturePropertiesService  = require('./picture-properties-service');
@@ -35,7 +34,7 @@ function checkImage(file, picture, res) {
     errorManager.handle({name : "missingPicture"}, res);
     return false;
   }
-  if (file.size > config.get('picture')['maxSize']) {
+  if (file.size > config.get('PICTURE_MAX_SIZE', 'picture.maxSize')) {
     errorManager.handle({name : "invalidPictureSize"}, res);
     return false;
   }
@@ -79,7 +78,7 @@ exports.deletePicture = (userId, pictureId, user, res) => {
       res.status(403).send();
     else
       orm.delete(pictureModel, undefined, attributes).then(function (resultDelete) {
-        fs.unlinkSync(path.resolve(config.get('picture')['folder'] + '/' + result.FILENAME));
+        fs.unlinkSync(path.resolve(config.get('PICTURE_FOLDER', 'picture.folder', './pictures') + '/' + result.FILENAME));
         res.status(200).send();
     });
   });

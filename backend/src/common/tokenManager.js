@@ -1,10 +1,10 @@
 const jwt = require('express-jwt');
-const config = require('config');
+const config = require('../common/configManager');
 const redisToken =  require('./redisToken');
 
 module.exports = function(app) {
   app.use(jwt({
-    secret: config.get('jwt')['secret'],
+    secret: config.get('JWT_SECRET', 'jwt.secret'),
     credentialsRequired: true,
     getToken: function fromHeaderOrQuerystring (req) {
       if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
