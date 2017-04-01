@@ -1,12 +1,13 @@
 import { BrowserModule }          from "@angular/platform-browser";
 import { NgModule }               from "@angular/core";
-import { FormsModule,ReactiveFormsModule }            from "@angular/forms";
+import { FormsModule, ReactiveFormsModule }            from "@angular/forms";
 import { HttpModule }             from "@angular/http";
 import { CookieService }          from "angular2-cookie/services/cookies.service";
 import { NgbModule }              from "@ng-bootstrap/ng-bootstrap";
 import { TagInputModule }         from "ng2-tag-input";
 import {ResourceModule}           from "ng2-resource-rest";
-import {ImageCropperComponent} from 'ng2-img-cropper';
+import {ImageCropperComponent}    from "ng2-img-cropper";
+import { NouisliderModule } from 'ng2-nouislider';
 
 import { AppRoutingModule }       from "./app-routing.module";
 import { AppComponent }           from "./app.component";
@@ -23,9 +24,11 @@ import { UploadComponent }        from "./components/users/upload/upload.compone
 import { RegisterComponent }      from './components/register/register.component';
 import { SearchComponent }        from './components/search/search.component';
 
-import { ConfigService }       from "./shared/config";
-import { ChatComponent } from './components/chat/chat.component';
-import {SocketIoService} from "./shared/SocketIoService";
+import { ConfigService }          from "./shared/config";
+import { ChatComponent }          from './components/chat/chat.component';
+import {SocketIoService}          from "./shared/SocketIoService";
+import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import {SocketIoService} from "./shared/SocketIoService";
     RegisterComponent,
     SearchComponent,
     ChatComponent,
-    ImageCropperComponent
+    Ng2CameraComponent,
+    ImageCropperComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import {SocketIoService} from "./shared/SocketIoService";
     NgbModule.forRoot(),
     ResourceModule.forRoot(),
     TagInputModule,
+    NouisliderModule,
   ],
   providers: [
     CookieService,

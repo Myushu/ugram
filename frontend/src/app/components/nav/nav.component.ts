@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
 
     this.socket = SocketIoService.getInstance().getNotification().subscribe(message => {
       console.log('message', message);
-    })
+    });
 
   }
 

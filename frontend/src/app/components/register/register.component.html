@@ -1,48 +1,70 @@
 <div id="page-wrapper" class="register">
   <div class="login-container">
     <h1>UGRAM</h1>
-    <h2>Register</h2>
     <div *ngIf="error">
       <div class="alert alert-danger" role="alert">{{error_message}}</div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input [(ngModel)]="email" required type="text" class="form-control" id="email" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <label for="pseudo">Pseudo</label>
-      <input [(ngModel)]="pseudo" required type="text" class="form-control" id="pseudo" placeholder="Pseudo">
-    </div>
-    <div class="form-group">
-      <label for="firstname">Firstname</label>
-      <input [(ngModel)]="firstname" required type="text" class="form-control" id="firstname" placeholder="Firstname">
-    </div>
-    <div class="form-group">
-      <label for="lastname">Lastname</label>
-      <input [(ngModel)]="lastname" required type="text" class="form-control" id="lastname" placeholder="Lastname">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input [(ngModel)]="password" required type="password" class="form-control" id="password" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <label for="password_conf">Confirm Password</label>
-      <input [(ngModel)]="password_conf" required type="password" class="form-control" id="password_conf" placeholder="Confirm password">
-    </div>
-    <div class="form-group row">
-      <label for="user-tel-update" class="col-2 col-form-label">Gender</label>
-      <div class="col-10">
-        <label class="radio-inline">
-          <input type="radio" name="sexe" id="inlineRadio1" value="M" [(ngModel)]="gender"> Male
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="sexe" id="inlineRadio2" value="F" [(ngModel)]="gender"> Female
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="sexe" id="inlineRadio3" value="X" [(ngModel)]="gender"> Other
-        </label>
+    <form class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="register($event)">
+      <div class="form-group">
+        <label for="firstname" class="col-md-4 control-label">Firstname</label>
+        <div class="col-md-8">
+          <input formControlName="firstname" type="text" class="form-control" id="firstname" placeholder="Firstname">
+        </div>
       </div>
+      <div class="form-group">
+        <label for="lastname" class="col-md-4 control-label">Lastname</label>
+        <div class="col-md-8">
+          <input formControlName="lastname" type="text" class="form-control" id="lastname" placeholder="Lastname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-md-4 control-label">Email</label>
+        <div class="col-md-8">
+          <input formControlName="email" type="text" class="form-control" id="email" placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pseudo" class="col-md-4 control-label">Pseudo</label>
+        <div class="col-md-8">
+          <input formControlName="pseudo" type="text" class="form-control" id="pseudo" placeholder="Pseudo">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-md-4 control-label">Password</label>
+        <div class="col-md-8">
+          <input formControlName="password" type="password" class="form-control" id="password" placeholder="Password">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password_conf" class="col-md-4 control-label">Confirm Password</label>
+        <div class="col-md-8">
+          <input formControlName="password_conf" type="password" class="form-control" id="password_conf" placeholder="Confirm password">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="gender" class="col-md-4 control-label">Gender</label>
+        <div class="col-md-8">
+          <div class="radio">
+            <label>
+              <input type="radio" id="gender" value="M" formControlName="gender"> Male
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" id="gender2" value="F" formControlName="gender"> Female
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input checked type="radio" id="gender3" value="X" formControlName="gender"> Other
+            </label>
+          </div>
+        </div>
+      </div>
+      <button style="margin-top: 20px" type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div style="margin-top: 20px;text-align: center">
+      <a routerLink="/login">Login</a>
     </div>
-    <button (click)="register()" type="submit" class="btn btn-default">Submit</button>
   </div>
 </div>
