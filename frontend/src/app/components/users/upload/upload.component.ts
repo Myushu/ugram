@@ -23,10 +23,11 @@ export class UploadComponent implements OnInit {
   public isCollapsed = true;
 
   public blurFilter = [0];
-  public brightnessFilter = [100];
-  public contrastFilter = [100];
   public grayscaleFilter = [0];
   public sepiaFilter = [0];
+
+  public brightnessFilter = [100];
+  public contrastFilter = [100];
   public saturateFilter = [100];
   public opacityFilter = [100];
   public cssFilter: SafeStyle;
@@ -52,12 +53,33 @@ export class UploadComponent implements OnInit {
   }
 
   applyFilters() {
-    console.log('b');
+    console.log('test', this.brightnessFilter);
     this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
       "filter: brightness("+this.brightnessFilter+"%)" +
       " contrast("+this.contrastFilter+"%)" +
       " saturate("+this.saturateFilter+"%)" +
       " opacity("+this.opacityFilter+"%)");
+  }
+
+  applyPreFilters(type: string) {
+    if (type === 'blur') {
+      this.grayscaleFilter = [0];
+      this.sepiaFilter = [0];
+      this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
+        "filter: blur("+this.blurFilter+"px)");
+    }
+    if (type === 'sepia') {
+      this.grayscaleFilter = [0];
+      this.blurFilter = [0];
+      this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
+        "filter: sepia("+this.sepiaFilter+"%)");
+    }
+    if (type === 'gs') {
+      this.blurFilter = [0];
+      this.sepiaFilter = [0];
+      this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
+        "filter: grayscale("+this.grayscaleFilter+"%)");
+    }
   }
 
   fileChangeListener($event) {
@@ -89,12 +111,11 @@ export class UploadComponent implements OnInit {
   }
 
   cropped(bounds: Bounds) {
-    console.log('img', this.data1);
     this.croppedHeight = bounds.bottom - bounds.top;
     this.croppedWidth = bounds.right - bounds.left;
   }
 
-  fileChange(tags, mentions) {
+  fileChange(tags, mentions, filters) {
       let file: File = this.image;//fileList[0];
       let formData:FormData = new FormData();
       formData.append('upload', file, file.name);
@@ -103,7 +124,7 @@ export class UploadComponent implements OnInit {
         formData.append('MENTIONs', JSON.stringify(mentions));
       if (tags.length > 0)
         formData.append('HASHTAGs', JSON.stringify(tags));
-      formData.append('PICTURE_PROPERTIES', JSON.stringify({}));
+      formData.append('PICTURE_PROPERTIES', JSON.stringify(filters));
       let headers = new Headers();
       headers.append('Authorization', 'Bearer ' + this._cookieService.get('token'));
       headers.append('Accept', 'application/json');
@@ -129,13 +150,21 @@ export class UploadComponent implements OnInit {
     const user_id = this._cookieService.getObject("user_id");
     let u_tags = [];
     let u_mentions = [];
+    let u_filters = {
+      OPACITY: this.opacityFilter,
+      BRIGTHNESS: this.brightnessFilter,
+      CONTRAST: this.contrastFilter,
+      SATURATE: this.saturateFilter,
+      BLUR: this.blurFilter,
+      SEPIA: this.sepiaFilter,
+      GRAYSCALE: this.grayscaleFilter
+    };
     for (let i = 0; i < this.tags.length; i++) {
       u_tags.push({HASHTAG: this.tags[i]["display"]});
     }
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }
-
     let byte = atob(this.getBase64Image(this.data1.image));
     let byteN = new Array(byte.length);
     for (let i = 0; i < byte.length; i++)
@@ -144,7 +173,7 @@ export class UploadComponent implements OnInit {
     let blop = new Blob([byteArray], {type: this.data1.image.substring(this.data1.image.indexOf(":")+1, this.data1.image.indexOf(";"))});
     this.image = blop;
     console.log(this.image);
-    this.fileChange(u_tags, u_mentions);
+    this.fileChange(u_tags, u_mentions, u_filters);
   }
 
   showCam() {

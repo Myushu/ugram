@@ -30,7 +30,7 @@
     <div class="row">
       <div *ngFor="let image of images;" class="col-xs-6 col-md-4">
         <a routerLink="/picture/{{user.ID_USER}}/{{image.ID_PICTURE}}" class="thumbnail">
-          <div class="img"><img src="{{picture_url}}/picture?filename={{image.FILENAME}}"></div>
+          <div class="img"><img [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}"></div>
         </a>
       </div>
     </div>

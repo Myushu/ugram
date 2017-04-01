@@ -1,7 +1,7 @@
 <div id="page-wrapper">
   <div class="container col-md-12">
     <div class="image col-md-8">
-      <img src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
+      <img [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
     </div>
     <div class="infos col-md-4">
       <ul>
