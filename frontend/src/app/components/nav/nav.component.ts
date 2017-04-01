@@ -35,8 +35,6 @@ export class NavComponent implements OnInit {
   }
 
   searchAction() {
-    console.log('bonjour');
-    console.log('search', this.search);
     this.router.navigate(['/search', this.search]);
   }
 
