@@ -56,7 +56,6 @@ export class FeedComponent implements OnInit {
       (res: IPictureResponse) => {
         this.images = res.rows;
         this.images = this.picturesService.setFilter(this.images);
-        console.log('images', this.images);
         this.totalEntries = res.count;
       }
     );

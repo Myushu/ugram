@@ -65,7 +65,6 @@ export class ProfileComponent implements OnInit {
       (res: IPictureResponse) => {
         this.images = res.rows;
         this.images = this.picturesService.setFilter(this.images);
-        console.log('my image', this.images);
         this.totalEntries = res.count;
       }
     );

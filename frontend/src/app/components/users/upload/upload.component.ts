@@ -53,7 +53,6 @@ export class UploadComponent implements OnInit {
   }
 
   applyFilters() {
-    console.log('test', this.brightnessFilter);
     this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
       "filter: brightness("+this.brightnessFilter+"%)" +
       " contrast("+this.contrastFilter+"%)" +
