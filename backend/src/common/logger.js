@@ -13,7 +13,7 @@ const logger = new winston.Logger({
 
 var winstonMode = config.get('WINSTON_MODE', 'winston.enable', false)
 logger.info('Logged on Wiston : ' +  winstonMode);
-if (winstonMode == true) {
+if (winstonMode == true || winstonMode == 'true') {
   var configuration = {
     logGroupName: config.get('LOG_GROUP_NAME', 'winston.logGroupName'),
     logStreamName: config.get('LOG_STREAM_NAME', 'winston.logStreamName'),
