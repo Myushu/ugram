@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit {
     this.userService.getUsers().$observable.subscribe(
       (res: IUserResponse) => {
         this.users = res.rows;
+        this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
       }
     );
 
