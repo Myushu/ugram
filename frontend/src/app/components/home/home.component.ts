@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit {
     this.picturesService.getPictures({page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
-        console.log(this.images);
         this.images = this.picturesService.setFilter(this.images);
         this.totalEntries = res.count;
       },

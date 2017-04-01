@@ -41,7 +41,7 @@ export class ReactionsService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Delete,
-    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/reaction/{!ID_REACTION}"
+    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/reaction/"
   })
   deleteReaction: ResourceMethod<IQueryDeleteReaction, IReaction>;
 }

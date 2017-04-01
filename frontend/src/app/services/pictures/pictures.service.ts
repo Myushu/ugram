@@ -102,7 +102,6 @@ export class PicturesService extends RestClient {
   }
 
   setFilter(images) {
-    console.log(images);
     if (images.length && images.length > 0) {
       for (let i = 0; i < images.length; i++) {
         images[i].filterCss = this.satanizer.bypassSecurityTrustStyle(
