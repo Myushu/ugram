@@ -4,6 +4,7 @@ import {IPicture, IPictureResponse}   from "app/services/pictures/pictures.servi
 import {UsersService, IUser}          from "app/services/users/users.service";
 import {UsersPicturesService}         from "app/services/users-pictures/users-pictures.service";
 import {ConfigService}                from "app/shared/config";
+import {PicturesService}              from "app/services/pictures/pictures.service";
 
 @Component({
   selector: "app-feed",
@@ -24,7 +25,8 @@ export class FeedComponent implements OnInit {
     private userService: UsersService,
     private Route: ActivatedRoute,
     private usersPicturesService: UsersPicturesService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private picturesService: PicturesService,
   ) {
 
   }
@@ -53,6 +55,7 @@ export class FeedComponent implements OnInit {
     this.usersPicturesService.getUserPictures({ID_USER: this.user_id, page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
+        this.images = this.picturesService.setFilter(this.images);
         this.totalEntries = res.count;
       }
     );

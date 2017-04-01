@@ -21,7 +21,7 @@
               </template>
             </ngb-tab>
 
-            <ngb-tab id="webcam" title="Webcam picture">
+            <!--<ngb-tab id="webcam" title="Webcam picture">
               <template ngbTabContent>
                 <div style="margin-top: 20px">
                   <video [src]="videosrc" class="cssWebCam"></video>
@@ -29,21 +29,19 @@
                   <button (click)="takePic()">Take</button>
                 </div>
               </template>
-            </ngb-tab>
+            </ngb-tab>-->
           </ngb-tabset>
-          <div class="row">
+          <div class="row" *ngIf="data1.image">
             <div class="col-md-6">
-              <span class="result" *ngIf="data1.image" >
                 <img [src]="data1.image"
                      [width]="croppedWidth"
                      [height]="croppedHeight"
-                     [style]="cssFilter"
-                >
-              </span>
+                     [style]="cssFilter">
             </div>
             <div class="col-md-6" style="text-align: start">
               <div class="card">
-                <div class="card-block">
+                <div class="card-block" style="padding: 35px!important;">
+                  <h2 style="margin: 0 0 30px 0">Filters</h2>
                   <div class="form-group" style="margin-bottom: 35px;">
                     <label for="description">Opacity</label>
                     <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="opacityFilter" [min]="0" [max]="100" [step]="1"></nouislider>
@@ -59,6 +57,20 @@
                   <div class="form-group" style="margin-bottom: 35px;">
                     <label for="description">Saturate</label>
                     <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="saturateFilter" [min]="0" [max]="200" [step]="1"></nouislider>
+                  </div>
+
+                  <h2 style="margin: 0 0 30px 0">PreFilters</h2>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Blur</label>
+                    <nouislider (change)="applyPreFilters('blur')" [tooltips]="[ true ]" [(ngModel)]="blurFilter" [min]="0" [max]="20" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Sepia</label>
+                    <nouislider (change)="applyPreFilters('sepia')" [tooltips]="[ true ]" [(ngModel)]="sepiaFilter" [min]="0" [max]="100" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Greyscale</label>
+                    <nouislider (change)="applyPreFilters('gs')" [tooltips]="[ true ]" [(ngModel)]="grayscaleFilter" [min]="0" [max]="100" [step]="1"></nouislider>
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@
     <div class="photo-container col-md-12" *ngFor="let image of images;">
       <!--<a [routerLink]="['/picture/:userid/:id']" [queryParams]="{'userid': image.userId, 'id': image.id}">-->
       <div class="photo-card">
-        <div class="img"> <a routerLink="/picture/{{image.ID_OWNER}}/{{image.ID_PICTURE}}"><img src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="600px"></a></div>
+        <div class="img"> <a routerLink="/picture/{{image.ID_OWNER}}/{{image.ID_PICTURE}}"><img [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="600px"></a></div>
         <div class="user">
           <ul>
             <li class="name"><a href="#">{{image.DESCRIPTION}}</a></li>

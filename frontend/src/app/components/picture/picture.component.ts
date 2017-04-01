@@ -115,6 +115,8 @@ export class PictureComponent implements OnInit {
       this.usersPicturesService.getUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID}).$observable.subscribe(
         (res: IPicture) => {
           this.image = this.picturesService.format_picture(res);
+          this.image = this.picturesService.setFilter(this.image);
+          console.log('wf', this.image);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
         },

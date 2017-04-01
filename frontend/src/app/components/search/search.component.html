@@ -17,7 +17,7 @@
         <ul>
           <li *ngFor="let dpic of searchDesc.rows">
             <ul>
-              <li class="name"><a routerLink="/picture/{{dpic.ID_OWNER}}/{{dpic.ID_PICTURE}}"><img width="500px" src="{{picture_url}}/picture?filename={{dpic.FILENAME}}"></a></li>
+              <li class="name"><a routerLink="/picture/{{dpic.ID_OWNER}}/{{dpic.ID_PICTURE}}"><img [style]="dpic.filterCss" width="500px" src="{{picture_url}}/picture?filename={{dpic.FILENAME}}"></a></li>
               <li>{{dpic.DESCRIPTION}}</li>
             </ul>
           </li>
@@ -28,7 +28,7 @@
         <ul>
           <li *ngFor="let hpic of searchHashtag.rows">
             <ul>
-              <li class="name"><a routerLink="/picture/{{hpic.ID_OWNER}}/{{hpic.ID_PICTURE}}"><img width="500px" src="{{picture_url}}/picture?filename={{hpic.FILENAME}}"></a></li>
+              <li class="name"><a routerLink="/picture/{{hpic.ID_OWNER}}/{{hpic.ID_PICTURE}}"><img [style]="hpic.filterCss" width="500px" src="{{picture_url}}/picture?filename={{hpic.FILENAME}}"></a></li>
               <li>{{hpic.DESCRIPTION}}</li>
             </ul>
           </li>

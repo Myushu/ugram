@@ -23,12 +23,9 @@ import { UpdateComponent }        from "./components/users/update/update.compone
 import { UploadComponent }        from "./components/users/upload/upload.component";
 import { RegisterComponent }      from './components/register/register.component';
 import { SearchComponent }        from './components/search/search.component';
-
 import { ConfigService }          from "./shared/config";
 import { ChatComponent }          from './components/chat/chat.component';
 import {SocketIoService}          from "./shared/SocketIoService";
-import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.component';
-
 
 @NgModule({
   declarations: [
@@ -46,7 +43,6 @@ import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.compo
     RegisterComponent,
     SearchComponent,
     ChatComponent,
-    Ng2CameraComponent,
     ImageCropperComponent,
   ],
   imports: [

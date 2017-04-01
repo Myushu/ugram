@@ -6,6 +6,7 @@ import {PicturesService, IPicture, IPictureResponse}  from "app/services/picture
 import {ConfigService}                                from "app/shared/config";
 
 import {Http, Response, Request}             from "@angular/http";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: "app-home",
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private picturesService: PicturesService,
     private configService: ConfigService,
-
+    private sanitizer: DomSanitizer,
     private http: Http,
 
   ) {
@@ -49,6 +50,8 @@ export class HomeComponent implements OnInit {
     this.picturesService.getPictures({page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
+        console.log(this.images);
+        this.images = this.picturesService.setFilter(this.images);
         this.totalEntries = res.count;
       },
       err => {
