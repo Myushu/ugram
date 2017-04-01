@@ -26,9 +26,9 @@ function doYouFollowHim(idUser, user) {
  })
 }
 
-function getCountFollowers(user) {
-  return orm.count(followModel, undefined, {where : {ID_FOLLOWER : user.userId}}).then(function(countFollowingResult) {
-     return orm.count(followModel, undefined, {where : {ID_USER : user.userId}}).then(function(countFollowerResult) {
+function getCountFollowers(userId) {
+  return orm.count(followModel, undefined, {where : {ID_FOLLOWER : userId}}).then(function(countFollowingResult) {
+     return orm.count(followModel, undefined, {where : {ID_USER : userId}}).then(function(countFollowerResult) {
       return {
         countFollower : countFollowerResult,
         countFollowing : countFollowingResult};
@@ -45,11 +45,11 @@ exports.getUsersById = (idUser, user, res) => {
       res.status(404).send();
       return ;
     }
-    getCountFollowers(user).then(function (followResult) {
+    getCountFollowers(idUser).then(function (followResult) {
       var json = extend(followResult, resultToJson(result));
       if (idUser != user.userId)
         doYouFollowHim(idUser, user).then(function (followResult) {
-          res.json(extend({isFollowd : followResult}, json));
+          res.json(extend({isFollowed : followResult}, json));
         })
       else
         res.json(json);
