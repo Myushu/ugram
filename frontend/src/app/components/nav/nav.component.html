@@ -29,6 +29,12 @@
       <input [(ngModel)]="search" style="margin-top: 7px;" class="form-control mr-sm-2" type="text" placeholder="Search">
       <button style="margin-top: 7px!important;" class="btn btn-outline-success my-2 my-sm-0" (click)="searchAction()" type="submit">Search</button>
     </div>
+    <div (click)="readNotif()" ngbDropdown class="d-inline-block" style="float: right;margin-top: 7px">
+      <button class="btn btn-outline-primary" id="dropdownMenu1" ngbDropdownToggle>Notifications<span *ngIf="pushNotif" class="label label-info">{{pushNotifNbr}}</span></button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <a routerLink="/picture/{{notif.ID_USER}}/{{notif.ID_PICTURE}}" *ngFor="let notif of notifs" class="dropdown-item">{{notif.MESSAGE}}</a>
+      </div>
+    </div>
   </div>
 </nav>
 

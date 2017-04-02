@@ -4,6 +4,7 @@ import { Router }                     from "@angular/router";
 import { FacebookLoginComponent }     from "app/components/facebook-login/facebook-login.component";
 import { UsersService }               from "app/services/users/users.service";
 import {SocketIoService}              from "app/shared/SocketIoService";
+import {NotificationsService, INotifResponse, INotif}         from "app/services/notifications/notifications.service";
 
 @Component({
   selector: "navbar",
@@ -14,24 +15,41 @@ import {SocketIoService}              from "app/shared/SocketIoService";
 export class NavComponent implements OnInit {
   private search: string;
   private socket;
+  private notifs: INotif[] = [<INotif>{}];
+  private pushNotif: boolean = false;
+  private pushNotifNbr: number = 0;
 
   constructor(
     private _cookieService: CookieService,
     private router: Router,
     private fb: FacebookLoginComponent,
     private userServices: UsersService,
+    private notificationsService: NotificationsService,
   ) {
   }
 
   ngOnInit() {
-    /*this.socket = this.socketIoService.getNotification().subscribe(message => {
-      console.log('message', message);
-    })*/
+    this.notificationsService.getNotifications({page: 0, perPage: 10}).$observable.subscribe(
+      (res: INotifResponse) => {
+        this.notifs = res.rows;
+      },
+      err => {
+        console.log('err', err);
+      }
+    );
 
-    this.socket = SocketIoService.getInstance().getNotification().subscribe(message => {
-      console.log('message', message);
+    this.socket = SocketIoService.getInstance().getNotification().subscribe(
+      (message: INotif) => {
+      this.pushNotif = true;
+      this.pushNotifNbr += 1;
+      this.notifs.unshift(message);
     });
 
+  }
+
+  readNotif() {
+    this.pushNotif = false;
+    this.pushNotifNbr = 0;
   }
 
   searchAction() {
