@@ -52,7 +52,6 @@ export class FeedComponent implements OnInit {
         this.user = res;
         if (this.user.PICTURE_PATH === 'default')
           this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
-        console.log(this.user);
         this.follow = this.user['isFollowed'];
       }
     );
