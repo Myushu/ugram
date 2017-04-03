@@ -16,6 +16,10 @@
         <li>
           <tag-input [ngModel]="mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
         </li>
+        <li>
+          <i class="fa fa-thumbs-up" style="font-size:30px;color: #337ab7 ;" aria-hidden="true" (click)="checkAlreadyLiked()"></i>
+           {{reactionsNbr}}
+        </li>
       </ul>
       <div *ngIf="updated">
         <div style="width: 90%" class="form-group row">
@@ -41,6 +45,7 @@
             </tag-input>
           </div>
         </div>
+
         <button class="btn btn-success" (click)="updateImage()">Update</button>
       </div>
       <div *ngIf="my_user_id == user.ID_USER && updated == 0" style="text-align: center">

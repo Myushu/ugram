@@ -10,7 +10,7 @@ import {UsersPicturesService}         from "app/services/users-pictures/users-pi
 import {IHashtagPicture}              from "app/services/hashtags/hashtags.service";
 import {IMentionPicture}              from "app/services/mentions/mentions.service";
 import {ICommentPicture}              from "app/services/comments/comments.service";
-import {IReactionPicture}             from "app/services/reactions/reactions.service";
+import {IReactionPicture, ReactionsService}             from "app/services/reactions/reactions.service";
 import {ConfigService}                from "app/shared/config";
 
 @Component({
@@ -27,11 +27,13 @@ export class PictureComponent implements OnInit {
   public mentions: IMentionPicture[];
   public comments: ICommentPicture[];
   public reactions: IReactionPicture[];
+  public reactionsNbr: number;
   public image: IPicture = <IPicture>{};
   public user: IUser = <IUser>{};
   public users = [];
   public updated: number = 0;
   public picture_url: string;
+  public isLiked: boolean;
 
   constructor(
     private _cookieService: CookieService,
@@ -40,9 +42,92 @@ export class PictureComponent implements OnInit {
     private Route: ActivatedRoute,
     private usersService: UsersService,
     private usersPicturesService: UsersPicturesService,
+    private reactionsService: ReactionsService,
     private configService: ConfigService,
   ) {
 
+  }
+
+  checkAlreadyLiked() {
+    console.log(this.reactions);
+    console.log(this.my_user_id);
+    console.log("reaction length: " + this.reactions.length);
+    if(this.isLiked)
+      console.log("SECOND - is Liked = true");
+    else
+      console.log("SECOND - is Liked = false");
+    if (this.isLiked) {
+      this.deleteThumbUp();
+    } else {
+      this.addThumbUp();
+    }
+
+    /*for (let i = 0; i < this.reactions.length; ++i) {
+      console.log(this.reactions[i]["ID_USER"]);
+      if (this.my_user_id == <number>this.reactions[i]["ID_USER"]) { //if already liked
+        console.log(this.reactions[i]["ID_USER"]);
+        this.reactionsService.deleteReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+          res => {
+            this.reactionsNbr -= 1;
+            this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id); //on retire l'id_user du like supprimer dans le tbl des reactions
+            console.log("like deleted for id_user: " + this.my_user_id);
+            this.isLiked = false;
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
+    }
+    if (!this.isLiked) {
+      this.isLiked = true;
+      this.addThumbUp();
+    }*/
+
+    /*if (this.reactions.filter(x => x.ID_USER === this.my_user_id)) { //if user already liked
+      console.log("already liked");
+      this.reactionsService.deleteReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+        res => {
+          this.reactionsNbr -= 1;
+          this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id); //on retire l'id_user du like supprimer dans le tbl des reactions
+          console.log("like deleted for id_user: " + this.my_user_id);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    } else {
+      this.addThumbUp();
+    }*/
+  }
+
+  addThumbUp() {
+    console.log("liking");
+    this.reactionsService.createReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        console.log("liked");
+        this.reactionsNbr += 1;
+        this.isLiked = true;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteThumbUp() {
+    console.log("unliking");
+    this.reactionsService.deleteReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        this.reactionsNbr -= 1;
+        this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id); //on retire l'id_user du like supprimer dans le tbl des reactions
+        console.log("like deleted for id_user: " + this.my_user_id);
+        this.isLiked = false;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   deleteImage() {
@@ -114,9 +199,27 @@ export class PictureComponent implements OnInit {
       );
       this.usersPicturesService.getUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID}).$observable.subscribe(
         (res: IPicture) => {
+          console.log(res);
           this.image = this.picturesService.format_picture(res);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
+          this.reactions = this.image.REACTIONs;
+          this.reactionsNbr = this.reactions.length;
+          this.isLiked = false;
+          console.log(this.my_user_id);
+          console.log("number of likes: " + this.reactionsNbr);
+          for (let i = 0; i < this.reactions.length; ++i) {
+            console.log("user id: " + this.reactions[i]["ID_USER"]);
+            if (this.my_user_id == this.reactions[i]["ID_USER"]) {
+              console.log("user id: " + this.reactions[i]["ID_USER"] + " already liked ht picture");
+              this.isLiked = true;
+            }
+          }
+
+          if(this.isLiked)
+            console.log("FIRST - is Liked = true");
+          else
+            console.log("FIRST - is Liked = false");
         },
         err => {
           console.log('err', err);
