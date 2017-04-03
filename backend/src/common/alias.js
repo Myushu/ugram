@@ -81,3 +81,6 @@ exports.messageAttributes = ['ID_SENDER', 'ID_RECEIVER', 'DATE_SENDED', 'MESSAGE
 exports.picturePropertiesInclude = {
   model : picturePropertiesModel
 }
+
+// Notification
+exports.notificationAttributes = ['MESSAGE', 'ID_USER', 'ID_PICTURE'];
