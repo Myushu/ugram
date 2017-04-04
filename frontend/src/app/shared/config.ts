@@ -10,7 +10,7 @@ export class ConfigService {
   constructor() {
     if (environment['envName'] === 'prod') {
       this.baseUrl = "http://default-environment.u3jmahpz8n.us-east-1.elasticbeanstalk.com";
-      this.baseSocketIoUrl = "";
+      this.baseSocketIoUrl = "ws://default-environment.u3jmahpz8n.us-east-1.elasticbeanstalk.com";
       this.FBApiId = "280735385694809";
     }
     else {

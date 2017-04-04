@@ -33,7 +33,7 @@ export class AppComponent {
     console.log("Env :", environment['envName']);
   }
 
-  showChat() {
+  isConnected() {
     return (this._cookieService.get("token"));
   }
 }

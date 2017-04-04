@@ -30,14 +30,19 @@ export class SocketIoService {
     return SocketIoService.instance;
   }
 
+  static closeInstance() {
+    SocketIoService.instance = null;
+  }
+
   connectWS() {
     this.socket = io.connect(this.configService.getSocketIoUrl());
     this.socket.emit('join', this._cookieService.get('token'));
     this.socket.on('notification', (data) => {});
     this.socket.on('message', (data) => {});
-    this.socket.on('errors', (data)=> {
+    this.socket.on('status', (data) => {});
+    this.socket.on('errors', (data) => {
       console.log('errors', data);
-    })
+    });
   }
 
   getNotification() {
@@ -68,7 +73,25 @@ export class SocketIoService {
     return observable;
   }
 
+  getStatus() {
+    if (!this.socket)
+      this.connectWS();
+    let observable = new Observable(observer => {
+      this.socket.on('status', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
   sendMessage(message) {
     this.socket.emit('message', message);
+  }
+
+  closeSocket() {
+    this.socket.disconnect();
   }
 }

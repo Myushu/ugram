@@ -79,6 +79,26 @@
   border-radius:6px;
 }
 
+.user-nc{
+  position:relative;
+  padding:10px 30px;
+}
+.user-nc:hover{
+  background:#f8f8f8;
+  cursor:pointer;
+
+}
+.user-nc:before{
+  content:'';
+  position:absolute;
+  background:#ababab;
+  height:10px;
+  width:10px;
+  left:10px;
+  top:15px;
+  border-radius:6px;
+}
+
 .msg_a{
   position:relative;
   background:#FDE4CE;

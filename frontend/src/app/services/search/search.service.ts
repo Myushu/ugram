@@ -4,6 +4,7 @@ import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest"
 import {RestClient}                                     from "app/shared/rest-client";
 import {IUser}                                          from "app/services/users/users.service"
 import {IPictureShort}                                  from "../pictures/pictures.service";
+import {IHashtagResponse} from "../hashtags/hashtags.service";
 
 // output
 export interface ISearchPictures {
@@ -36,7 +37,14 @@ export class SearchService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Get,
-    path: "/hashtag?input={!INPUT}"
+    path: "/hashtag?input={!INPUT}&absolute={!absolute}"
   })
-  searchHashtag: ResourceMethod<{INPUT: string}, ISearchPictures>;
+  searchHashtag: ResourceMethod<{INPUT: string, absolute?: boolean}, ISearchPictures>;
+
+  @ResourceAction({
+    method: RequestMethod.Get,
+    path: "/autocomplete/hashtag?input={!INPUT}&absolute={!absolute}"
+  })
+  searchAutocompleteHashtag: ResourceMethod<{INPUT: string, absolute?: boolean}, IHashtagResponse>;
+
 }
