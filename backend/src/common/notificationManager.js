@@ -33,3 +33,17 @@ module.exports.notifyFollowers = (user, pictureId) => {
     }
   });
 }
+
+module.exports.notifyConnection = (socket, idUser) => {
+  socketManager.broadcast(socket, 'status', {
+    ID_USER : idUser,
+    STATUS : 'connected'
+  });
+}
+
+module.exports.notifyDisconnection = (socket, idUser) => {
+  socketManager.broadcast(socket, 'status', {
+    ID_USER : idUser,
+    STATUS : 'disconnected'
+  });
+}
