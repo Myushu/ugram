@@ -1,7 +1,9 @@
 <div id="wrapper" style="height: 1000px">
-  <navbar></navbar>
+  <div *ngIf="isConnected()">
+    <navbar></navbar>
+  </div>
   <router-outlet></router-outlet>
-  <div *ngIf="showChat()">
+  <div *ngIf="isConnected()">
     <app-chat></app-chat>
   </div>
 </div>

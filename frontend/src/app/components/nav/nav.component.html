@@ -1,7 +1,4 @@
-
-
-
-<nav *ngIf="showMenu()" class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -26,12 +23,15 @@
       </li>
     </ul>
     <div style="float: right" class="form-inline my-2 my-lg-0">
-      <input [(ngModel)]="search" style="margin-top: 7px;" class="form-control mr-sm-2" type="text" placeholder="Search">
+      <!--<ng2-completer [pause]="1000" #openClose (keyup)="autocompleteSearch($event)" [(ngModel)]="search" [datasource]="dataService" [minSearchLength]="1"></ng2-completer>-->
+      <!--<input (keyup)="checkValue()" [min-chars]="1" auto-complete [(ngModel)]="search" [source]="searchAC" />-->
+      <p-autoComplete field="display" [minLength]="1" [(ngModel)]="search" [suggestions]="searchAC" (completeMethod)="doSearch($event)"></p-autoComplete>
       <button style="margin-top: 7px!important;" class="btn btn-outline-success my-2 my-sm-0" (click)="searchAction()" type="submit">Search</button>
     </div>
     <div (click)="readNotif()" ngbDropdown class="d-inline-block" style="float: right;margin-top: 7px">
       <button class="btn btn-outline-primary" id="dropdownMenu1" ngbDropdownToggle>Notifications<span *ngIf="pushNotif" class="label label-info">{{pushNotifNbr}}</span></button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <a *ngIf="notifs.length === 0" class="dropdown-item">You don't have any notifications</a>
         <a routerLink="/picture/{{notif.ID_USER}}/{{notif.ID_PICTURE}}" *ngFor="let notif of notifs" class="dropdown-item">{{notif.MESSAGE}}</a>
       </div>
     </div>

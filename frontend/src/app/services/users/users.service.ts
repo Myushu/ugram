@@ -39,6 +39,7 @@ export interface IUserShort {
   PSEUDO: string;
   PICTURE_PATH?: string;
   SEXE: string;
+  IS_CONNECTED?: boolean;
 }
 
 export interface IUser extends IUserShort {

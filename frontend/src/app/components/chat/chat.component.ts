@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ElementRef} from '@angular/core';
 import { SocketIoService }    from "app/shared/SocketIoService";
 import {UsersService, IUserResponse, IUserShort} from "../../services/users/users.service";
 import {ChatService, IChatResponse} from "app/services/chat/chat.service";
@@ -24,18 +24,27 @@ export class ChatComponent implements OnInit {
     private userService: UsersService,
     private chatService: ChatService,
     private _cookieService: CookieService,
+    private elRef: ElementRef
   ) {}
 
   ngOnInit() {
+    console.log('Init chat');
     this.userService.getUsers().$observable.subscribe(
       (res: IUserResponse) => {
         this.users = res.rows;
         this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
+        for (let i = 0; i < this.users.length; i++)
+          this.users[i]['newMessage'] = 0;
+        console.log(this.users);
       }
     );
 
     this.socket = SocketIoService.getInstance().getMessage().subscribe(message => {
       console.log('message', message);
+      if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
+        this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
+        console.log('bonjour');
+      }
       this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
     });
   }
@@ -48,18 +57,16 @@ export class ChatComponent implements OnInit {
 
   messageBox(user) {
     this.chat = [];
+    user['newMessage'] = 0;
     this.chatService.getChat({ID_USER: user.ID_USER}).$observable.subscribe(
       (res: IChatResponse) => {
         for (let i = res.rows.length - 1; i >= 0; i--) {
-          console.log('hola', res.rows[i]);
           if (res.rows[i].ID_SENDER == <number><any>this._cookieService.get('user_id')) {
-            console.log('bonjour');
             this.chat.push({user: 'me', mess: res.rows[i].MESSAGE, div: 'msg_b'});
           }
           else
             this.chat.push({user: user.PSEUDO, mess: res.rows[i].MESSAGE, div: 'msg_a'});
         }
-        console.log('chat', this.chat);
       }
     );
     this.user = user;
@@ -68,6 +75,7 @@ export class ChatComponent implements OnInit {
 
   closeChatBox() {
     this.display = false;
+    this.user = null;
   }
 
   collapseBox() {
