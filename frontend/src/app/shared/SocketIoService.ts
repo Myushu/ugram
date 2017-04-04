@@ -35,7 +35,6 @@ export class SocketIoService {
   }
 
   connectWS() {
-    console.log('Socket IO Log In');
     this.socket = io.connect(this.configService.getSocketIoUrl());
     this.socket.emit('join', this._cookieService.get('token'));
     this.socket.on('notification', (data) => {});

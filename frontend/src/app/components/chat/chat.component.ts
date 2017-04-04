@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { SocketIoService }    from "app/shared/SocketIoService";
 import {UsersService, IUserResponse, IUserShort} from "../../services/users/users.service";
 import {ChatService, IChatResponse} from "app/services/chat/chat.service";
@@ -13,7 +13,6 @@ export class ChatComponent implements OnInit {
   private message: string = "";
   private socket;
   private chat = [];
-  private idUser: number = 2;
   public users: IUserShort[] = [<IUserShort>{}];
   public user: IUserShort = <IUserShort>{};
 
@@ -24,18 +23,15 @@ export class ChatComponent implements OnInit {
     private userService: UsersService,
     private chatService: ChatService,
     private _cookieService: CookieService,
-    private elRef: ElementRef
   ) {}
 
   ngOnInit() {
-    console.log('Init chat');
     this.userService.getUsers().$observable.subscribe(
       (res: IUserResponse) => {
         this.users = res.rows;
         this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
         for (let i = 0; i < this.users.length; i++)
           this.users[i]['newMessage'] = 0;
-        console.log(this.users);
       }
     );
 
@@ -43,7 +39,6 @@ export class ChatComponent implements OnInit {
       console.log('message', message);
       if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
         this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
-        console.log('bonjour');
       }
       this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
     });

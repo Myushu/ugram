@@ -36,7 +36,6 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Init Nav');
     this.notificationsService.getNotifications({page: 0, perPage: 10}).$observable.subscribe(
       (res: INotifResponse) => {
         this.notifs = res.rows;
@@ -76,7 +75,6 @@ export class NavComponent implements OnInit {
   }
 
   autocompleteSearch() {
-    console.log('search');
     this.searchACTmp = [];
     this.searchService.searchUsers({INPUT: this.search}).$observable.subscribe(
       (res: ISearchUsers) => {

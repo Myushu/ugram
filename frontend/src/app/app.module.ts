@@ -8,8 +8,6 @@ import { TagInputModule }         from "ng2-tag-input";
 import {ResourceModule}           from "ng2-resource-rest";
 import {ImageCropperComponent}    from "ng2-img-cropper";
 import { NouisliderModule }       from 'ng2-nouislider';
-// import { Ng2CompleterModule }     from "ng2-completer";
-// import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import {AutoCompleteModule}       from 'primeng/components/autocomplete/autocomplete';
 
 import { AppRoutingModule }       from "./app-routing.module";
@@ -58,8 +56,6 @@ import {SocketIoService}          from "./shared/SocketIoService";
     ResourceModule.forRoot(),
     TagInputModule,
     NouisliderModule,
-    // Ng2CompleterModule
-    // NguiAutoCompleteModule,
     AutoCompleteModule
   ],
   providers: [
