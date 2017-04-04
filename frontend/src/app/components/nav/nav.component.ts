@@ -52,7 +52,6 @@ export class NavComponent implements OnInit {
         this.notifs.unshift(message);
       }
     );
-
   }
 
   readNotif() {

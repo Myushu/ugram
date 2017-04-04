@@ -40,8 +40,7 @@ export class SocketIoService {
     this.socket.emit('join', this._cookieService.get('token'));
     this.socket.on('notification', (data) => {});
     this.socket.on('message', (data) => {});
-    this.socket.on('connection', (data) => {console.log('connection', data)});
-    this.socket.on('disconnection', (data) => {console.log('disconnection', data)});
+    this.socket.on('status', (data) => {});
     this.socket.on('errors', (data) => {
       console.log('errors', data);
     });
@@ -66,6 +65,20 @@ export class SocketIoService {
       this.connectWS();
     let observable = new Observable(observer => {
       this.socket.on('message', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  getStatus() {
+    if (!this.socket)
+      this.connectWS();
+    let observable = new Observable(observer => {
+      this.socket.on('status', (data) => {
         observer.next(data);
       });
       return () => {
