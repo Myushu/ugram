@@ -39,7 +39,8 @@ export class SocketIoService {
     this.socket.emit('join', this._cookieService.get('token'));
     this.socket.on('notification', (data) => {});
     this.socket.on('message', (data) => {});
-    this.socket.on('status', (data) => {});
+    this.socket.on('status', (data) => {console.log('new status', data)});
+    this.socket.on('update_client', (data) => {console.log('update user')});
     this.socket.on('errors', (data) => {
       console.log('errors', data);
     });
@@ -87,11 +88,27 @@ export class SocketIoService {
     return observable;
   }
 
+  updateUser() {
+    if (!this.socket)
+      this.connectWS();
+    let observable = new Observable(observer => {
+      this.socket.on('update_client', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
   sendMessage(message) {
     this.socket.emit('message', message);
   }
 
   closeSocket() {
+    console.log('Close Socket');
     this.socket.disconnect();
+    this.socket.close();
   }
 }

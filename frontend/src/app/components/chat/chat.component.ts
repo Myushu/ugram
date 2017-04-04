@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { SocketIoService }    from "app/shared/SocketIoService";
 import {UsersService, IUserResponse, IUserShort} from "../../services/users/users.service";
 import {ChatService, IChatResponse} from "app/services/chat/chat.service";
 import {CookieService}    from "angular2-cookie/core";
+import {FormBuilder, Validators, FormControl}    from "@angular/forms";
 
 @Component({
   selector: 'app-chat',
@@ -19,10 +20,16 @@ export class ChatComponent implements OnInit {
   public display: boolean = false;
   public display_body: boolean = false;
 
+  public chatForm = this.fb.group({
+    message: [""]
+  });
+
   constructor(
     private userService: UsersService,
     private chatService: ChatService,
     private _cookieService: CookieService,
+    private elRef: ElementRef,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit() {
@@ -32,6 +39,7 @@ export class ChatComponent implements OnInit {
         this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
         for (let i = 0; i < this.users.length; i++)
           this.users[i]['newMessage'] = 0;
+        console.log('users', this.users);
       }
     );
 
@@ -45,18 +53,34 @@ export class ChatComponent implements OnInit {
 
     this.socket = SocketIoService.getInstance().getStatus().subscribe(
       res => {
-        if (res['STATUS'] == 'connected')
-          this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 1;
-        else
-          this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 0;
+        if (this.users.length > 1) {
+          if (res['STATUS'] == 'connected')
+            this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 1;
+          else
+            this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 0;
+        }
+      }
+    );
+
+    this.socket = SocketIoService.getInstance().updateUser().subscribe(
+      data => {
+        this.userService.getUsers().$observable.subscribe(
+          (res: IUserResponse) => {
+            this.users = res.rows;
+            this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
+            for (let i = 0; i < this.users.length; i++)
+              this.users[i]['newMessage'] = 0;
+            console.log('users', this.users);
+          }
+        );
       }
     );
   }
 
   sendMessage() {
-    SocketIoService.getInstance().sendMessage({MESSAGE: this.message, USER_ID: this.user.ID_USER});
-    this.chat.push({user: 'me', mess: this.message, div: 'msg_b'});
-    this.message = "";
+    SocketIoService.getInstance().sendMessage({MESSAGE: this.chatForm.value.message, USER_ID: this.user.ID_USER});
+    this.chat.push({user: 'me', mess: this.chatForm.value.message, div: 'msg_b'});
+    this.chatForm.reset();
   }
 
   messageBox(user) {
