@@ -1,8 +1,14 @@
 const logger = require("../common/logger");
 
+var io;
+
 const clients = [];
 const sockets = [];
 const pseudoList = []
+
+module.exports.init = (newIo) => {
+  io = newIo;
+}
 
 module.exports.addClient = (clientId, pseudo, socket) => {
   if (clients[clientId] === undefined)
@@ -31,6 +37,10 @@ function sendMessageToClient(clientId, messageType, message) {
 module.exports.notifyClient = (clientId, messageType, message) => {
   if (clients[clientId] != undefined)
     sendMessageToClient(clientId, messageType, message)
+}
+
+module.exports.notifyAll = (messageType, message) => {
+  io.sockets.emit(messageType, message);
 }
 
 module.exports.broadcast = (socket, messageType, message) => {

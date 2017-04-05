@@ -7,6 +7,7 @@ const alias = require('../common/alias');
 const errorManager = require('../common/errors');
 const redisToken = require('../common/redisToken')
 const queryManager = require('../common/queryManager');
+const notification = require('../common/notificationManager');
 
 const userModel = orm.getSequelize().import("../models/USER.js")
 const followModel = orm.getSequelize().import("../models/FOLLOWING.js")
@@ -69,17 +70,23 @@ exports.createUser = (req, res) => {
   delete req.ID_USER_FACEBOOK;
   delete req.ID_USER;
   req.IS_CONNECTED = false,
-  orm.create(userModel, res, req);
+  orm.create(userModel, res, req).then(function() {
+    notification.notifyUpdateUser();
+  })
 }
 
 exports.updateUser = (content, idUser, user, res) => {
   delete content.ID_USER;
   delete IS_CONNECTED;
-  orm.update(userModel, content, res, { where : {'ID_USER' : user.userId }});
+  orm.update(userModel, content, res, { where : {'ID_USER' : user.userId }}).then(function () {
+    notification.notifyUpdateUser();
+  });
 }
 
 exports.deleteUser = (idUser, user, req, res) => {
-  orm.delete(userModel, res, { where : {'ID_USER' : user.userId }});
+  orm.delete(userModel, res, { where : {'ID_USER' : user.userId }}).then(function () {
+    notification.notifyUpdateUser();
+  });
   this.logout(req, res);
 }
 
@@ -99,11 +106,10 @@ exports.checkUserAuthentication = (body, res) => {
     })
 }
 
-function tokenGenerator(result, res, isFacebook) {
+function tokenGenerator(result, res) {
     var user = {
       userId: result.ID_USER,
-      pseudo: result.PSEUDO,
-      facebook : isFacebook
+      pseudo: result.PSEUDO
     };
 
     var token = jwt.sign(user, config.get('JWT_SECRET', 'jwt.secret'), {
@@ -118,7 +124,7 @@ exports.authentification = (req, res) => {
     if (!result)
       res.status(403).send();
     else
-      tokenGenerator(result, res, false);
+      tokenGenerator(result, res);
   });
 }
 
@@ -133,7 +139,7 @@ function authentificationFb (req, res) {
       if (!result) {
           return createUserByFacebook(req, res, resFacebook);
         } else
-          tokenGenerator(result, res, true);
+          tokenGenerator(result, res);
       });
   });
 }
@@ -146,9 +152,11 @@ function createUserByFacebook (req, res, resFacebook)   {
               "PICTURE_PATH": resFacebook.picture.data.url,
               "DATE_BIRTHDAY": resFacebook.birthday,
               "SEXE": (resFacebook.gender == "male") ? 'M' : 'F',
-              "IS_CONNECTED": false,
+              "IS_CONNECTED": true,
               "ID_USER_FACEBOOK": resFacebook.id};
-    orm.create(userModel, undefined, user);
+    orm.create(userModel, undefined, user).then(function() {
+          notification.notifyUpdateUser();
+    });
     authentificationFb(req, res);
 }
 
