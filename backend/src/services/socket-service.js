@@ -8,6 +8,10 @@ const notificationManager = require('../common/notificationManager');
 
 const messageModel = orm.getSequelize().import("../models/MESSAGE.js");
 
+exports.init = (io) => {
+  socketManager.init(io);
+}
+
 exports.join = (data, client) => {
   try {
     var user = jwtDecode(data);
@@ -36,6 +40,7 @@ exports.message = (io, client, message) => {
   var user = socketManager.getClientId(client);
   if (!user.USER_ID) {
     client.emit('errors', 'You are not connected');
+    logger.warn('user with invalid token try to send message');
     return ;
   }
   message.PSEUDO = user.PSEUDO;

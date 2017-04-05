@@ -1,8 +1,9 @@
 const service = require('../services/socket-service');
 
 module.exports = function(io) {
-  io.on('connection', function(client) {
+  service.init(io);
 
+  io.on('connection', function(client) {
     // Init the connection
     client.on('join', function(data) {
       service.join(data, client);

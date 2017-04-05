@@ -34,6 +34,10 @@ module.exports.notifyFollowers = (user, pictureId) => {
   });
 }
 
+module.exports.notifyUpdateUser = () => {
+  socketManager.notifyAll('update_client', "");
+}
+
 module.exports.notifyConnection = (socket, idUser) => {
   socketManager.broadcast(socket, 'status', {
     ID_USER : idUser,
