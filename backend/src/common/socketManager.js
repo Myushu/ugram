@@ -24,13 +24,17 @@ module.exports.removeClient = (socket) => {
 
 function sendMessageToClient(clientId, messageType, message) {
   for (var socket in clients[clientId]) {
-  clients[clientId][socket].emit(messageType, message);
+    clients[clientId][socket].emit(messageType, message);
   }
 }
 
 module.exports.notifyClient = (clientId, messageType, message) => {
   if (clients[clientId] != undefined)
     sendMessageToClient(clientId, messageType, message)
+}
+
+module.exports.broadcast = (socket, messageType, message) => {
+  socket.broadcast.emit(messageType, message);
 }
 
 module.exports.getClientId = (socket) => {

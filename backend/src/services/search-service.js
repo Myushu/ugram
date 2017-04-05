@@ -48,8 +48,8 @@ exports.searchDescription = (query, res) => {
 }
 
 exports.searchHashtag = (query, res) => {
-  if (query.absolute == false)
-    query.input = query.input + '%';
+  if (query.absolute == 'false')
+    query.input += '%';
   var attributes = {
     attributes : alias.pictureAttributes,
     include : [
@@ -59,11 +59,26 @@ exports.searchHashtag = (query, res) => {
         attributes : [],
         where : {
           'HASHTAG' : {
-            $like : query.input
+            $like :  query.input
         }
       }
     }]
   }
   queryManager.fillAttributesFromQuery(attributes, query);
   orm.findAllAndCount(pictureModel, res, attributes);
+}
+
+exports.hashtagAutocomplete = (query, res) => {
+  if (query.absolute == 'false')
+    query.input += '%';
+  var attributes = {
+    attributes : alias.hashtagAttributes ,
+    where : {
+      'HASHTAG' : {
+        $like :  query.input
+      }
+    }
+  }
+  queryManager.fillAttributesFromQuery(attributes, query);
+  orm.findAllAndCount(hashtagModel, res, attributes);
 }

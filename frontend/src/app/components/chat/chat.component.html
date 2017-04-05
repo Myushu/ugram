@@ -3,7 +3,7 @@
     Chatbox
   </div>
   <div *ngIf="display_body" class="chat_body">
-    <div class="user" *ngFor="let user of users" (click)="messageBox(user)">{{user.PSEUDO}}</div>
+    <div *ngFor="let user of users" [ngClass]="(user.IS_CONNECTED === 1)?'user':'user-nc'"  class="user-{{user.ID_USER}}" (click)="messageBox(user)">{{user.PSEUDO}} <span *ngIf="user.newMessage > 0" class="label label-info">{{user.newMessage}}</span></div>
   </div>
 </div>
 <div *ngIf="display">

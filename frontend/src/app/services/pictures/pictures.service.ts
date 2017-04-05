@@ -1,4 +1,4 @@
-import {Injectable}                                     from "@angular/core";
+import {Injectable, Injector}                                     from "@angular/core";
 import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
 import {IUserMini}                                      from "app/services/users/users.service";
@@ -6,6 +6,8 @@ import {IReactionPicture}                               from "app/services/react
 import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service";
 import {ICommentPicture}                                from "app/services/comments/comments.service";
 import {IMentionPicture}                                from "app/services/mentions/mentions.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {Http} from "@angular/http";
 
 // input
 export interface IQueryInput {
@@ -46,6 +48,15 @@ export interface IPictureResponse {
   url: "/pictures"
 })
 export class PicturesService extends RestClient {
+  public satanizer;
+
+  constructor(
+    http: Http,
+    injector: Injector,
+  ) {
+    super(http, injector);
+    this.satanizer = injector.get(DomSanitizer);
+  }
 
   @ResourceAction({
     path: "/",
@@ -88,5 +99,31 @@ export class PicturesService extends RestClient {
       }
     }
     return (pics);
+  }
+
+  setFilter(images) {
+    if (images.length && images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].filterCss = this.satanizer.bypassSecurityTrustStyle(
+          "filter:  brightness(" + images[i].PICTURE_PROPERTy['BRIGTHNESS'] + "%)" +
+          " contrast(" + images[i].PICTURE_PROPERTy['CONTRAST'] + "%)" +
+          " saturate(" + images[i].PICTURE_PROPERTy['SATURATE'] + "%)" +
+          " opacity(" + images[i].PICTURE_PROPERTy['OPACITY'] + "%)" +
+          " blur(" + images[i].PICTURE_PROPERTy['BLUR'] + "px)" +
+          " grayscale(" + images[i].PICTURE_PROPERTy['GRAYSCALE'] + "%)" +
+          " sepia(" + images[i].PICTURE_PROPERTy['SEPIA'] + "%)");
+      }
+    }
+    else if (images.PICTURE_PROPERTy) {
+      images.filterCss = this.satanizer.bypassSecurityTrustStyle(
+        "filter:  brightness(" + images.PICTURE_PROPERTy['BRIGTHNESS'] + "%)" +
+        " contrast(" + images.PICTURE_PROPERTy['CONTRAST'] + "%)" +
+        " saturate(" + images.PICTURE_PROPERTy['SATURATE'] + "%)" +
+        " opacity(" + images.PICTURE_PROPERTy['OPACITY'] + "%)" +
+        " blur(" + images.PICTURE_PROPERTy['BLUR'] + "px)" +
+        " grayscale(" + images.PICTURE_PROPERTy['GRAYSCALE'] + "%)" +
+        " sepia(" + images.PICTURE_PROPERTy['SEPIA'] + "%)");
+    }
+    return images;
   }
 }

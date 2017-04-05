@@ -12,7 +12,6 @@ import { DiscoverComponent }    from "./components/users/discover/discover.compo
 import {RegisterComponent}      from "./components/register/register.component";
 import {SearchComponent} from "./components/search/search.component";
 
-import {Ng2CameraComponent} from "./components/ng2-camera/ng2-camera.component";
 
 
 const routes: Routes = [
@@ -27,8 +26,6 @@ const routes: Routes = [
   { path: "discover", component: DiscoverComponent },
   { path: "register", component: RegisterComponent },
   { path: "search/:search", component: SearchComponent},
-
-  { path: "webcame", component: Ng2CameraComponent}
 ];
 
 

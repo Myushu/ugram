@@ -7,7 +7,8 @@ import { NgbModule }              from "@ng-bootstrap/ng-bootstrap";
 import { TagInputModule }         from "ng2-tag-input";
 import {ResourceModule}           from "ng2-resource-rest";
 import {ImageCropperComponent}    from "ng2-img-cropper";
-import { NouisliderModule } from 'ng2-nouislider';
+import { NouisliderModule }       from 'ng2-nouislider';
+import {AutoCompleteModule}       from 'primeng/components/autocomplete/autocomplete';
 
 import { AppRoutingModule }       from "./app-routing.module";
 import { AppComponent }           from "./app.component";
@@ -23,12 +24,9 @@ import { UpdateComponent }        from "./components/users/update/update.compone
 import { UploadComponent }        from "./components/users/upload/upload.component";
 import { RegisterComponent }      from './components/register/register.component';
 import { SearchComponent }        from './components/search/search.component';
-
 import { ConfigService }          from "./shared/config";
 import { ChatComponent }          from './components/chat/chat.component';
 import {SocketIoService}          from "./shared/SocketIoService";
-import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.component';
-
 
 @NgModule({
   declarations: [
@@ -46,7 +44,6 @@ import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.compo
     RegisterComponent,
     SearchComponent,
     ChatComponent,
-    Ng2CameraComponent,
     ImageCropperComponent,
   ],
   imports: [
@@ -59,6 +56,7 @@ import { Ng2CameraComponent }     from './components/ng2-camera/ng2-camera.compo
     ResourceModule.forRoot(),
     TagInputModule,
     NouisliderModule,
+    AutoCompleteModule
   ],
   providers: [
     CookieService,

@@ -13,6 +13,7 @@ use UGRAM;
     DATE_BIRTHDAY date null,
     SEXE char not null,
     ID_USER_FACEBOOK varchar(255) null,
+    IS_CONNECTED boolean not null,
     constraint PK_USER primary key (ID_USER)
   );
 

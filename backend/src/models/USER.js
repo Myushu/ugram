@@ -53,6 +53,10 @@ module.exports = function(sequelize, DataTypes) {
     ID_USER_FACEBOOK: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    IS_CONNECTED: {
+      type: DataTypes.INTEGER(1),
+      allowNull: false
     }
   }, {
     tableName: 'USER',

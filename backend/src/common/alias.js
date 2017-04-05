@@ -36,8 +36,8 @@ exports.pictureWhereUser = (pictureId, userId) => {
 };
 
 // User
-exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO'];
-exports.userAttributesFull = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'];
+exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'IS_CONNECTED'];
+exports.userAttributesFull = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE', 'IS_CONNECTED'];
 exports.userInclude = {
   model : userModel,
   attributes : this.userAttributes
@@ -81,3 +81,6 @@ exports.messageAttributes = ['ID_SENDER', 'ID_RECEIVER', 'DATE_SENDED', 'MESSAGE
 exports.picturePropertiesInclude = {
   model : picturePropertiesModel
 }
+
+// Notification
+exports.notificationAttributes = ['MESSAGE', 'ID_USER', 'ID_PICTURE'];

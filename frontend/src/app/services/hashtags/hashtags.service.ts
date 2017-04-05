@@ -23,6 +23,11 @@ export interface IHashtag {
   ID_PICTURE: number;
 }
 
+export interface IHashtagResponse {
+  count: number;
+  rows: IHashtagPicture[];
+}
+
 export interface IHashtagPicture {
   HASHTAG: string;
 }
