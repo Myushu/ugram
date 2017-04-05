@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
           this._cookieService.put('token', res['token']);
           this._cookieService.put('user_id', res['userId']);
           this._cookieService.put('login_facebook', "0");
-          //this.socketIoService.connectWS();
           this.router.navigate(["/home"]);
         },
         err => {

@@ -64,7 +64,6 @@ export class SocketIoService {
   getMessage() {
     let observable = new Observable(observer => {
       this.socket.on('message', (data) => {
-        console.log('new message');
         observer.next(data);
       });
       return () => {
