@@ -35,19 +35,21 @@ export class SocketIoService {
   }
 
   connectWS() {
+    console.log('Connect Socket IO');
     this.socket = io.connect(this.configService.getSocketIoUrl());
-    this.socket.emit('join', this._cookieService.get('token'));
+    this.socket.on('connect', (data) => {
+      this.socket.emit('join', this._cookieService.get('token'));
+    });
     this.socket.on('notification', (data) => {});
     this.socket.on('message', (data) => {});
     this.socket.on('status', (data) => {});
+    this.socket.on('update_client', (data) => {});
     this.socket.on('errors', (data) => {
       console.log('errors', data);
     });
   }
 
   getNotification() {
-    if (!this.socket)
-      this.connectWS();
     let observable = new Observable(observer => {
       this.socket.on('notification', (data) => {
         observer.next(data);
@@ -60,8 +62,6 @@ export class SocketIoService {
   }
 
   getMessage() {
-    if (!this.socket)
-      this.connectWS();
     let observable = new Observable(observer => {
       this.socket.on('message', (data) => {
         observer.next(data);
@@ -74,10 +74,20 @@ export class SocketIoService {
   }
 
   getStatus() {
-    if (!this.socket)
-      this.connectWS();
     let observable = new Observable(observer => {
       this.socket.on('status', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  updateUser() {
+    let observable = new Observable(observer => {
+      this.socket.on('update_client', (data) => {
         observer.next(data);
       });
       return () => {
@@ -92,6 +102,8 @@ export class SocketIoService {
   }
 
   closeSocket() {
+    console.log('Close Socket');
     this.socket.disconnect();
+    this.socket.close();
   }
 }
