@@ -27,22 +27,17 @@ npm start
 ### Back end
 
 To run the server, set information on the config file ``` backend/config/default.json```.   
-You must init the SQL database :
-```
-mysql -u [user] -p[password] < backend/dist/ugram.sql
-mysql -u [user] -p[password] < dist/phone_code.sql
-```
 You also must start the [redis](redis.io) database : 
 ```
 sudo service redis start
 ```
 If you want ton init the database, you must run : 
 ```
+cd backend
 npm run-script initialize
 ```
 Then you can start the server :
 ```
-cd backend
 npm start
 ```
 
