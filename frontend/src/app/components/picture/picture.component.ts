@@ -57,7 +57,7 @@ export class PictureComponent implements OnInit {
   }
 
   addThumbUp() {
-    this.reactionsService.createReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+    this.reactionsService.createReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
       res => {
         this.reactionsNbr += 1;
         this.isLiked = true;
@@ -69,7 +69,7 @@ export class PictureComponent implements OnInit {
   }
 
   deleteThumbUp() {
-    this.reactionsService.deleteReaction({ID_USER: this.my_user_id, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+    this.reactionsService.deleteReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
       res => {
         this.reactionsNbr -= 1;
         this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id);
@@ -150,10 +150,8 @@ export class PictureComponent implements OnInit {
       );
       this.usersPicturesService.getUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID}).$observable.subscribe(
         (res: IPicture) => {
-          console.log(res);
           this.image = this.picturesService.format_picture(res);
           this.image = this.picturesService.setFilter(this.image);
-          console.log('wf', this.image);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
           this.reactions = this.image.REACTIONs;
