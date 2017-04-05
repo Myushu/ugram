@@ -13,7 +13,6 @@ interface IQueryCreateReaction {
 interface IQueryDeleteReaction {
   ID_USER: number;
   ID_PICTURE: number;
-  ID_REACTION: number;
 }
 
 // output
@@ -41,7 +40,7 @@ export class ReactionsService extends RestClient {
 
   @ResourceAction({
     method: RequestMethod.Delete,
-    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/reaction/"
+    path: "/{!ID_USER}/pictures/{!ID_PICTURE}/reaction"
   })
   deleteReaction: ResourceMethod<IQueryDeleteReaction, IReaction>;
 }

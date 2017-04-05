@@ -10,7 +10,7 @@ import {UsersPicturesService}         from "app/services/users-pictures/users-pi
 import {IHashtagPicture}              from "app/services/hashtags/hashtags.service";
 import {IMentionPicture}              from "app/services/mentions/mentions.service";
 import {ICommentPicture}              from "app/services/comments/comments.service";
-import {IReactionPicture}             from "app/services/reactions/reactions.service";
+import {IReactionPicture, ReactionsService}             from "app/services/reactions/reactions.service";
 import {ConfigService}                from "app/shared/config";
 
 @Component({
@@ -27,11 +27,13 @@ export class PictureComponent implements OnInit {
   public mentions: IMentionPicture[];
   public comments: ICommentPicture[];
   public reactions: IReactionPicture[];
+  public reactionsNbr: number;
   public image: IPicture = <IPicture>{};
   public user: IUser = <IUser>{};
   public users = [];
   public updated: number = 0;
   public picture_url: string;
+  public isLiked: boolean;
 
   constructor(
     private _cookieService: CookieService,
@@ -40,9 +42,43 @@ export class PictureComponent implements OnInit {
     private Route: ActivatedRoute,
     private usersService: UsersService,
     private usersPicturesService: UsersPicturesService,
+    private reactionsService: ReactionsService,
     private configService: ConfigService,
   ) {
 
+  }
+
+  checkAlreadyLiked() {
+    if (this.isLiked) {
+      this.deleteThumbUp();
+    } else {
+      this.addThumbUp();
+    }
+  }
+
+  addThumbUp() {
+    this.reactionsService.createReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        this.reactionsNbr += 1;
+        this.isLiked = true;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteThumbUp() {
+    this.reactionsService.deleteReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        this.reactionsNbr -= 1;
+        this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id);
+        this.isLiked = false;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   deleteImage() {
@@ -116,9 +152,16 @@ export class PictureComponent implements OnInit {
         (res: IPicture) => {
           this.image = this.picturesService.format_picture(res);
           this.image = this.picturesService.setFilter(this.image);
-          console.log('wf', this.image);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
+          this.reactions = this.image.REACTIONs;
+          this.reactionsNbr = this.reactions.length;
+          this.isLiked = false;
+          for (let i = 0; i < this.reactions.length; ++i) {
+            if (this.my_user_id == this.reactions[i]["ID_USER"]) {
+              this.isLiked = true;
+            }
+          }
         },
         err => {
           console.log('err', err);
