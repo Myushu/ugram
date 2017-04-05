@@ -30,7 +30,8 @@ export class ChatComponent implements OnInit {
     private _cookieService: CookieService,
     private elRef: ElementRef,
     private fb: FormBuilder,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.userService.getUsers().$observable.subscribe(
@@ -55,16 +56,18 @@ export class ChatComponent implements OnInit {
             console.log('user deconnected', this.users);
           }
         }
-        SocketIoService.getInstance().getMessage().subscribe(message => {
-          console.log('message', message);
-          if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
-            console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
-            this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
-          }
-          this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
-        });
       }
     );
+
+    SocketIoService.getInstance().getMessage().subscribe(message => {
+      console.log('message', message);
+      if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
+        console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
+        this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
+      }
+      else if (this.users && this.user.ID_USER == message['ID_SENDER'])
+        this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
+    });
 
     SocketIoService.getInstance().updateUser().subscribe(
       data => {

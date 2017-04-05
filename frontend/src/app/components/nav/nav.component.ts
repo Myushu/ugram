@@ -33,6 +33,7 @@ export class NavComponent implements OnInit {
     private notificationsService: NotificationsService,
     private searchService: SearchService,
   ) {
+    SocketIoService.getInstance().connectWS();
   }
 
   ngOnInit() {
