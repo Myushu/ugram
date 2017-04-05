@@ -43,26 +43,30 @@ export class ChatComponent implements OnInit {
       }
     );
 
-    this.socket = SocketIoService.getInstance().getMessage().subscribe(message => {
-      console.log('message', message);
-      if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
-        this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
-      }
-      this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
-    });
-
-    this.socket = SocketIoService.getInstance().getStatus().subscribe(
+    SocketIoService.getInstance().getStatus().subscribe(
       res => {
-        if (this.users.length > 1) {
-          if (res['STATUS'] == 'connected')
+        if (this.users.length > 0) {
+          if (res['STATUS'] == 'connected') {
             this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 1;
-          else
+            console.log('user connected', this.users);
+          }
+          else {
             this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 0;
+            console.log('user deconnected', this.users);
+          }
         }
+        SocketIoService.getInstance().getMessage().subscribe(message => {
+          console.log('message', message);
+          if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
+            console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
+            this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
+          }
+          this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
+        });
       }
     );
 
-    this.socket = SocketIoService.getInstance().updateUser().subscribe(
+    SocketIoService.getInstance().updateUser().subscribe(
       data => {
         this.userService.getUsers().$observable.subscribe(
           (res: IUserResponse) => {

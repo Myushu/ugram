@@ -38,7 +38,7 @@ export class SocketIoService {
     this.socket = io.connect(this.configService.getSocketIoUrl());
     this.socket.emit('join', this._cookieService.get('token'));
     this.socket.on('notification', (data) => {});
-    this.socket.on('message', (data) => {});
+    this.socket.on('message', (data) => {console.log('new message', data)});
     this.socket.on('status', (data) => {console.log('new status', data)});
     this.socket.on('update_client', (data) => {console.log('update user')});
     this.socket.on('errors', (data) => {

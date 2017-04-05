@@ -68,8 +68,9 @@ export class NavComponent implements OnInit {
   logoutAction() {
     SocketIoService.getInstance().closeSocket();
     SocketIoService.closeInstance();
-    this.fb.onFacebookLogoutClick();
     this._cookieService.removeAll();
+    if (this._cookieService.get('login_facebook') === "1")
+      this.fb.onFacebookLogoutClick();
     this.userServices.logoutUser();
     this.router.navigate(["/login"]);
   }

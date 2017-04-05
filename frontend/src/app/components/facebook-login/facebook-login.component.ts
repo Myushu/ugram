@@ -45,6 +45,7 @@ export class FacebookLoginComponent implements OnInit {
       this.usersService.FBLoginUser({TOKEN: resp['authResponse']['accessToken']}, (res: string) => {
         this._cookieService.put('token', res['token']);
         this._cookieService.put('user_id', res['userId']);
+        this._cookieService.put('login_facebook', "1");
         this.router.navigate(['/home']);
       });
     }else if (resp.status === "not_authorized") {
