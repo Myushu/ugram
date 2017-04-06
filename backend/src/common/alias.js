@@ -36,7 +36,7 @@ exports.pictureWhereUser = (pictureId, userId) => {
 };
 
 // User
-exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'IS_CONNECTED'];
+exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'IS_CONNECTED', 'PICTURE_PATH'];
 exports.userAttributesFull = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE', 'IS_CONNECTED'];
 exports.userInclude = {
   model : userModel,
@@ -67,7 +67,7 @@ exports.hashtagInclude = {
 };
 
 // Comment
-exports.commentAttributes = ['ID_PICTURE', 'ID_USER'];
+exports.commentAttributes = ['ID_PICTURE', 'ID_USER', 'CONTENT', 'DATE_CREATION'];
 exports.commentInclude = {
   model : commentModel,
   attributes : this.commentAttributes,
