@@ -91,7 +91,9 @@ exports.deleteUser = (idUser, user, req, res) => {
 }
 
 exports.logout = (req, res) => {
-  redisToken.removeToken(req.headers.authorization.split(' ')[1]);
+  redisToken.removeToken(req.cookies.token);
+  res.clearCookie('token');
+  res.clearCookie('user_id');
   res.status(200).send();
 }
 
@@ -107,16 +109,13 @@ exports.checkUserAuthentication = (body, res) => {
 }
 
 function tokenGenerator(result, res) {
-    var user = {
-      userId: result.ID_USER,
-      pseudo: result.PSEUDO
-    };
-
+    var user = { userId: result.ID_USER };
     var token = jwt.sign(user, config.get('JWT_SECRET', 'jwt.secret'), {
-      expiresIn: '24h',
+      expiresIn: config.get('TOKEN_EXPIRE', 'token.expire'),
     });
     redisToken.addToken(token, user.userId);
-    res.json({token : token, userId : user.userId});
+    res.cookie('token', token, {maxAge: config.get('TOKEN_EXPIRE', 'token.expire') * 1000, httpOnly: true});
+    res.status(200).send({ID_USER : user.userId});
 }
 
 exports.authentification = (req, res) => {

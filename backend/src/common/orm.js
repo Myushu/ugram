@@ -52,7 +52,7 @@ function sequelizeCall (request)  {
 exports.findAll = (model, res, attributes, sendIt) => {
   return sequelizeCall(model.findAll(attributes)).then(function (result) {
     setResult(result, res)
-    if (sendIt === undefined)
+    if (sendIt === undefined && res != undefined)
       res.send(result);
     return result;
   })

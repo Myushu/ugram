@@ -1,6 +1,7 @@
 const socketManager = require('./socketManager');
 const orm = require("../common/orm");
 
+const userModel  = orm.getSequelize().import("../models/USER.js");
 const notificationModel = orm.getSequelize().import("../models/NOTIFICATION.js");
 const followModel = orm.getSequelize().import("../models/FOLLOWING.js");
 
@@ -14,16 +15,22 @@ function notifyClient (clientId, msg, pictureId, userId) {
     orm.create(notificationModel, undefined, message);
 }
 
-module.exports.notifyComment = (ownerId, pseudo, pictureId) => {
-  notifyClient(ownerId, pseudo + ' commented one of your picture', pictureId, ownerId);
+module.exports.notifyComment = (ownerId, idSender, pictureId) => {
+  orm.find(userModel, undefined, {where : {ID_USER : idSender}}).then(function(result) {
+    notifyClient(ownerId, result.PSEUDO + ' commented one of your picture', pictureId, ownerId);
+  });
 }
 
-module.exports.notifyMention = (ownerId, pseudo, userId, pictureId) => {
-  notifyClient(ownerId, pseudo + ' tagged you on one of his picture', pictureId, userId);
+module.exports.notifyMention = (ownerId, userId, pictureId) => {
+  orm.find(userModel, undefined, {where : {ID_USER : userId}}).then(function(result) {
+    notifyClient(ownerId, result.PSEUDO + ' tagged you on one of his picture', pictureId, userId);
+  });
 }
 
-module.exports.notifyReaction = (ownerId, pseudo, pictureId) => {
-  notifyClient(ownerId, pseudo + ' reacted one of your picture', pictureId, ownerId);
+module.exports.notifyReaction = (ownerId, idSender, pictureId) => {
+  orm.find(userModel, undefined, {where : {ID_USER : idSender}}).then(function(result) {
+    notifyClient(ownerId, result.PSEUDO + ' reacted one of your picture', pictureId, ownerId);
+  });
 }
 
 module.exports.notifyFollowers = (user, pictureId) => {

@@ -1,6 +1,5 @@
 const orm = require('../common/orm');
 const logger = require("../common/logger");
-const jwtDecode = require('jwt-decode');
 const redisToken = require('../common/redisToken')
 const socketManager = require("../common/socketManager");
 const userService = require('../services/users-service');
@@ -12,42 +11,52 @@ exports.init = (io) => {
   socketManager.init(io);
 }
 
-exports.join = (data, client) => {
-  try {
-    var user = jwtDecode(data);
-    redisToken.isTokenOnRedis(data, user, function (err, repplies) {
-      if (repplies == user.userId) {
-        socketManager.addClient(user.userId, user.pseudo, client);
-        userService.setConnectStatus(true,  user.userId);
-        notificationManager.notifyConnection(client, user.userId);
-      } else
-        client.disconnect('unauthorized');
-    });
-  } catch (e) {
-    logger.error(e.message);
+function testClientConnection(client) {
+  var user = socketManager.getClientId(client);
+  if (user == undefined) {
+    client.disconnect('unauthorized');
+    return undefined;
   }
+  return user;
+}
+
+exports.connect = (client) => {
+  var user = testClientConnection(client);
+  if (user == undefined)
+    return ;
+
+  redisToken.isTokenOnRedis(socketManager.getToken(client), user, function (err, repplies) {
+    if (repplies == user.userId) {
+      socketManager.addClient(user.userId, user.pseudo, client);
+      userService.setConnectStatus(true,  user.userId);
+      notificationManager.notifyConnection(client, user.userId);
+    } else {
+      logger.warn('Socket connection with unauthorized token');
+      client.disconnect('unauthorized');
+    }
+  });
 }
 
 exports.disconnect = (client) => {
-  idUser = socketManager.getClientId(client).USER_ID;
-  userService.setConnectStatus(false, idUser);
-  socketManager.removeClient(client);
-  notificationManager.notifyDisconnection(client, idUser);
+  var user = testClientConnection(client);
+  if (user == undefined)
+    return ;
+
+  userService.setConnectStatus(false, user.userId);
+  socketManager.removeClient(client, user.userId);
+  notificationManager.notifyDisconnection(client, user.userId);
   client.disconnect('connection closed');
 }
 
 exports.message = (io, client, message) => {
-  var user = socketManager.getClientId(client);
-  if (!user.USER_ID) {
-    client.emit('errors', 'You are not connected');
-    logger.warn('user with invalid token try to send message');
+  var user = testClientConnection(client);
+  if (user == undefined)
     return ;
-  }
-  message.PSEUDO = user.PSEUDO;
+
   message.ID_RECEIVER = message.USER_ID;
-  message.ID_SENDER = user.USER_ID;
-  delete message.PSEUDO;
+  message.ID_SENDER = user.userId;
   delete message.USER_ID;
+  logger.error('ERROR MESSAGE', message);
   socketManager.notifyClient(message.ID_RECEIVER, 'message', message)
   orm.create(messageModel, undefined, message);
 }

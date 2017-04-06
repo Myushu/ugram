@@ -4,11 +4,13 @@ const http = require('http');
 const morgan = require('morgan');
 const socket = require('socket.io');
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
 const config = require('./common/configManager');
 const logger = require('./common/logger');
 const orm = require('./common/orm');
 
 const app = express();
+
 const server = http.createServer(app);
 const io = socket(server, { path: '/socket.io'});
 const port = config.get('PORT', 'server.port', 3000);
@@ -26,7 +28,9 @@ const corsOptions = {
 app.use(morgan(logger.format, {'stream': logger.stream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
 require('./common/headerManager')(app);
 require('./common/tokenManager')(app);
 require('./controllers/home-controller')(app);
