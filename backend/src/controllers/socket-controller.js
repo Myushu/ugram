@@ -1,13 +1,12 @@
 const service = require('../services/socket-service');
+const cookieParser = require('socket.io-cookie');
 
 module.exports = function(io) {
   service.init(io);
+  io.use(cookieParser);
 
   io.on('connection', function(client) {
-    // Init the connection
-    client.on('join', function(data) {
-      service.join(data, client);
-    });
+    service.connect(client);
 
     // Disconnect
     client.on('disconnect', function () {

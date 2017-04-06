@@ -1,10 +1,8 @@
 const logger = require("../common/logger");
+const jwtDecode = require('jwt-decode');
 
 var io;
-
 const clients = [];
-const sockets = [];
-const pseudoList = []
 
 module.exports.init = (newIo) => {
   io = newIo;
@@ -14,17 +12,13 @@ module.exports.addClient = (clientId, pseudo, socket) => {
   if (clients[clientId] === undefined)
     clients[clientId] = [];
   clients[clientId][socket.id] = socket;
-  sockets[socket.id] = clientId
-  pseudoList[clientId] = pseudo;
   logger.info('User ' +  clientId + ' is now connected');
 }
 
-module.exports.removeClient = (socket) => {
-  var userId = sockets[socket.id];
-  logger.info('User ' +  userId + ' is now disconnected');
-  if (userId != undefined) {
-    delete clients[userId][socket.id];
-    delete sockets[socket.id];
+module.exports.removeClient = (socket, clientId) => {
+  logger.info('User ' +  clientId + ' is now disconnected');
+  if (clientId != undefined) {
+    delete clients[clientId][socket.id];
   }
 }
 
@@ -47,10 +41,15 @@ module.exports.broadcast = (socket, messageType, message) => {
   socket.broadcast.emit(messageType, message);
 }
 
+module.exports.getToken = (socket) => {
+  return socket.handshake.headers.cookie.token;
+}
+
 module.exports.getClientId = (socket) => {
-  var userId = sockets[socket.id];
-  return {
-    USER_ID : userId,
-    PSEUDO : pseudoList[userId]
-  };
+  try {
+    return jwtDecode(socket.handshake.headers.cookie.token);
+  } catch (e) {
+    logger.warn('Socket connection with invalid token');
+    return undefined;
+  }
 }

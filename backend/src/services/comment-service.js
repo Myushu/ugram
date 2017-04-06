@@ -9,7 +9,7 @@ exports.createComment = (userId, pictureId, comment, res, userWriter) => {
   comment.ID_USER = userWriter.userId;
   orm.create(commentModel, res, comment).then(function(result) {
     if (userId != comment.ID_USER)
-      notification.notifyComment(userId, userWriter.pseudo, comment.ID_PICTURE)
+      notification.notifyComment(userId, userWriter.userId, comment.ID_PICTURE)
   });
 }
 

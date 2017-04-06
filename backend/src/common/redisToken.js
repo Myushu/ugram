@@ -15,15 +15,18 @@ const redisClient = redis.createClient({
 });
 
 exports.isTokenOnRedis = (token, user, callback) => {
-    redisClient.get(token, callback);
+  logger.info('redis : GET', token);
+  redisClient.get(token, callback);
 }
 
 exports.addToken = (token, userId) => {
+  logger.info('redis : SET', token, userId);
   redisClient.set(token, userId,  function (err, replies) {
     redisClient.expire(token, config.get('TOKEN_EXPIRE', 'token.expire'));
   });
 }
 
 exports.removeToken = (token) => {
+  logger.info('redis : DEL', token);
   redisClient.del(token);
 }

@@ -21,11 +21,10 @@
   },
   "homepage": "https://github.com/GLO3102/ugram-h17-team-06#readme",
   "dependencies": {
-    "aws-sdk": "^2.6.15",
     "body-parser": "^1.15.2",
     "config": "^1.25.1",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
-    "ejs": "^2.5.2",
     "errno": "^0.1.4",
     "express": "^4.14.0",
     "express-jwt": "^5.1.0",
@@ -39,7 +38,7 @@
     "redis": "^2.6.3",
     "sequelize": "^3.30.1",
     "socket.io": "^1.7.3",
-    "socketio-jwt": "^4.5.0",
+    "socket.io-cookie": "0.0.1",
     "sql": "^0.74.0",
     "winston": "^2.3.0",
     "winston-aws-cloudwatch": "^1.4.0"

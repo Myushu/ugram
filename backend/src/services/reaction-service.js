@@ -7,7 +7,7 @@ const reactionModel = orm.getSequelize().import("../models/REACTION.js");
 exports.creationReaction = (userId, pictureId, user, res) => {
   orm.create(reactionModel, res,  alias.pictureWhereUser(pictureId, user.userId)).then(function(result) {
     if (userId != user.userId)
-      notification.notifyReaction(userId, user.pseudo, pictureId);
+      notification.notifyReaction(userId, user.userId, pictureId);
   });
 }
 
