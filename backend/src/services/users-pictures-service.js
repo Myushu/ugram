@@ -94,7 +94,8 @@ exports.getPictureById = (userId, pictureId, res) => {
       alias.hashtagInclude,
       alias.commentInclude,
       alias.picturePropertiesInclude
-    ]
+    ],
+    order : 'DATE_CREATION asc',
   });
 }
 

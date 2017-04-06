@@ -49,15 +49,17 @@ function sequelizeCall (request)  {
   });
 }
 
-exports.findAll = (model, res, attributes) => {
+exports.findAll = (model, res, attributes, sendIt) => {
   return sequelizeCall(model.findAll(attributes)).then(function (result) {
     setResult(result, res)
+    if (sendIt === undefined)
+      res.send(result);
     return result;
   })
 }
 
 exports.findAllAndCount = (model, res, attributes) => {
-  return this.findAll(model, res, attributes).then(function (result) {
+  return this.findAll(model, res, attributes, false).then(function (result) {
     sequelizeCall(model.count({where : attributes.where})).then(function (resultCount) {
       var json = {};
       json['count'] = resultCount  == undefined ? 0 : resultCount;

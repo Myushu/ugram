@@ -1,5 +1,6 @@
 const orm = require('../common/orm');
 const notification = require('../common/notificationManager');
+const alias =  require('../common/alias');
 
 const commentModel = orm.getSequelize().import("../models/COMMENT.js");
 
@@ -19,4 +20,17 @@ exports.deleteComment = (userId, pictureId, commentId, res, userWriter) => {
     ID_COMMENT : commentId,
   };
   orm.delete(commentModel, res, {where : comment});
+}
+
+exports.findById = (userId, pictureId, res) => {
+  var attributes = {
+    where : {
+      ID_PICTURE : pictureId
+    },
+    order : 'DATE_CREATION asc',
+    include : [
+      alias.userInclude,
+    ]
+  }
+  orm.findAll(commentModel, res, attributes);
 }
