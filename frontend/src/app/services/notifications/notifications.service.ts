@@ -27,7 +27,8 @@ export interface INotifResponse {
 
 @Injectable()
 @ResourceParams({
-  url: "/notification"
+  url: "/notification",
+  withCredentials: true
 })
 export class NotificationsService extends RestClient {
 

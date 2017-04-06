@@ -28,7 +28,8 @@ export interface IReactionPicture {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class ReactionsService extends RestClient {
 

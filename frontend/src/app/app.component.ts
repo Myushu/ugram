@@ -34,6 +34,6 @@ export class AppComponent {
   }
 
   isConnected() {
-    return (this._cookieService.get("token"));
+    return (this._cookieService.get("user_id"));
   }
 }

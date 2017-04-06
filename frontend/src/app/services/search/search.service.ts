@@ -19,7 +19,8 @@ export interface ISearchUsers {
 
 @Injectable()
 @ResourceParams({
-  url: "/search"
+  url: "/search",
+  withCredentials: true,
 })
 export class SearchService extends RestClient {
 

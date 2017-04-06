@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private http: Http,
 
   ) {
-    if (!this._cookieService.get("token"))
+    if (!this._cookieService.get("user_id"))
       this.router.navigate(["/login"]);
   }
 

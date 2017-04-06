@@ -30,7 +30,8 @@ export interface IMentionPicture {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class MentionsService extends RestClient {
 

@@ -24,11 +24,6 @@ export class RestClient extends Resource {
 
   getHeaders(methodOptions?: any): any {
     let headers = super.getHeaders();
-
-    if (!methodOptions.noAuth) {
-        if (this._cookieService.get("token"))
-          headers.Authorization = "Bearer " + this._cookieService.get("token");
-    }
     return headers;
   }
 
