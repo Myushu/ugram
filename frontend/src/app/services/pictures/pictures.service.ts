@@ -45,7 +45,8 @@ export interface IPictureResponse {
 
 @Injectable()
 @ResourceParams({
-  url: "/pictures"
+  url: "/pictures",
+  withCredentials: true,
 })
 export class PicturesService extends RestClient {
   public satanizer;
@@ -60,6 +61,7 @@ export class PicturesService extends RestClient {
 
   @ResourceAction({
     path: "/",
+    withCredentials: true,
   })
   getPictures: ResourceMethod<IQueryInput, IPictureResponse>;
 

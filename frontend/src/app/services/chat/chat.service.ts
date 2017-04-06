@@ -18,7 +18,8 @@ export interface IChatResponse {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class ChatService extends RestClient {
 

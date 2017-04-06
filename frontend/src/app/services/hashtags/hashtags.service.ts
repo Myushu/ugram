@@ -34,7 +34,8 @@ export interface IHashtagPicture {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class HashtagsService extends RestClient {
 

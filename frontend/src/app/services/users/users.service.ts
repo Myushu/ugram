@@ -1,7 +1,8 @@
-import {Injectable}                                     from "@angular/core";
-import {RequestMethod}                                  from "@angular/http";
+import {Injectable, Injector}                                     from "@angular/core";
+import {RequestMethod, Http}                                  from "@angular/http";
 import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
+import {ConfigService}                                  from "app/shared/config";
 
 // input
 interface IQueryInput {
@@ -54,6 +55,7 @@ export interface IUserMini {
   FIRSTNAME: string;
   LASTNAME: string;
   PSEUDO: string;
+  PICTURE_PATH?: string;
 }
 
 export interface IUserResponse {
@@ -63,9 +65,19 @@ export interface IUserResponse {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class UsersService extends RestClient {
+  public configService: ConfigService;
+
+  constructor(
+    http: Http,
+    injector: Injector,
+  ) {
+    super(http, injector);
+    this.configService = new ConfigService();
+  }
 
   @ResourceAction({
     path: "/"
@@ -112,4 +124,20 @@ export class UsersService extends RestClient {
     path: "/logout"
   })
   logoutUser: ResourceMethod<any, any>;
+
+  formatPicturePath(user) {
+    console.log('formatPic');
+    if (!user.length) {
+      console.log('User lenght 0');
+      if (!(user.PICTURE_PATH.startsWith('https://') || user.PICTURE_PATH.startsWith('http://'))) {
+        console.log('is not url');
+        user.PICTURE_PATH = this.configService.baseUrl + "/picture?filename=" + user.PICTURE_PATH;
+      }
+      return user;
+    }
+    else {
+      for (let i = 0; i < user.length; i++)
+        user[i] = this.formatPicturePath(user[i]);
+    }
+  }
 }

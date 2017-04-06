@@ -38,7 +38,8 @@ export class SocketIoService {
     console.log('Connect Socket IO');
     this.socket = io.connect(this.configService.getSocketIoUrl());
     this.socket.on('connect', (data) => {
-      this.socket.emit('join', this._cookieService.get('token'));
+      console.log('coooooo');
+      //this.socket.emit('join', this._cookieService.get('token'));
     });
     this.socket.on('notification', (data) => {});
     this.socket.on('message', (data) => {});

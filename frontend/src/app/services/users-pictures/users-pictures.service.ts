@@ -34,7 +34,8 @@ export interface IUploadTest {
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class UsersPicturesService extends RestClient {
 

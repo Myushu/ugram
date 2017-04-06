@@ -5,7 +5,8 @@ import {RestClient}                                     from "app/shared/rest-cl
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class FollowService extends RestClient {
 

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private validationService: ValidationService
   ) {
-    if (this._cookieService.get("token"))
+    if (this._cookieService.get("user_id"))
       this.router.navigate(["/home"]);
   }
 
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.dirty && this.loginForm.valid) {
       this.userService.loginUser({EMAIL: this.loginForm.value.email, PASSWORD_HASH: <string><any>Md5.hashStr(this.loginForm.value.password)}).$observable.subscribe(
         res => {
-          this._cookieService.put('token', res['token']);
-          this._cookieService.put('user_id', res['userId']);
+          this._cookieService.put('user_id', res['ID_USER']);
           this._cookieService.put('login_facebook', "0");
           this.router.navigate(["/home"]);
         },

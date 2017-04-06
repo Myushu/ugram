@@ -125,9 +125,8 @@ export class UploadComponent implements OnInit {
         formData.append('HASHTAGs', JSON.stringify(tags));
       formData.append('PICTURE_PROPERTIES', JSON.stringify(filters));
       let headers = new Headers();
-      headers.append('Authorization', 'Bearer ' + this._cookieService.get('token'));
       headers.append('Accept', 'application/json');
-      let options = new RequestOptions({ headers: headers });
+      let options = new RequestOptions({ headers: headers, withCredentials: true });
       this.http.post(this.cs.getUrl() + '/users/' + this._cookieService.get('user_id') + '/pictures', formData, options)
         .map(res => res)
         .catch(error => Observable.throw(error))
