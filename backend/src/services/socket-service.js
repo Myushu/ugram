@@ -43,8 +43,9 @@ exports.disconnect = (client) => {
     return ;
 
   userService.setConnectStatus(false, user.userId);
-  socketManager.removeClient(client, user.userId);
-  notificationManager.notifyDisconnection(client, user.userId);
+  var nb = socketManager.removeClient(client, user.userId);
+  if (nb == 0)
+    notificationManager.notifyDisconnection(client, user.userId);
   client.disconnect('connection closed');
 }
 

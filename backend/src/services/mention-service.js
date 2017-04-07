@@ -13,7 +13,7 @@ exports.creationMention = (userId, pictureId, mention, user, res) => {
       res.status(403).send();
     else {
       orm.create(mentionModel, res, mention).then(function (result) {
-        if (userId != user.idUser)
+        if (mention.ID_USER != user.userId)
           notification.notifyMention(mention.ID_USER, user.userId, mention.ID_PICTURE)
       });
     }

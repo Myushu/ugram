@@ -17,9 +17,11 @@ module.exports.addClient = (clientId, pseudo, socket) => {
 
 module.exports.removeClient = (socket, clientId) => {
   logger.info('User ' +  clientId + ' is now disconnected');
-  if (clientId != undefined) {
+  if (clientId != undefined && clients[clientId] != undefined) {
     delete clients[clientId][socket.id];
+    return clients[clientId].length;
   }
+  return 1;
 }
 
 function sendMessageToClient(clientId, messageType, message) {
