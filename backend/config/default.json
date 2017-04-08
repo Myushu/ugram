@@ -27,6 +27,9 @@
     "port" : 3000,
     "cors" : ["http://localhost:4200"]
   },
+  "client" : {
+    "url" : "http://localhost:4200"
+  },
   "winston" : {
     "enable" : false,
     "level" : "silly"

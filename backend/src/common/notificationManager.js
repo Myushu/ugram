@@ -34,10 +34,12 @@ module.exports.notifyReaction = (ownerId, idSender, pictureId) => {
 }
 
 module.exports.notifyFollowers = (user, pictureId) => {
-  orm.findAll(followModel, undefined, {where : {ID_USER : user.userId}}).then(function(result) {
-    for (var i in result) {
-      notifyClient(result[i].ID_FOLLOWER, user.pseudo + " posted a new picture", pictureId, user.userId);
-    }
+  orm.find(userModel, undefined, {where : {ID_USER : user.userId}}).then(function(res) {
+    orm.findAll(followModel, undefined, {where : {ID_USER : user.userId}}).then(function(result) {
+      for (var i in result) {
+        notifyClient(result[i].ID_FOLLOWER, res.PSEUDO + " posted a new picture", pictureId, user.userId);
+      }
+    });
   });
 }
 
