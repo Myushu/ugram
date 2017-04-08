@@ -1,3 +1,35 @@
+@import "../../../../node_modules/ng2-tag-input/dist/modules/components/styles/core/_core.scss";
+
+$foundation-primary: #1779ba;
+$foundation-primary-dark: darken($foundation-primary, 10%);
+
+// this is the container's theme
+$foundation-theme: (
+  container-border-bottom: none!important
+);
+
+$foundation-tag-theme: (
+  background: #0275d8,
+  background-focused: $foundation-primary-dark,
+  background-active: $foundation-primary-dark,
+  background-hover: $foundation-primary-dark,
+  color: #fff,
+  color-hover: #fff,
+  border-radius: 20px,
+  padding: 0 15px,
+  display: inline-block,
+  text-align: center,
+  font-size: 13px
+);
+
+/deep/ .ng2-tag-input.foundation-theme {
+  @include tag-input-theme($foundation-theme);
+}
+
+/deep/ .ng2-tag-input.foundation-theme tag {
+  @include tag-theme($foundation-tag-theme);
+}
+
 #page-wrapper {
   background-color: #FAFAFA;
   padding: 0;
@@ -15,10 +47,35 @@
       background-color: #fff;
       border: 1px solid #e6e6e6;
       div {
+        &.photo-head {
+          padding-bottom: 15px;
+          text-align: start;
+          .avatar {
+            text-decoration: none;
+            font-weight: bold;
+            color: #212121;
+            img {
+              width: 30px;
+              height: 30px;
+              overflow: hidden;
+              border-radius: 50%;
+              margin-right: 5px;
+            }
+            &:hover {
+              color: #3498db;
+            }
+          }
+          .date {
+            float: right;
+            margin-top: 5px;
+            color: #bdbdbd;
+          }
+        }
         &.user {
-          height: 60px;
           ul {
+            text-align: start;
             padding: 10px;
+            margin-bottom: 20px;
             li {
               list-style: none;
               border: 0;
@@ -32,10 +89,9 @@
                   text-decoration: none;
                 }
               }
-              &.date {
-                font-size: 12px;
-                color: #bdbdbd;
-                padding-top: 0;
+              &.react {
+                font-size: 15px;
+                font-weight: 500;
               }
             }
           }

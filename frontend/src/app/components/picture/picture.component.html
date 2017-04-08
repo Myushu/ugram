@@ -10,6 +10,9 @@
         <li class="desc">
           {{image.DESCRIPTION}}
         </li>
+        <li class="ment">
+          With <span *ngFor="let mention of mentions"><a routerLink="/user/{{mention.value}}">{{mention.display}}</a> </span>
+        </li>
         <li class="react">
           <ul>
             <li>
@@ -22,9 +25,6 @@
         </li>
         <li>
           <tag-input theme="foundation-theme" [ngModel]="tags" [transform]="transformer" [readonly]="true"></tag-input>
-        </li>
-        <li>
-          <tag-input [ngModel]="mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
         </li>
       </ul>
 

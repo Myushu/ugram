@@ -43,22 +43,11 @@ export class ProfileComponent implements OnInit {
     this.picture_url = this.configService.getUrl();
   }
 
-  deleteProfileAction() {
-      this.userService.deleteUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
-        res => {
-            this.fb.onFacebookLogoutClick();
-            this._cookieService.removeAll();
-            this.router.navigate(["/login"]);
-        }
-      );
-  }
-
   getUserPicture() {
     this.userService.getUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
       (res: IUser) => {
         this.user = res;
-        if (this.user.PICTURE_PATH === 'default')
-          this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
+        this.userService.formatPicturePath(this.user);
       }
     );
     this.usersPicturesService.getUserPictures({ID_USER: <number><any>this._cookieService.get('user_id'), page: this.page, perPage: this.pageSize}).$observable.subscribe(

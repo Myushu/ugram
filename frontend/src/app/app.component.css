@@ -45,7 +45,7 @@ table {
 }
 
 body {
-  height: 1000px;
+  height: 100%;
   min-height: 100%;
   position: relative;
   background-color: #34495e!important;

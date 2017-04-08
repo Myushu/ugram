@@ -52,9 +52,9 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         err => {
-          let error = JSON.parse(err._body);
+          //let error = JSON.parse(err._body);
           this.error = true;
-          this.error_message = "Error with the field  " + error['path'];
+          this.error_message = "Error with the field  ";
         }
       );
     }
