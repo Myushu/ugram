@@ -1,6 +1,7 @@
 const extend = require('util')._extend
 const graph = require('fbgraph');
 const jwt = require('jsonwebtoken');
+const randomMame = require('node-random-name');
 const config = require('../common/configManager');
 const orm = require('../common/orm');
 const alias = require('../common/alias');
@@ -111,7 +112,7 @@ exports.checkUserAuthentication = (body, res) => {
 function tokenGenerator(result, res) {
     var user = { userId: result.ID_USER };
     var token = jwt.sign(user, config.get('JWT_SECRET', 'jwt.secret'), {
-      expiresIn: config.get('TOKEN_EXPIRE', 'token.expire'),
+      expiresIn: config.get('TOKEN_EXPIRE', 'token.expire') * 1000,
     });
     redisToken.addToken(token, user.userId);
     res.cookie('token', token, {maxAge: config.get('TOKEN_EXPIRE', 'token.expire') * 1000, httpOnly: true});
@@ -146,7 +147,7 @@ function authentificationFb (req, res) {
 function createUserByFacebook (req, res, resFacebook)   {
   var user = {"FIRSTNAME": resFacebook.first_name,
               "LASTNAME": resFacebook.last_name,
-              "PSEUDO": resFacebook.first_name + '-' + resFacebook.id,
+              "PSEUDO": randomMame({ random: Math.random, female: (resFacebook.gender == "male") ? true : false}),
               "EMAIL": resFacebook.email,
               "PICTURE_PATH": resFacebook.picture.data.url,
               "DATE_BIRTHDAY": resFacebook.birthday,
