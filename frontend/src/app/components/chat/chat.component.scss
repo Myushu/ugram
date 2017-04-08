@@ -15,7 +15,7 @@
 }
 
 .chat_head,.msg_head{
-  background:#f39c12;
+  background:#3498db;
   color:white;
   padding:15px;
   font-weight:bold;
@@ -44,12 +44,15 @@
   overflow-x: hidden;
 }
 .msg_input{
-  width:100%;
-  border: 1px solid white;
-  border-top:1px solid #DDDDDD;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  width: 100%;
+  height: 30px;
   box-sizing: border-box;
+  border: none;
+  background-color: #FFF;
+  color: #383838;
+  &:focus {
+    outline: none;
+  }
 }
 
 .close{
@@ -143,4 +146,9 @@
   border-color: transparent transparent transparent #EEF2E7;
   right:-20px;
   top:7px;
+}
+
+.msg_footer {
+  //margin-bottom: 10px;
+  //padding: 5px;
 }

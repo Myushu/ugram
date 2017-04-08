@@ -17,9 +17,9 @@
         <div class="msg_push"></div>
       </div>
       <div class="msg_footer">
-        <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-          <input type="text" formControlName="message" class="msg_input">
-          <button type="submit">Send</button>
+        <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" style="width: 100%;padding: 10px;border-top: 1px solid #c9d0da;">
+          <input placeholder="Type a message..." type="text" formControlName="message" class="msg_input">
+          <button class="btn btn-primary hidden" type="submit">Send</button>
         </form>
       </div>
     </div>

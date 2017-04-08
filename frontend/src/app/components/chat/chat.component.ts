@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
 
     SocketIoService.getInstance().getStatus().subscribe(
       res => {
-        if (this.users.length > 0) {
+        if (this.users.length > 0 && res['ID_USER'] != this._cookieService.get('user_id')) {
           if (res['STATUS'] == 'connected') {
             this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 1;
             console.log('user connected', this.users);

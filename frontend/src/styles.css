@@ -1,8 +1,10 @@
 @import "~nouislider/distribute/nouislider.min.css";
 
+html {
+  height: 100%;
+}
 body {
-  height: auto;
-  min-height: 100%;
+  height: 100%;
   position: relative;
   background-color: #F1F5F8; }
 

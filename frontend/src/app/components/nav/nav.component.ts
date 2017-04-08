@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild}          from "@angular/core";
+import {Component, OnInit, ViewChild, ViewEncapsulation}          from "@angular/core";
 import {CookieService}                from "angular2-cookie/core";
 import { Router }                     from "@angular/router";
 import { FacebookLoginComponent }     from "app/components/facebook-login/facebook-login.component";
@@ -10,6 +10,7 @@ import {IHashtagPicture, IHashtagResponse} from "../../services/hashtags/hashtag
 
 @Component({
   selector: "navbar",
+  encapsulation: ViewEncapsulation.None,
   templateUrl: "./nav.component.html",
   styleUrls: ["./nav.component.scss"],
   providers: [CookieService, FacebookLoginComponent]

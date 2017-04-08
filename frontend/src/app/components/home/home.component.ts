@@ -7,6 +7,7 @@ import {ConfigService}                                from "app/shared/config";
 
 import {Http, Response, Request}             from "@angular/http";
 import {DomSanitizer} from "@angular/platform-browser";
+import {IHashtagPicture} from "../../services/hashtags/hashtags.service";
 
 @Component({
   selector: "app-home",
@@ -46,11 +47,25 @@ export class HomeComponent implements OnInit {
     this.getPicture();
   }
 
+  format_hashtag(tags) {
+    for (let i = 0; i < tags.length; i++) {
+      tags[i].display = '#' + tags[i].HASHTAG;
+      tags[i].value = tags[i].HASHTAG;
+    }
+    return(tags);
+  }
+
   getPicture() {
     this.picturesService.getPictures({page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
+        this.images = this.picturesService.format_picture(this.images);
         this.images = this.picturesService.setFilter(this.images);
+        this.images = this.picturesService.formatImagePicturePath(this.images);
+        for (let i = 0; i < this.images.length; i++) {
+          this.images[i]['nbrReact'] = this.images[i].REACTIONs.length;
+          this.images[i]['tags'] = this.format_hashtag(this.images[i].HASHTAGs);
+        }
         this.totalEntries = res.count;
       },
       err => {

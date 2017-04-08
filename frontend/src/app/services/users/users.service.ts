@@ -126,11 +126,8 @@ export class UsersService extends RestClient {
   logoutUser: ResourceMethod<any, any>;
 
   formatPicturePath(user) {
-    console.log('formatPic');
     if (!user.length) {
-      console.log('User lenght 0');
       if (!(user.PICTURE_PATH.startsWith('https://') || user.PICTURE_PATH.startsWith('http://'))) {
-        console.log('is not url');
         user.PICTURE_PATH = this.configService.baseUrl + "/picture?filename=" + user.PICTURE_PATH;
       }
       return user;

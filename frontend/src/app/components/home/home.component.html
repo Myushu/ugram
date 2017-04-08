@@ -1,14 +1,21 @@
 <div id="page-wrapper">
-  <div class="public_photos">
+  <div class="public_photos" *ngIf="images">
     <div class="photo-container col-md-12" *ngFor="let image of images;">
       <!--<a [routerLink]="['/picture/:userid/:id']" [queryParams]="{'userid': image.userId, 'id': image.id}">-->
       <div class="photo-card">
+        <div class="photo-head" *ngIf="image.USER">
+          <a href="#" class="avatar"><img src="{{image.USER.PICTURE_PATH}}">
+          @{{image.USER.PSEUDO}}</a>
+          <div class="date">{{image.timeSince}}</div>
+        </div>
         <div class="img"> <a routerLink="/picture/{{image.ID_OWNER}}/{{image.ID_PICTURE}}"><img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="600px"></a></div>
         <div class="user">
           <ul>
-            <li class="name"><a href="#">{{image.DESCRIPTION}}</a></li>
-            <li class="date">{{image.timeSince}}</li>
+            <li class="react">{{image.nbrReact}} likes</li>
+            <li class="name">{{image.DESCRIPTION}}</li>
           </ul>
+          <tag-input theme="foundation-theme" [ngModel]="image.tags" [transform]="transformer" [readonly]="true"></tag-input>
+
         </div>
       </div>
     </div>

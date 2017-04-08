@@ -4,14 +4,16 @@
       <ul class="discover-feed">
         <li>DISCOVER PEOPLE</li>
       </ul>
-      <ul *ngFor="let user of users;" class="discover-feed">
-        <li class="infos">
-          <ul>
-            <li><a routerLink="/user/{{user.ID_USER}}">{{user.FIRSTNAME}} {{user.LASTNAME}}</a></li>
-            <li>@{{user.PSEUDO}}</li>
-          </ul>
-        </li>
-      </ul>
+      <div *ngFor="let user of users;" class="discover-feed">
+        <div class="infos">
+          <div class="pic"><img src="{{user.PICTURE_PATH}}"></div>
+          <div class="user-infos">
+            <div class="name"><a routerLink="/user/{{user.ID_USER}}">{{user.FIRSTNAME}} {{user.LASTNAME}}</a></div>
+            <div class="pseudo">@{{user.PSEUDO}}</div>
+          </div>
+        </div>
+        <div class="follow"><button class="btn btn-primary">Follow</button></div>
+      </div>
       <ngb-pagination style="text-align: center" (pageChange)="onPager($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [collectionSize]="totalEntries" [(pageSize)]="pageSize" [(page)]="page"></ngb-pagination>
     </div>
   </div>
