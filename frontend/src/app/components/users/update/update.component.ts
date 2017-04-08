@@ -41,6 +41,16 @@ export class UpdateComponent implements OnInit {
     );
   }
 
+  deleteProfileAction() {
+    this.userService.deleteUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
+      res => {
+        this.fb.onFacebookLogoutClick();
+        this._cookieService.removeAll();
+        this.router.navigate(["/login"]);
+      }
+    );
+  }
+
   submitUpdate() {
     this.userService.updateUser({LASTNAME: this.lastname, FIRSTNAME: this.firstname, EMAIL: this.email, SEXE: this.gender, PSEUDO: this.pseudo, ID_USER: this.user.ID_USER, PICTURE_PATH: this.picturePath}).$observable.subscribe(
       res => {

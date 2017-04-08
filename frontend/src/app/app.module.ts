@@ -1,5 +1,5 @@
 import { BrowserModule }          from "@angular/platform-browser";
-import { NgModule }               from "@angular/core";
+import { NgModule,ViewEncapsulation }               from "@angular/core";
 import { FormsModule, ReactiveFormsModule }            from "@angular/forms";
 import { HttpModule }             from "@angular/http";
 import { CookieService }          from "angular2-cookie/services/cookies.service";
@@ -9,6 +9,7 @@ import {ResourceModule}           from "ng2-resource-rest";
 import {ImageCropperComponent}    from "ng2-img-cropper";
 import { NouisliderModule }       from 'ng2-nouislider';
 import {AutoCompleteModule}       from 'primeng/components/autocomplete/autocomplete';
+import { CompilerConfig } from '@angular/compiler'
 
 import { AppRoutingModule }       from "./app-routing.module";
 import { AppComponent }           from "./app.component";
@@ -61,7 +62,9 @@ import {SocketIoService}          from "./shared/SocketIoService";
   providers: [
     CookieService,
     ConfigService,
-    SocketIoService
+    SocketIoService,
+    /*provide: CompilerConfig,
+    useValue: new CompilerConfig({defaultEncapsulation: ViewEncapsulation})*/
   ],
   bootstrap: [AppComponent]
 })

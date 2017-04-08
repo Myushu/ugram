@@ -188,13 +188,10 @@ export class PictureComponent implements OnInit {
         (res: IPicture) => {
           this.image = this.picturesService.format_picture(res);
           this.image = this.picturesService.setFilter(this.image);
-          console.log('image', this.image);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
-          console.log('res', res);
           this.comments = this.commentsService.format_comment(res.COMMENTs);
           this.comments = this.commentsService.formatCommentPicturePath(this.comments);
-          console.log('com', this.comments);
           this.reactions = this.image.REACTIONs;
           this.reactionsNbr = this.reactions.length;
           this.isLiked = false;

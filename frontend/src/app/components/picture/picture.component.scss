@@ -59,7 +59,7 @@ $foundation-tag-theme: (
             border: 0;
           }
           &.desc {
-            margin: 10px 0 30px;
+            margin: 10px 0 20px;
           }
           &.react {
             margin-bottom: 20px;
@@ -84,6 +84,10 @@ $foundation-tag-theme: (
                 }
               }
             }
+          }
+          &.ment {
+            color: #90949c;
+            margin-bottom: 10px;
           }
         }
       }
@@ -119,7 +123,7 @@ p {
 }
 
 .comments {
-  margin: 40px auto 0;
+  margin: 20px auto 0;
   padding: 0 20px;
   .comments-box {
     max-height: 500px;

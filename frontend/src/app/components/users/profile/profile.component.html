@@ -4,7 +4,7 @@
     <div class="main_profile1">
       <h1 class="profile-name">{{user.FIRSTNAME}} {{user.LASTNAME}}</h1>
       <h2>@{{user.PSEUDO}}</h2>
-      <section class="buttons">
+      <section class="buttons" style="margin-bottom: 10px">
         <div class="container">
           <div class="btn btn-3" style="width:33%;">posts
             <div style="clear:both;"></div>
@@ -23,7 +23,6 @@
       </section>
       <div style="clear:both;"></div>
       <a routerLink="/update/" class="btn btn-primary update">Update Profile</a>
-      <a (click)="deleteProfileAction()" class="btn btn-primary update" style="background-color:#FE2E2E">Delete Profile</a>
     </div>
   </div>
 
