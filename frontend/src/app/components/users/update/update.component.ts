@@ -2,11 +2,13 @@ import { Component, OnInit }  from "@angular/core";
 import {CookieService}        from "angular2-cookie/core";
 import { Router }             from "@angular/router";
 import {UsersService, IUser}  from "app/services/users/users.service";
+import {FacebookLoginComponent} from "../../facebook-login/facebook-login.component";
 
 @Component({
   selector: "app-update",
   templateUrl: "./update.component.html",
   styleUrls: ["./update.component.scss"],
+  providers: [FacebookLoginComponent]
 })
 export class UpdateComponent implements OnInit {
   public lastname;
@@ -22,7 +24,8 @@ export class UpdateComponent implements OnInit {
   constructor(
     private _cookieService: CookieService,
     private router: Router,
-    private userService: UsersService
+    private userService: UsersService,
+    private fb: FacebookLoginComponent,
   ) {
 
   }
