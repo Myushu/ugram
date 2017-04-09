@@ -29,11 +29,11 @@ npm start
 ### Back end
 
 To run the server, set information on the config file ``` backend/config/default.json```.   
-You also must start the [redis](redis.io) database : 
+You also must start the [redis](redis.io) database :
 ```
 sudo service redis start
 ```
-If you want ton init the database, you must run : 
+If you want ton init the database, you must run :
 ```
 cd backend
 npm run-script initialize
@@ -45,7 +45,7 @@ npm start
 
 ## Project implémentation
 ### Front end
-The frontend is based on [Angular 2](https://angular.io). 
+The frontend is based on [Angular 2](https://angular.io).
 The rest library is [ng2-resource-rest](https://github.com/troyanskiy/ng2-resource-rest).
 The guideline is the [Angular 2 official](https://angular.io/styleguide).
 
@@ -53,7 +53,7 @@ The guideline is the [Angular 2 official](https://angular.io/styleguide).
 The server is based on [express](http://expressjs.com/). The token manager is [jwt](http://jwt.io). The logger is [Winston](https://github.com/lazywithclass/winston-cloudwatch). The MySQL driver is [mysql](https://www.npmjs.com/package/mysql). The [Redis](redis.io) driver is [redis](https://www.npmjs.com/package/redis).
 The SQL orm is [sequelize](http://docs.sequelizejs.com/en/v3/). The models are stored on ```backend/src/models```. To regenerate the models, run :
 ```
-backend/dist/generate_models.sh 
+backend/dist/generate_models.sh
 ```
 The services are stored on ```backend/src/services``` and controllers on ```backend/src/controllers```. The common folder (```backend/src/common```) contains the services using by other services such as the orm or the configuration file manager.
 
@@ -63,16 +63,16 @@ For the last release, we implemented few bonus :
  - An Autocompletion on the search bar   
  - Some Filters when you post a new picture  
  - A following system  
- 
+
 ### The tchat
+<img align="right" width="160" height="300" src="ressources/tchat.png">
 On your rigth side you have the tchat scrollable panel.  
-When your friend is connected, he have a green ligth ![online pine](ressources/message_online.png), otherwhise it's should grey ![offline pine](ressources/message_offline.png). When you click on a username, a text will open. You can see your old conversation and you can send a new message.  
-When you recevied a new message, the page's title is updated like this : `(1) Ugram`. And you should be seen a warning box next to the sender name with the numner of new message.  
-![chat](ressources/tchat.png)
+When your friend is connected, he have a green ligth, otherwhise it's should be grey. When you click on a username, a text will open. You can see your old conversation and you can send a new message.  
+When you recevied a new message, the page's title is updated like : **(1) Ugram** . And you should be seen a warning box next to the sender name with the numner of new message.  
 
 ### The Autocompletion on the search bar  
 On rigth top side, you should see a search bar. When you started typping a autocompletion combox will appered. You can find by user, hashtag or word on description.  
-![autocmopletion](ressources/autocompletion.png)
+![auto-completion](ressources/autocompletion.png)
 
 ### The Filters
 When your upload a picture you can some filters :
@@ -80,5 +80,6 @@ When your upload a picture you can some filters :
 ![filter panel](ressources/filter_panel.png)
 
 ### The following system.
-On your friend's page you can a see a following button ![following button](ressources/following_button.png). You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.  
+On your friend's page you can a see a following button. You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.
+![following button](ressources/following_button.png)    
 ![following notification](ressources/following_message.png)
