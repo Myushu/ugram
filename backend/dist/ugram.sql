@@ -9,7 +9,7 @@ use UGRAM;
     PSEUDO varchar(255) not null unique,
     EMAIL varchar(255) not null unique,
     PASSWORD_HASH varchar(255) null,
-    PICTURE_PATH varchar(255) null,
+    PICTURE_PATH varchar(255) not null default 'default',
     DATE_BIRTHDAY date null,
     SEXE char not null,
     ID_USER_FACEBOOK varchar(255) null,
