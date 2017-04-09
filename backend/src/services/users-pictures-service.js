@@ -112,11 +112,6 @@ exports.updatePicture = (userId, pictureId, content, user, res) => {
       orm.update(pictureModel, content, res, attributes).then(function (r) {
         mentionService.deleteAllByPictureId(result.ID_PICTURE);
         hashtagService.deleteAllByPictureId(result.ID_PICTURE);
-        picturePropertiesService.deletePictureProperties(result.ID_PICTURE);
-        if (content.PICTURE_PROPERTIES != undefined)
-          picturePropertiesService.createPictureProperties(result.ID_PICTURE, content.PICTURE_PROPERTIES);
-        else
-          picturePropertiesService.createPictureProperties(result.ID_PICTURE, {});
         if (content.MENTIONs != undefined) {
           for (var i = 0; i < content.MENTIONs.length; ++i) {
             content.MENTIONs[i].ID_PICTURE = result.ID_PICTURE;
