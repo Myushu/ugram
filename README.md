@@ -43,7 +43,7 @@ Then you can start the server :
 npm start
 ```
 
-## Project implémentation
+## Project implementation
 ### Front end
 The frontend is based on [Angular 2](https://angular.io).
 The rest library is [ng2-resource-rest](https://github.com/troyanskiy/ng2-resource-rest).
