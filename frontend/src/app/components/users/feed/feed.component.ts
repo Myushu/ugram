@@ -86,6 +86,5 @@ export class FeedComponent implements OnInit {
         console.log('err', err);
       }
     );
-
   }
 }

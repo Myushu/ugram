@@ -4,11 +4,14 @@ import {UsersService, IUserResponse, IUserShort} from "../../services/users/user
 import {ChatService, IChatResponse} from "app/services/chat/chat.service";
 import {CookieService}    from "angular2-cookie/core";
 import {FormBuilder, Validators, FormControl}    from "@angular/forms";
+import {Title} from "@angular/platform-browser";
+import {TitleService} from "../../shared/title.service";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
+  providers: [TitleService]
 })
 export class ChatComponent implements OnInit {
   private message: string = "";
@@ -30,6 +33,7 @@ export class ChatComponent implements OnInit {
     private _cookieService: CookieService,
     private elRef: ElementRef,
     private fb: FormBuilder,
+    private titleService: TitleService,
   ) {
   }
 
@@ -64,6 +68,7 @@ export class ChatComponent implements OnInit {
       if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
         console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
         this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
+        this.titleService.setTitleNotif(1);
       }
       else if (this.users && this.user.ID_USER == message['ID_SENDER'])
         this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
@@ -93,6 +98,7 @@ export class ChatComponent implements OnInit {
   messageBox(user) {
     this.chat = [];
     user['newMessage'] = 0;
+    this.titleService.deleteTitleNotif();
     this.chatService.getChat({ID_USER: user.ID_USER}).$observable.subscribe(
       (res: IChatResponse) => {
         for (let i = res.rows.length - 1; i >= 0; i--) {

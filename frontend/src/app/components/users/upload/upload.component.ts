@@ -20,7 +20,6 @@ export class UploadComponent implements OnInit {
   public mentions = [];
   public desc: string = "";
   public image;
-  public isCollapsed = true;
 
   public blurFilter = [0];
   public grayscaleFilter = [0];
@@ -37,8 +36,8 @@ export class UploadComponent implements OnInit {
   public error_message: string = "";
   public data1: any;
   public cropperSettings1: CropperSettings;
-  croppedWidth:number;
-  croppedHeight:number;
+  public image_size: number = 550;
+
   @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
   constructor(
@@ -96,22 +95,22 @@ export class UploadComponent implements OnInit {
 
   ngOnInit() {
       this.cropperSettings1 = new CropperSettings();
-      this.cropperSettings1.canvasWidth = 500;
-      this.cropperSettings1.canvasHeight = 300;
+      this.cropperSettings1.canvasWidth = 550;
+      this.cropperSettings1.canvasHeight = 550;
+      this.cropperSettings1.croppedWidth = 550;
+      this.cropperSettings1.croppedHeight = 550;
       this.cropperSettings1.minWidth = 100;
       this.cropperSettings1.minHeight = 100;
       this.cropperSettings1.rounded = false;
-      this.cropperSettings1.preserveSize = true;
-      this.cropperSettings1.keepAspect = false;
-      this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
-      this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
+      this.cropperSettings1.keepAspect = true;
       this.cropperSettings1.noFileInput = true;
       this.data1 = {};
   }
 
   cropped(bounds: Bounds) {
-    this.croppedHeight = bounds.bottom - bounds.top;
-    this.croppedWidth = bounds.right - bounds.left;
+    console.log('bb', bounds);
+    this.cropperSettings1.croppedHeight = bounds.bottom - bounds.top;
+    this.cropperSettings1.croppedWidth = bounds.right - bounds.left;
   }
 
   fileChange(tags, mentions, filters) {
