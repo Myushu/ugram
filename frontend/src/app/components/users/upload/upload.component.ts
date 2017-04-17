@@ -20,7 +20,6 @@ export class UploadComponent implements OnInit {
   public mentions = [];
   public desc: string = "";
   public image;
-  public isCollapsed = true;
 
   public blurFilter = [0];
   public grayscaleFilter = [0];
@@ -37,8 +36,8 @@ export class UploadComponent implements OnInit {
   public error_message: string = "";
   public data1: any;
   public cropperSettings1: CropperSettings;
-  croppedWidth:number;
-  croppedHeight:number;
+  public image_size: number = 550;
+
   @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
   constructor(

@@ -26,7 +26,6 @@ export class NavComponent implements OnInit {
   protected searchAC = [];
   protected searchACTmp = [];
 
-
   constructor(
     private _cookieService: CookieService,
     private router: Router,
