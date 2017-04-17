@@ -8,9 +8,9 @@ export class ConfigService {
   public FBApiId: string;
 
   constructor() {
-    this.baseUrl = "http://10.248.57.217:3000";
-    this.baseSocketIoUrl = "ws://10.248.57.217:3000/";
-    this.FBApiId = "755385831298927";
+      this.baseUrl = "http://ugram-team6.us-east-1.elasticbeanstalk.com";
+      this.baseSocketIoUrl = "ws://ugram-team6.us-east-1.elasticbeanstalk.com";
+      this.FBApiId = "280735385694809";
   }
 
   getUrl() {
