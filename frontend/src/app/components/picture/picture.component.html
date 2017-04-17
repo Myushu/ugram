@@ -4,13 +4,14 @@
       <img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
     </div>
     <div class="infos col-md-4">
+      <div *ngIf="!updated">
       <ul>
         <li class="user"><a routerLink="/user/{{user.ID_USER}}">{{user.PSEUDO}}</a></li>
         <li class="time">{{image.timeSince}}</li>
         <li class="desc">
           {{image.DESCRIPTION}}
         </li>
-        <li class="ment">
+        <li class="ment" *ngIf="mentions && mentions.length > 0">
           With <span *ngFor="let mention of mentions"><a routerLink="/user/{{mention.value}}">{{mention.display}}</a> </span>
         </li>
         <li class="react">
@@ -58,6 +59,7 @@
             </form>
           </div>
         </div>
+      </div>
       </div>
 
 

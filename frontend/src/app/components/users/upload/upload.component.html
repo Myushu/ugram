@@ -71,27 +71,6 @@
                     <label for="description">Greyscale</label>
                     <nouislider (change)="applyPreFilters('gs')" [tooltips]="[ true ]" [(ngModel)]="grayscaleFilter" [min]="0" [max]="100" [step]="1"></nouislider>
                   </div>
-                  <h2 style="margin: 0 0 30px 0">Image sizing</h2>
-                  <div class="form-group" style="margin-bottom: 35px;">
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="200" checked>
-                        200*200
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="400">
-                        400*400
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="550">
-                        550*550 (default)
-                      </label>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -106,6 +85,9 @@
             <div class="form-group">
               <label>Hashtags</label>
               <tag-input [(ngModel)]="tags" [theme]="'minimal'"></tag-input>
+              <div style="width: 100%; text-align: start">
+                <i>*all '#' will be removed automatically</i>
+              </div>
             </div>
 
 
@@ -125,3 +107,7 @@
         </div>
     </div>
 </div>
+
+<style>
+
+</style>

@@ -1,4 +1,4 @@
-import {Component, OnInit}                            from "@angular/core";
+import {Component, OnInit, ViewEncapsulation}                            from "@angular/core";
 import {CookieService}                                from "angular2-cookie/core";
 import {Router}                                       from "@angular/router";
 import {NgbPaginationConfig}                          from "@ng-bootstrap/ng-bootstrap";
@@ -11,6 +11,7 @@ import {IHashtagPicture} from "../../services/hashtags/hashtags.service";
 
 @Component({
   selector: "app-home",
+  encapsulation: ViewEncapsulation.None,
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
   providers: [CookieService, NgbPaginationConfig, ConfigService]
@@ -44,7 +45,8 @@ export class HomeComponent implements OnInit {
   onPager(event: number): void {
     document.body.scrollTop = 0;
     this.page = event - 1;
-    this.getPicture();
+    if (this._cookieService.get("user_id"))
+      this.getPicture();
   }
 
   format_hashtag(tags) {

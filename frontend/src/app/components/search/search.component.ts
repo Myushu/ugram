@@ -40,10 +40,13 @@ export class SearchComponent implements OnInit {
           this.searchDesc.rows = this.picturesService.setFilter(this.searchDesc.rows);
         }
       );
-      this.searchService.searchHashtag({INPUT: this.search}).$observable.subscribe(
+      this.searchService.searchHashtag({INPUT: this.search, absolute: false}).$observable.subscribe(
         (res: ISearchPictures) => {
           this.searchHashtag = res;
           this.searchHashtag.rows = this.picturesService.setFilter(this.searchHashtag.rows);
+        },
+        err => {
+          console.log('error', err);
         }
       );
     });

@@ -12,8 +12,8 @@
             <div class="pseudo">@{{user.PSEUDO}}</div>
           </div>
         </div>
-        <div class="follow"><button class="btn btn-primary">Follow</button></div>
       </div>
+      <br>
       <ngb-pagination style="text-align: center" (pageChange)="onPager($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [collectionSize]="totalEntries" [(pageSize)]="pageSize" [(page)]="page"></ngb-pagination>
     </div>
   </div>

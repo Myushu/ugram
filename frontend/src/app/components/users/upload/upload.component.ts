@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef }              from "@angular/core";
+import {Component, OnInit, ViewChild, ElementRef, ViewEncapsulation}              from "@angular/core";
 import {CookieService}                    from "angular2-cookie/core";
 import {Router}                           from "@angular/router";
 import {UsersService, IUserResponse}      from "app/services/users/users.service";
@@ -10,6 +10,7 @@ import {DomSanitizer, SafeStyle}                     from '@angular/platform-bro
 
 @Component({
   selector: "app-upload",
+  encapsulation: ViewEncapsulation.None,
   templateUrl: "./upload.component.html",
   styleUrls: ["./upload.component.scss"],
   providers: [ConfigService]
@@ -36,7 +37,6 @@ export class UploadComponent implements OnInit {
   public error_message: string = "";
   public data1: any;
   public cropperSettings1: CropperSettings;
-  public image_size: number = 550;
 
   @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
@@ -52,6 +52,9 @@ export class UploadComponent implements OnInit {
   }
 
   applyFilters() {
+    this.grayscaleFilter = [0];
+    this.sepiaFilter = [0];
+    this.blurFilter = [0];
     this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
       "filter: brightness("+this.brightnessFilter+"%)" +
       " contrast("+this.contrastFilter+"%)" +
@@ -61,18 +64,30 @@ export class UploadComponent implements OnInit {
 
   applyPreFilters(type: string) {
     if (type === 'blur') {
+      this.brightnessFilter = [100];
+      this.contrastFilter = [100];
+      this.saturateFilter = [100];
+      this.opacityFilter = [100];
       this.grayscaleFilter = [0];
       this.sepiaFilter = [0];
       this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
         "filter: blur("+this.blurFilter+"px)");
     }
     if (type === 'sepia') {
+      this.brightnessFilter = [100];
+      this.contrastFilter = [100];
+      this.saturateFilter = [100];
+      this.opacityFilter = [100];
       this.grayscaleFilter = [0];
       this.blurFilter = [0];
       this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
         "filter: sepia("+this.sepiaFilter+"%)");
     }
     if (type === 'gs') {
+      this.brightnessFilter = [100];
+      this.contrastFilter = [100];
+      this.saturateFilter = [100];
+      this.opacityFilter = [100];
       this.blurFilter = [0];
       this.sepiaFilter = [0];
       this.cssFilter = this.sanitizer.bypassSecurityTrustStyle(
@@ -157,6 +172,7 @@ export class UploadComponent implements OnInit {
       GRAYSCALE: this.grayscaleFilter
     };
     for (let i = 0; i < this.tags.length; i++) {
+      this.tags[i]["display"] = this.tags[i]["display"].replace(/#/g, "");
       u_tags.push({HASHTAG: this.tags[i]["display"]});
     }
     for (let i = 0; i < this.mentions.length; i++) {
