@@ -116,7 +116,6 @@ export class NavComponent implements OnInit {
   }
 
   doSearch(event) {
-    console.log(event);
     this.autocompleteSearch();
   }
 }

@@ -1,5 +1,5 @@
-import {Injectable, Injector}                                     from "@angular/core";
-import {RequestMethod, Http}                                  from "@angular/http";
+import {Injectable, Injector}                           from "@angular/core";
+import {RequestMethod, Http}                            from "@angular/http";
 import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
 import {ConfigService}                                  from "app/shared/config";
@@ -69,7 +69,7 @@ export interface IUserResponse {
   withCredentials: true,
 })
 export class UsersService extends RestClient {
-  public configService: ConfigService;
+  private configService: ConfigService;
 
   constructor(
     http: Http,

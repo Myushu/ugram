@@ -27,6 +27,8 @@ export class ChatComponent implements OnInit {
     message: [""]
   });
 
+  public globalNewMessage: number = 0;
+
   constructor(
     private userService: UsersService,
     private chatService: ChatService,
@@ -69,6 +71,7 @@ export class ChatComponent implements OnInit {
         console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
         this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
         this.titleService.setTitleNotif(1);
+        this.globalNewMessage += 1;
       }
       else if (this.users && this.user.ID_USER == message['ID_SENDER'])
         this.chat.push({user: message['PSEUDO'], mess: message['MESSAGE'], div: 'msg_a'});
@@ -99,6 +102,7 @@ export class ChatComponent implements OnInit {
     this.chat = [];
     user['newMessage'] = 0;
     this.titleService.deleteTitleNotif();
+    this.globalNewMessage = 0;
     this.chatService.getChat({ID_USER: user.ID_USER}).$observable.subscribe(
       (res: IChatResponse) => {
         for (let i = res.rows.length - 1; i >= 0; i--) {

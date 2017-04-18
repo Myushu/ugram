@@ -133,10 +133,13 @@ export class PictureComponent implements OnInit {
     let u_tags = [];
     let u_mentions = [];
     for (let i = 0; i < this.tags.length; i++) {
+      this.tags[i]["value"] = this.tags[i]["value"].replace(/#/g, "");
+      this.tags[i]["display"] = this.tags[i]["value"].replace(/#/g, "");
       if (!this.tags[i]["display"].startsWith("#"))
         this.tags[i]["display"] = "#" + this.tags[i]["display"];
       u_tags.push({HASHTAG: this.tags[i]["value"]});
     }
+    console.log('hassssss', this.tags);
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }

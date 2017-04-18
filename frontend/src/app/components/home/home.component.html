@@ -11,7 +11,7 @@
         <div class="img"> <a routerLink="/picture/{{image.ID_OWNER}}/{{image.ID_PICTURE}}"><img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="600px"></a></div>
         <div class="user">
           <ul>
-            <li class="react">{{image.nbrReact}} likes</li>
+            <li class="react">{{image.nbrReact}} <i [class.islike]="isLiked" class="fa fa-heart" style="font-size:15px;color: #e74c3c" aria-hidden="true"></i></li>
             <li class="name">{{image.DESCRIPTION}}</li>
           </ul>
           <tag-input theme="foundation-theme" [ngModel]="image.tags" [transform]="transformer" [readonly]="true"></tag-input>
