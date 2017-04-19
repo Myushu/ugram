@@ -6,6 +6,7 @@ import {UsersPicturesService}       from "app/services/users-pictures/users-pict
 import {ConfigService}              from "app/shared/config";
 import {FacebookLoginComponent}     from "app/components/facebook-login/facebook-login.component";
 import {Router}                     from "@angular/router";
+import {PicturesService}            from "app/services/pictures/pictures.service";
 
 @Component({
   selector: "app-profile",
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private configService: ConfigService,
     private fb: FacebookLoginComponent,
     private router: Router,
+    private picturesService: PicturesService,
   ) {
 
   }
@@ -41,27 +43,17 @@ export class ProfileComponent implements OnInit {
     this.picture_url = this.configService.getUrl();
   }
 
-  deleteProfileAction() {
-      this.userService.deleteUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
-        res => {
-            this.fb.onFacebookLogoutClick();
-            this._cookieService.removeAll();
-            this.router.navigate(["/login"]);
-        }
-      );
-  }
-
   getUserPicture() {
     this.userService.getUser({id: <number><any>this._cookieService.get('user_id')}).$observable.subscribe(
       (res: IUser) => {
         this.user = res;
-        if (this.user.PICTURE_PATH === 'default')
-          this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
+        this.userService.formatPicturePath(this.user);
       }
     );
     this.usersPicturesService.getUserPictures({ID_USER: <number><any>this._cookieService.get('user_id'), page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
+        this.images = this.picturesService.setFilter(this.images);
         this.totalEntries = res.count;
       }
     );

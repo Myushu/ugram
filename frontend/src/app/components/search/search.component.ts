@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute}               from "@angular/router";
 import {SearchService, ISearchUsers, ISearchPictures}        from "app/services/search/search.service";
 import {ConfigService}    from "app/shared/config";
+import {PicturesService} from 'app/services/pictures/pictures.service'
 
 @Component({
   selector: 'app-search',
@@ -21,6 +22,7 @@ export class SearchComponent implements OnInit {
     private Route: ActivatedRoute,
     private searchService: SearchService,
     private configService: ConfigService,
+    private picturesService: PicturesService,
   ) { }
 
   ngOnInit() {
@@ -35,11 +37,16 @@ export class SearchComponent implements OnInit {
       this.searchService.searchDescription({INPUT: this.search}).$observable.subscribe(
         (res: ISearchPictures) => {
           this.searchDesc = res;
+          this.searchDesc.rows = this.picturesService.setFilter(this.searchDesc.rows);
         }
       );
-      this.searchService.searchHashtag({INPUT: this.search}).$observable.subscribe(
+      this.searchService.searchHashtag({INPUT: this.search, absolute: false}).$observable.subscribe(
         (res: ISearchPictures) => {
           this.searchHashtag = res;
+          this.searchHashtag.rows = this.picturesService.setFilter(this.searchHashtag.rows);
+        },
+        err => {
+          console.log('error', err);
         }
       );
     });

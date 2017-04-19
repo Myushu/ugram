@@ -23,13 +23,19 @@ export interface IHashtag {
   ID_PICTURE: number;
 }
 
+export interface IHashtagResponse {
+  count: number;
+  rows: IHashtagPicture[];
+}
+
 export interface IHashtagPicture {
   HASHTAG: string;
 }
 
 @Injectable()
 @ResourceParams({
-  url: "/users"
+  url: "/users",
+  withCredentials: true,
 })
 export class HashtagsService extends RestClient {
 

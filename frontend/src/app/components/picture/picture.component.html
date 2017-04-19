@@ -1,22 +1,70 @@
 <div id="page-wrapper">
   <div class="container col-md-12">
     <div class="image col-md-8">
-      <img src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
+      <img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="100%">
     </div>
     <div class="infos col-md-4">
+      <div *ngIf="!updated">
       <ul>
         <li class="user"><a routerLink="/user/{{user.ID_USER}}">{{user.PSEUDO}}</a></li>
         <li class="time">{{image.timeSince}}</li>
-        <li>
+        <li class="desc">
           {{image.DESCRIPTION}}
         </li>
-        <li>
-          <tag-input [ngModel]="tags" [readonly]="true"></tag-input>
+        <li class="ment" *ngIf="mentions && mentions.length > 0">
+          With <span *ngFor="let mention of mentions"><a routerLink="/user/{{mention.value}}">{{mention.display}}</a> </span>
+        </li>
+        <li class="react">
+          <ul>
+            <li>
+              <i [class.islike]="isLiked" class="fa fa-heart" style="font-size:25px;" aria-hidden="true" (click)="checkAlreadyLiked()"></i>
+            </li>
+            <li class="nbr-react">
+              {{reactionsNbr}} peoples like this
+            </li>
+          </ul>
         </li>
         <li>
-          <tag-input [ngModel]="mentions" [readonly]="true" [theme]="'minimal'"></tag-input>
+          <tag-input theme="foundation-theme" [ngModel]="tags" [transform]="transformer" [readonly]="true"></tag-input>
         </li>
       </ul>
+
+
+      <div class="comments">
+        <div class="comments-box">
+          <div *ngFor="let comment of comments" class="comment-wrap">
+            <div class="photo" style="width: 60px;">
+              <img class="avatar" style="margin: 0" src="{{comment.USER.PICTURE_PATH}}">
+              <!--<div class="avatar" style="background-image: url('{{comment.USER.PICTURE_PATH}}')"></div>-->
+            </div>
+            <div class="comment-block">
+              <p class="comment-text">{{comment.CONTENT}}</p>
+              <div class="bottom-comment">
+                <div class="comment-date">{{comment.timeSince}}</div>
+                <ul class="comment-actions">
+                  <li class="complain"><a routerLink="/user/{{comment.ID_USER}}">@{{comment.USER.PSEUDO}}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment-wrap">
+          <div class="photo">
+          </div>
+          <div class="comment-block">
+            <form [formGroup]="commentForm" (ngSubmit)="sendComment()">
+              <textarea formControlName="comment" name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
+              <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+
       <div *ngIf="updated">
         <div style="width: 90%" class="form-group row">
           <label class="col-2 col-form-label">Description</label>
@@ -41,6 +89,7 @@
             </tag-input>
           </div>
         </div>
+
         <button class="btn btn-success" (click)="updateImage()">Update</button>
       </div>
       <div *ngIf="my_user_id == user.ID_USER && updated == 0" style="text-align: center">

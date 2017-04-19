@@ -1,0 +1,27 @@
+<div class="chat_box">
+  <div class="chat_head" (click)="collapseBox()">
+    Chatbox <span *ngIf="!display_body && globalNewMessage > 0">({{globalNewMessage}} new message(s))</span>
+  </div>
+  <div *ngIf="display_body" class="chat_body" style="overflow: scroll;">
+    <div *ngFor="let user of users" [ngClass]="(user.IS_CONNECTED === 1)?'user':'user-nc'"  class="user-{{user.ID_USER}}" (click)="messageBox(user)">{{user.PSEUDO}} <span *ngIf="user.newMessage > 0" class="label label-info">{{user.newMessage}}</span></div>
+  </div>
+</div>
+<div *ngIf="display">
+  <div class="msg_box" style="right:290px">
+    <div class="msg_head">{{user.PSEUDO}}
+      <div class="close" (click)="closeChatBox()">x</div>
+    </div>
+    <div style="overflow: scroll;" class="msg_wrap">
+      <div class="msg_body">
+        <div *ngFor="let c of chat" class="{{c.div}}">{{c.mess}}</div>
+        <div class="msg_push"></div>
+      </div>
+      <div class="msg_footer">
+        <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" style="width: 100%;padding: 10px;border-top: 1px solid #c9d0da;">
+          <input placeholder="Type a message..." type="text" formControlName="message" class="msg_input">
+          <button class="btn btn-primary hidden" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,8 @@ import { DiscoverComponent }    from "./components/users/discover/discover.compo
 import {RegisterComponent}      from "./components/register/register.component";
 import {SearchComponent} from "./components/search/search.component";
 
+
+
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "home", component: HomeComponent},
@@ -23,8 +25,7 @@ const routes: Routes = [
   { path: "upload", component: UploadComponent},
   { path: "discover", component: DiscoverComponent },
   { path: "register", component: RegisterComponent },
-  { path: "search/:search", component: SearchComponent}
-
+  { path: "search/:search", component: SearchComponent},
 ];
 
 

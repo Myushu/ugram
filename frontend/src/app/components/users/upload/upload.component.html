@@ -5,17 +5,89 @@
             <div *ngIf="error">
               <div class="alert alert-danger" role="alert">{{error_message}}</div>
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea [(ngModel)]="desc" class="form-control" id="description" placeholder="Description"></textarea>
+
+          <ngb-tabset (tabChange)="beforeChange($event)">
+            <ngb-tab id="upload" title="Upload picture">
+              <template ngbTabContent>
+                <div style="margin-top: 20px">
+                  <div class="file-upload">
+                    <div class="fileUpload btn btn-primary">
+                      <span>Upload</span>
+                      <input class="upload" type="file" (change)="fileChangeListener($event)">
+                    </div>
+                  </div>
+                  <img-cropper #cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+                </div>
+              </template>
+            </ngb-tab>
+
+            <!--<ngb-tab id="webcam" title="Webcam picture">
+              <template ngbTabContent>
+                <div style="margin-top: 20px">
+                  <video [src]="videosrc" class="cssWebCam"></video>
+                  <canvas></canvas>
+                  <button (click)="takePic()">Take</button>
+                </div>
+              </template>
+            </ngb-tab>-->
+          </ngb-tabset>
+          <div class="row" *ngIf="data1.image">
+            <div class="col-md-6">
+                <img [src]="data1.image"
+                     [style]="cssFilter"
+                      width="550px" height="550px">
             </div>
+            <div class="col-md-6" style="text-align: start">
+              <div class="card">
+                <div class="card-block" style="padding: 35px!important;">
+                  <h2 style="margin: 0 0 30px 0">Filters</h2>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Opacity</label>
+                    <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="opacityFilter" [min]="0" [max]="100" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Brightness</label>
+                    <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="brightnessFilter" [min]="0" [max]="200" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Contrast</label>
+                    <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="contrastFilter" [min]="0" [max]="200" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Saturate</label>
+                    <nouislider (change)="applyFilters()" [tooltips]="[ true ]" [(ngModel)]="saturateFilter" [min]="0" [max]="200" [step]="1"></nouislider>
+                  </div>
+
+                  <h2 style="margin: 0 0 30px 0">PreFilters</h2>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Blur</label>
+                    <nouislider (change)="applyPreFilters('blur')" [tooltips]="[ true ]" [(ngModel)]="blurFilter" [min]="0" [max]="20" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Sepia</label>
+                    <nouislider (change)="applyPreFilters('sepia')" [tooltips]="[ true ]" [(ngModel)]="sepiaFilter" [min]="0" [max]="100" [step]="1"></nouislider>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 35px;">
+                    <label for="description">Greyscale</label>
+                    <nouislider (change)="applyPreFilters('gs')" [tooltips]="[ true ]" [(ngModel)]="grayscaleFilter" [min]="0" [max]="100" [step]="1"></nouislider>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div style="margin-top: 20px">
             <div class="form-group">
-                <input (change)="changeActionPic($event)" type="file" name="file" id="file" class="inputfile" />
-                <label for="file">Choose a file</label>
+              <label for="description">Description</label>
+              <input type="text" [(ngModel)]="desc" class="form-control" id="description" placeholder="Description">
             </div>
             <div class="form-group">
               <label>Hashtags</label>
               <tag-input [(ngModel)]="tags" [theme]="'minimal'"></tag-input>
+              <div style="width: 100%; text-align: start">
+                <i>*all '#' will be removed automatically</i>
+              </div>
             </div>
 
 
@@ -28,9 +100,14 @@
                 </tag-input>
               </div>
             </div>
-            <div style="text-align: start" class="form-group">
-                <button (click)="uploadPicture()" type="submit" class="btn btn-primary">Submit</button>
-            </div>
+          </div>
+          <div style="text-align: start" class="form-group">
+              <button (click)="uploadPicture()" type="submit" class="btn btn-primary">Submit</button>
+          </div>
         </div>
     </div>
 </div>
+
+<style>
+
+</style>

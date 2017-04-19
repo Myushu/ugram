@@ -3,6 +3,9 @@
     text-align: center;
     img {
       height: 6em;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
     }
     .main_profile1 {
       margin: -90px auto 0;
@@ -17,12 +20,24 @@
         background-color: #3498db;
         color: #fff;
         font-size: 15px;
-        border: 0;
         border-radius: 0;
+        border: 1px solid #3498db;
         &:hover {
           color: #3498db;
           background-color: #fff;
           border: 1px solid #3498db;
+        }
+      }
+      .delete {
+        background-color: #FE2E2E;
+        color: #fff;
+        font-size: 15px;
+        border-radius: 0;
+        border: 1px solid #FE2E2E;
+        &:hover {
+          color: #FE2E2E;
+          background-color: #fff;
+          border: 1px solid #FE2E2E;
         }
       }
       h2 {

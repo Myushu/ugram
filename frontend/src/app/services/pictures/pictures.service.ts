@@ -1,11 +1,13 @@
-import {Injectable}                                     from "@angular/core";
+import {Injectable, Injector}                                     from "@angular/core";
 import {ResourceAction, ResourceMethod, ResourceParams} from "ng2-resource-rest";
 import {RestClient}                                     from "app/shared/rest-client";
-import {IUserMini}                                      from "app/services/users/users.service";
+import {IUserMini, UsersService}                                      from "app/services/users/users.service";
 import {IReactionPicture}                               from "app/services/reactions/reactions.service";
 import {IHashtagPicture}                                from "app/services/hashtags/hashtags.service";
 import {ICommentPicture}                                from "app/services/comments/comments.service";
 import {IMentionPicture}                                from "app/services/mentions/mentions.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {Http} from "@angular/http";
 
 // input
 export interface IQueryInput {
@@ -43,12 +45,25 @@ export interface IPictureResponse {
 
 @Injectable()
 @ResourceParams({
-  url: "/pictures"
+  url: "/pictures",
+  withCredentials: true,
 })
 export class PicturesService extends RestClient {
+  public satanizer;
+  public usersService: UsersService;
+
+  constructor(
+    http: Http,
+    injector: Injector,
+  ) {
+    super(http, injector);
+    this.usersService = new UsersService(http, injector);
+    this.satanizer = injector.get(DomSanitizer);
+  }
 
   @ResourceAction({
     path: "/",
+    withCredentials: true,
   })
   getPictures: ResourceMethod<IQueryInput, IPictureResponse>;
 
@@ -84,9 +99,43 @@ export class PicturesService extends RestClient {
     }
     else {
       for (let i = 0; i < pics.length; i++) {
-        pics[i].timeSince = this.timeSince(pics[i].DATE_POSTED);
+        let datum = Date.parse(pics[i].DATE_POSTED);
+        pics[i].timeSince = this.timeSince(datum);
       }
     }
     return (pics);
+  }
+
+  formatImagePicturePath(images) {
+    for (let i = 0; i < images.length; i++) {
+      images[i].USER = this.usersService.formatPicturePath(images[i].USER);
+    }
+    return images;
+  }
+
+  setFilter(images) {
+    if (images.length && images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].filterCss = this.satanizer.bypassSecurityTrustStyle(
+          "filter:  brightness(" + images[i].PICTURE_PROPERTy['BRIGTHNESS'] + "%)" +
+          " contrast(" + images[i].PICTURE_PROPERTy['CONTRAST'] + "%)" +
+          " saturate(" + images[i].PICTURE_PROPERTy['SATURATE'] + "%)" +
+          " opacity(" + images[i].PICTURE_PROPERTy['OPACITY'] + "%)" +
+          " blur(" + images[i].PICTURE_PROPERTy['BLUR'] + "px)" +
+          " grayscale(" + images[i].PICTURE_PROPERTy['GRAYSCALE'] + "%)" +
+          " sepia(" + images[i].PICTURE_PROPERTy['SEPIA'] + "%)");
+      }
+    }
+    else if (images.PICTURE_PROPERTy) {
+      images.filterCss = this.satanizer.bypassSecurityTrustStyle(
+        "filter:  brightness(" + images.PICTURE_PROPERTy['BRIGTHNESS'] + "%)" +
+        " contrast(" + images.PICTURE_PROPERTy['CONTRAST'] + "%)" +
+        " saturate(" + images.PICTURE_PROPERTy['SATURATE'] + "%)" +
+        " opacity(" + images.PICTURE_PROPERTy['OPACITY'] + "%)" +
+        " blur(" + images.PICTURE_PROPERTy['BLUR'] + "px)" +
+        " grayscale(" + images.PICTURE_PROPERTy['GRAYSCALE'] + "%)" +
+        " sepia(" + images.PICTURE_PROPERTy['SEPIA'] + "%)");
+    }
+    return images;
   }
 }

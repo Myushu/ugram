@@ -2,19 +2,26 @@ import {Component, OnInit}  from "@angular/core";
 import {Router}             from "@angular/router";
 import {CookieService}      from "angular2-cookie/core";
 import {UsersService}       from "app/services/users/users.service";
+import {ConfigService}      from "app/shared/config";
 
 declare const FB: any;
 
 @Component({
   selector: "facebook-login",
   templateUrl: "facebook-login.component.html",
+  styleUrls: ["./facebook-login.component.scss"]
 })
 
 export class FacebookLoginComponent implements OnInit {
 
-  constructor(private router: Router, private _cookieService: CookieService, private usersService: UsersService) {
+  constructor(
+    private router: Router,
+    private _cookieService: CookieService,
+    private usersService: UsersService,
+    private configService: ConfigService
+  ) {
     FB.init({
-      appId      : "280735385694809",
+      appId      : configService.getApiIdFB(),
       cookie     : false,
       xfbml      : true,
       version    : "v2.5"
@@ -36,8 +43,8 @@ export class FacebookLoginComponent implements OnInit {
   statusChangeCallback(resp) {
     if (resp.status === "connected") {
       this.usersService.FBLoginUser({TOKEN: resp['authResponse']['accessToken']}, (res: string) => {
-        this._cookieService.put('token', res['token']);
-        this._cookieService.put('user_id', res['userId']);
+        this._cookieService.put('user_id', res['ID_USER']);
+        this._cookieService.put('login_facebook', "1");
         this.router.navigate(['/home']);
       });
     }else if (resp.status === "not_authorized") {

@@ -24,11 +24,6 @@ export class RestClient extends Resource {
 
   getHeaders(methodOptions?: any): any {
     let headers = super.getHeaders();
-
-    if (!methodOptions.noAuth) {
-        if (this._cookieService.get("token"))
-          headers.Authorization = "Bearer " + this._cookieService.get("token");
-    }
     return headers;
   }
 
@@ -44,11 +39,11 @@ export class RestClient extends Resource {
           subscriber.next((<any>res)._body ? res.json() : null);
         },
         (error: Response) => {
-          console.log('error', error);
-          if (error.status == 401) {
+          if (error.status === 401) {
             this._cookieService.removeAll();
             this.router.navigate(["/login"]);
           }
+          subscriber.error(error);
         },
         () => subscriber.complete()
       );

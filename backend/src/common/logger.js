@@ -1,6 +1,6 @@
-const config = require('config');
-var winston = require('winston');
-var CloudWatchTransport = require('winston-aws-cloudwatch');
+const winston = require('winston');
+const CloudWatchTransport = require('winston-aws-cloudwatch');
+const config = require('../common/configManager');
 
 const logger = new winston.Logger({
   transports: [
@@ -11,24 +11,24 @@ const logger = new winston.Logger({
   ]
 });
 
-var configuration = {
-  logGroupName: config.get('winston')['logGroupName'],
-  logStreamName: config.get('winston')['logStreamName'],
-  createLogGroup: false,
-  createLogStream: true,
-  awsConfig: {
-    accessKeyId: process.env.CLOUDWATCH_ACCESS_KEY_ID,
-    secretAccessKey: process.env.CLOUDWATCH_SECRET_ACCESS_KEY,
-    region: config.get('winston')['awsRegion'],
-  },
-  formatLog: function (item) {
-    return item.level + ': ' + item.message + ' ' + JSON.stringify(item.meta)
+var winstonMode = config.get('WINSTON_MODE', 'winston.enable', false)
+logger.info('Logged on Wiston : ' +  winstonMode);
+if (winstonMode == true || winstonMode == 'true') {
+  var configuration = {
+    logGroupName: config.get('LOG_GROUP_NAME', 'winston.logGroupName'),
+    logStreamName: config.get('LOG_STREAM_NAME', 'winston.logStreamName'),
+    createLogGroup: false,
+    createLogStream: true,
+    awsConfig: {
+      accessKeyId: config.get('CLOUDWATCH_ACCESS_KEY_ID', 'winston.cloudwatchAccessKeyId'),
+      secretAccessKey: config.get('CLOUDWATCH_SECRET_ACCESS_KEY', 'winston.cloudwatchAccessId'),
+      region: config.get('AWS_REGION', 'winston.awsRegion')
+    }
   }
+  logger.add(CloudWatchTransport, configuration);
 }
 
-if (config.get('winston')['enable'] == true)
-  logger.add(CloudWatchTransport, configuration);
-logger.level = config.get('winston')['level'],
+logger.level = config.get('LOGGER_LEVEL', 'winston.level', 'silly');
 logger.stream = {
   write: function(message, encoding) {
     logger.info(message);

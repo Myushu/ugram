@@ -9,9 +9,11 @@ import {
 import {UsersPicturesService}         from "app/services/users-pictures/users-pictures.service";
 import {IHashtagPicture}              from "app/services/hashtags/hashtags.service";
 import {IMentionPicture}              from "app/services/mentions/mentions.service";
-import {ICommentPicture}              from "app/services/comments/comments.service";
-import {IReactionPicture}             from "app/services/reactions/reactions.service";
+import {CommentsService, ICommentPicture}              from "app/services/comments/comments.service";
+import {IReactionPicture, ReactionsService}             from "app/services/reactions/reactions.service";
 import {ConfigService}                from "app/shared/config";
+import {FormBuilder, Validators, FormControl}    from "@angular/forms";
+
 
 @Component({
   selector: "app-picture",
@@ -27,11 +29,17 @@ export class PictureComponent implements OnInit {
   public mentions: IMentionPicture[];
   public comments: ICommentPicture[];
   public reactions: IReactionPicture[];
+  public reactionsNbr: number;
   public image: IPicture = <IPicture>{};
   public user: IUser = <IUser>{};
   public users = [];
   public updated: number = 0;
   public picture_url: string;
+  public isLiked: boolean;
+
+  public commentForm = this.fb.group({
+    comment: [""]
+  });
 
   constructor(
     private _cookieService: CookieService,
@@ -40,9 +48,69 @@ export class PictureComponent implements OnInit {
     private Route: ActivatedRoute,
     private usersService: UsersService,
     private usersPicturesService: UsersPicturesService,
+    private reactionsService: ReactionsService,
     private configService: ConfigService,
+    private commentsService: CommentsService,
+    private fb: FormBuilder,
   ) {
 
+  }
+
+  transformer(item: string): string {
+    return `#${item}`;
+  }
+
+  sendComment() {
+    this.commentsService.createComment({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE, CONTENT: this.commentForm.value.comment}).$observable.subscribe(
+      res => {
+        this.commentsService.getComments({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+          res => {
+            this.comments = this.commentsService.format_comment(res);
+            this.comments = this.commentsService.formatCommentPicturePath(this.comments);
+            this.commentForm.reset();
+          },
+          err => {
+            console.log('err', err);
+          }
+        );
+      },
+      err => {
+        console.log('err', err);
+      }
+    );
+  }
+
+  checkAlreadyLiked() {
+    if (this.isLiked) {
+      this.deleteThumbUp();
+    } else {
+      this.addThumbUp();
+    }
+  }
+
+  addThumbUp() {
+    this.reactionsService.createReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        this.reactionsNbr += 1;
+        this.isLiked = true;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteThumbUp() {
+    this.reactionsService.deleteReaction({ID_USER: this.image.ID_OWNER, ID_PICTURE: this.image.ID_PICTURE}).$observable.subscribe(
+      res => {
+        this.reactionsNbr -= 1;
+        this.reactions = this.reactions.filter(x => x.ID_USER != this.my_user_id);
+        this.isLiked = false;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   deleteImage() {
@@ -64,7 +132,11 @@ export class PictureComponent implements OnInit {
     let u_tags = [];
     let u_mentions = [];
     for (let i = 0; i < this.tags.length; i++) {
-      u_tags.push({HASHTAG: this.tags[i]["display"]});
+      this.tags[i]["value"] = this.tags[i]["value"].replace(/#/g, "");
+      this.tags[i]["display"] = this.tags[i]["value"].replace(/#/g, "");
+      if (!this.tags[i]["display"].startsWith("#"))
+        this.tags[i]["display"] = "#" + this.tags[i]["display"];
+      u_tags.push({HASHTAG: this.tags[i]["value"]});
     }
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
@@ -81,14 +153,15 @@ export class PictureComponent implements OnInit {
 
   format_hashtag(tags) {
     for (let i = 0; i < tags.length; i++) {
-      tags[i].display = tags[i].HASHTAG;
+      tags[i].display = '#' + tags[i].HASHTAG;
+      tags[i].value = tags[i].HASHTAG;
     }
     return(tags);
   }
 
   format_mention(ment) {
     for (let i = 0; i < ment.length; i++) {
-      ment[i].display = ment[i].USER.PSEUDO;
+      ment[i].display = '@' + ment[i].USER.PSEUDO;
       ment[i].value = ment[i].USER.ID_USER;
     }
     return (ment);
@@ -115,8 +188,19 @@ export class PictureComponent implements OnInit {
       this.usersPicturesService.getUserPicture({ID_USER: this.req_userID, ID_PICTURE: this.req_pictureID}).$observable.subscribe(
         (res: IPicture) => {
           this.image = this.picturesService.format_picture(res);
+          this.image = this.picturesService.setFilter(this.image);
           this.tags = this.format_hashtag(this.image.HASHTAGs);
           this.mentions = this.format_mention(this.image.MENTIONs);
+          this.comments = this.commentsService.format_comment(res.COMMENTs);
+          this.comments = this.commentsService.formatCommentPicturePath(this.comments);
+          this.reactions = this.image.REACTIONs;
+          this.reactionsNbr = this.reactions.length;
+          this.isLiked = false;
+          for (let i = 0; i < this.reactions.length; ++i) {
+            if (this.my_user_id == this.reactions[i]["ID_USER"]) {
+              this.isLiked = true;
+            }
+          }
         },
         err => {
           console.log('err', err);

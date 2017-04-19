@@ -32,6 +32,7 @@ export class DiscoverComponent implements OnInit {
       (res: IUserResponse) => {
         this.totalEntries = res.count;
         this.users = res.rows;
+        this.userService.formatPicturePath(this.users);
       }
     );
   }

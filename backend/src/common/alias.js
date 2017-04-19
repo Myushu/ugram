@@ -6,16 +6,19 @@ const userModel = orm.getSequelize().import("../models/USER.js");
 const mentionModel = orm.getSequelize().import("../models/MENTION.js");
 const hashtagModel =  orm.getSequelize().import("../models/HASHTAG.js");
 const commentModel = orm.getSequelize().import("../models/COMMENT.js");
+const picturePropertiesModel = orm.getSequelize().import("../models/PICTURE_PROPERTIES.js");
 
 pictureModel.hasMany(reactionModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(mentionModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(hashtagModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.hasMany(commentModel, {foreignKey : 'ID_PICTURE'});
+pictureModel.hasOne(picturePropertiesModel, {foreignKey : 'ID_PICTURE'});
 pictureModel.belongsTo(userModel, {foreignKey : 'ID_OWNER'});
 reactionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 mentionModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 commentModel.belongsTo(userModel, {foreignKey : 'ID_USER'});
 hashtagModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
+picturePropertiesModel.belongsTo(pictureModel, {foreignKey : 'ID_PICTURE'});
 
 // Pictures
 exports.pictureAttributes = ['ID_PICTURE', 'ID_OWNER', 'FILENAME', 'DATE_POSTED', 'DESCRIPTION'];
@@ -33,8 +36,8 @@ exports.pictureWhereUser = (pictureId, userId) => {
 };
 
 // User
-exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO'];
-exports.userAttributesFull = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE'];
+exports.userAttributes =  ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'IS_CONNECTED', 'PICTURE_PATH'];
+exports.userAttributesFull = ['ID_USER', 'FIRSTNAME', 'LASTNAME', 'PSEUDO', 'PICTURE_PATH', 'SEXE', 'IS_CONNECTED'];
 exports.userInclude = {
   model : userModel,
   attributes : this.userAttributes
@@ -45,7 +48,7 @@ exports.reactionAttributes = {exclude : ['ID_PICTURE']};
 exports.reactionInclude = {
   model : reactionModel,
   attributes : this.reactionAttributes,
-  include : this.userInclude
+  include : Object.assign({}, this.userInclude)
 };
 
 // Mention
@@ -64,9 +67,20 @@ exports.hashtagInclude = {
 };
 
 // Comment
-exports.commentAttributes = ['ID_PICTURE', 'ID_USER'];
+exports.commentAttributes = ['ID_PICTURE', 'ID_USER', 'CONTENT', 'DATE_CREATION'];
 exports.commentInclude = {
   model : commentModel,
   attributes : this.commentAttributes,
   include : Object.assign({}, this.userInclude)
 };
+
+// Message
+exports.messageAttributes = ['ID_SENDER', 'ID_RECEIVER', 'DATE_SENDED', 'MESSAGE'];
+
+// Pictures Properties
+exports.picturePropertiesInclude = {
+  model : picturePropertiesModel
+}
+
+// Notification
+exports.notificationAttributes = ['MESSAGE', 'ID_USER', 'ID_PICTURE'];

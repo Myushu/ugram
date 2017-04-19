@@ -18,5 +18,10 @@ generate_models() {
   sequelize-auto --help -o "./src/models" -d $DB_DATABASE -h $DB_HOST -u $DB_LOGIN -x $DB_PASSWORD
 }
 
+init_database() {
+  mysql -h $DB_HOST -u $DB_LOGIN -p$DB_PASSWORD < dist/ugram.sql
+}
+
+init_database
 generate_models
 apply_patch

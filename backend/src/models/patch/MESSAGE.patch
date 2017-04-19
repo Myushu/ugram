@@ -1,0 +1,9 @@
+30c30
+<       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+---
+>       defaultValue: DataTypes.NOW
+37c37,38
+<     tableName: 'MESSAGE'
+---
+>     tableName: 'MESSAGE',
+>     timestamps : false

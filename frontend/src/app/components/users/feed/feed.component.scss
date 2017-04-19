@@ -17,11 +17,23 @@
         background-color: #3498db;
         color: #fff;
         font-size: 15px;
-        border: 0;
+        border: 1px solid #3498db;
         border-radius: 0;
         &:hover {
           color: #3498db;
           background-color: #fff;
+          border: 1px solid #3498db;
+        }
+      }
+      .follow {
+        background-color: #fff;
+        color: #3498db;
+        font-size: 15px;
+        border: 1px solid #3498db;
+        border-radius: 0;
+        &:hover {
+          color: #fff;
+          background-color: #3498db;
           border: 1px solid #3498db;
         }
       }

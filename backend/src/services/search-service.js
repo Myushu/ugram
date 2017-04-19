@@ -13,56 +13,72 @@ exports.searchUser = (query, res) => {
       $or : [
         {
           'FIRSTNAME' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           },
         }, {
           'LASTNAME' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           },
         }, {
           'PSEUDO' : {
-            $like : '%' + query.input + '%'
+            $like : query.input + '%'
           }
         }
       ]
     }
   }
-  var attributesCount = Object.assign({}, attributes);
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(userModel, res, attributes, attributesCount);
+  orm.findAllAndCount(userModel, res, attributes);
 }
 
 exports.searchDescription = (query, res) => {
   var attributes = {
     attributes : alias.pictureAttributes,
+    include : [
+      alias.picturePropertiesInclude
+    ],
     where : {
       'DESCRIPTION' : {
         $like : '%' + query.input + '%'
       }
     }
   }
-  var attributesCount = Object.assign({}, attributes);;
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
+  orm.findAllAndCount(pictureModel, res, attributes);
 }
 
 exports.searchHashtag = (query, res) => {
+  if (query.absolute == 'false')
+    query.input += '%';
   var attributes = {
     attributes : alias.pictureAttributes,
-    include : [{
-      model : hashtagModel,
-      attributes : [],
-      where : {
-        'HASHTAG' : {
-          $like : query.input
+    include : [
+      alias.picturePropertiesInclude,
+      {
+        model : hashtagModel,
+        attributes : [],
+        where : {
+          'HASHTAG' : {
+            $like :  query.input
         }
       }
     }]
   }
-  var attributesCount = Object.assign({}, attributes);;
-  delete attributesCount['attributes'];
   queryManager.fillAttributesFromQuery(attributes, query);
-  orm.findAllAndCount(pictureModel, res, attributes, attributesCount);
+  orm.findAllAndCount(pictureModel, res, attributes);
+}
+
+exports.hashtagAutocomplete = (query, res) => {
+  if (query.absolute == 'false')
+    query.input += '%';
+  var attributes = {
+    attributes : alias.hashtagAttributes ,
+    where : {
+      'HASHTAG' : {
+        $like :  query.input
+      }
+    }
+  }
+  queryManager.fillAttributesFromQuery(attributes, query);
+  orm.findAllAndCount(hashtagModel, res, attributes);
 }

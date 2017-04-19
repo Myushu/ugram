@@ -5,7 +5,7 @@
     <div class="main_profile1">
       <h1 class="profile-name">{{user.FIRSTNAME}} {{user.LASTNAME}}</h1>
       <h2>@{{user.PSEUDO}}</h2>
-      <section class="buttons">
+      <section class="buttons" style="margin-bottom: 10px">
         <div class="container">
           <div class="btn btn-3" style="width:33%;">posts
             <div style="clear:both;"></div>
@@ -14,15 +14,17 @@
           <div class="btn btn-3" style="width:36%; border-right:1px solid rgba(0, 0, 0, 0.1); border-left:1px solid rgba(0, 0, 0, 0.1)">followers
 
             <div style="clear:both;"></div>
-            <span style="font-size:20px; font-weight:bold;">125</span>
+            <span style="font-size:20px; font-weight:bold;">{{user.countFollower}}</span>
           </div>
           <div class="btn btn-2" style=" width:23%;">following
             <div style="clear:both;"></div>
-            <span style="font-size:20px; font-weight:bold;">25</span>
+            <span style="font-size:20px; font-weight:bold;">{{user.countFollowing}}</span>
           </div>
         </div>
       </section>
       <div style="clear:both;"></div>
+      <a *ngIf="follow === false" (click)="followAction()" class="btn btn-primary update">Follow</a>
+      <a *ngIf="follow === true" (click)="unfollowAction()" class="btn btn-primary follow">Following</a>
     </div>
   </div>
 
@@ -30,7 +32,7 @@
     <div class="row">
       <div *ngFor="let image of images;" class="col-xs-6 col-md-4">
         <a routerLink="/picture/{{user.ID_USER}}/{{image.ID_PICTURE}}" class="thumbnail">
-          <div class="img"><img src="{{picture_url}}/picture?filename={{image.FILENAME}}"></div>
+          <div class="img"><img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}"></div>
         </a>
       </div>
     </div>

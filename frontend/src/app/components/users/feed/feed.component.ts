@@ -4,6 +4,8 @@ import {IPicture, IPictureResponse}   from "app/services/pictures/pictures.servi
 import {UsersService, IUser}          from "app/services/users/users.service";
 import {UsersPicturesService}         from "app/services/users-pictures/users-pictures.service";
 import {ConfigService}                from "app/shared/config";
+import {PicturesService}              from "app/services/pictures/pictures.service";
+import {FollowService}                from "app/services/follow/follow.service";
 
 @Component({
   selector: "app-feed",
@@ -19,12 +21,15 @@ export class FeedComponent implements OnInit {
   public totalEntries: number = 0;
   public user_id: number;
   public picture_url: string;
+  public follow: boolean = false;
 
   constructor(
     private userService: UsersService,
     private Route: ActivatedRoute,
     private usersPicturesService: UsersPicturesService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private picturesService: PicturesService,
+    private followService: FollowService,
   ) {
 
   }
@@ -47,13 +52,38 @@ export class FeedComponent implements OnInit {
         this.user = res;
         if (this.user.PICTURE_PATH === 'default')
           this.user.PICTURE_PATH = this.configService.getUrl() + '/picture?filename=' + this.user.PICTURE_PATH;
-        console.log(this.user);
+        this.follow = this.user['isFollowed'];
       }
     );
     this.usersPicturesService.getUserPictures({ID_USER: this.user_id, page: this.page, perPage: this.pageSize}).$observable.subscribe(
       (res: IPictureResponse) => {
         this.images = res.rows;
+        this.images = this.picturesService.setFilter(this.images);
         this.totalEntries = res.count;
+      }
+    );
+  }
+
+  followAction() {
+    this.followService.createReaction({ID_USER: this.user.ID_USER}).$observable.subscribe(
+      res => {
+        this.user['countFollower'] += 1;
+        this.follow = true;
+      },
+      err => {
+        console.log('err', err);
+      }
+    );
+  }
+
+  unfollowAction() {
+    this.followService.deleteReaction({ID_USER: this.user.ID_USER}).$observable.subscribe(
+      res => {
+        this.user['countFollower'] -= 1;
+        this.follow = false;
+      },
+      err => {
+        console.log('err', err);
       }
     );
   }

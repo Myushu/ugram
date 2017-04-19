@@ -15,4 +15,8 @@ module.exports = function(app) {
     app.get('/search/users', (req, res) => {
       service.searchUser(req.query, res);
     })
+
+    app.get('/search/autocomplete/hashtag', (req, res) => {
+      service.hashtagAutocomplete(req.query, res);
+    })
 }
