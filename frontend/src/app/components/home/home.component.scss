@@ -5,7 +5,8 @@ $foundation-primary-dark: darken($foundation-primary, 10%);
 
 // this is the container's theme
 $foundation-theme: (
-  container-border-bottom: none!important
+  container-border-bottom: none!important,
+  container-width: 100%
 );
 
 $foundation-tag-theme: (
