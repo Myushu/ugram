@@ -13,6 +13,12 @@ The instagram like made by the **team 06** for [GLO-3312](https://github.com/GLO
 **API :**
 - [API documentation](http://docs.ugram06.apiary.io)
 
+**Analytics** :
+
+- We can't shared the analytics dashboard without your gmail address, so we take a screenshot of the dashboard. If you want more information, you can send me your gmail address to aljosha.armitano.1[at]ulaval.ca.  
+
+![analytics](ressources/analytics.png)
+
 ## Project Configuration
 
 ### Front end
@@ -59,10 +65,10 @@ Services are stored on ```backend/src/services``` and controllers on ```backend/
 
 ## Bonus
 For the last release, we implemented some bonus :
- - A tchat to talk with your friends   
- - An autocompletion on the search bar   
- - Some filters when you post a new picture  
- - A following system  
+- A tchat to talk with your friends   
+- An autocompletion on the search bar   
+- Some filters when you post a new picture  
+- A following system  
 
 ### The tchat
 On the rigth side you have the tchat scrollable panel.  
