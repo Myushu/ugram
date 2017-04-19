@@ -28,12 +28,12 @@ npm start
 
 ### Back end
 
-To run the server, set information on the config file ``` backend/config/default.json```.   
+To run the server, set informations on the config file ``` backend/config/default.json```.   
 You also must start the [redis](redis.io) database :
 ```
 sudo service redis start
 ```
-If you want ton init the database, you must run :
+If you want to init the database, you must run :
 ```
 cd backend
 npm run-script initialize
@@ -55,18 +55,18 @@ The SQL orm is [sequelize](http://docs.sequelizejs.com/en/v3/). The models are s
 ```
 backend/dist/generate_models.sh
 ```
-The services are stored on ```backend/src/services``` and controllers on ```backend/src/controllers```. The common folder (```backend/src/common```) contains the services using by other services such as the orm or the configuration file manager.
+Services are stored on ```backend/src/services``` and controllers on ```backend/src/controllers```. The common folder (```backend/src/common```) contains services using by other services such as the orm or the configuration file manager.
 
 ## Bonus
-For the last release, we implemented few bonus :
+For the last release, we implemented some bonus :
  - A tchat to talk with your friends   
- - An Autocompletion on the search bar   
- - Some Filters when you post a new picture  
+ - An autocompletion on the search bar   
+ - Some filters when you post a new picture  
  - A following system  
 
 ### The tchat
 <img align="right" width="160" height="300" src="ressources/tchat.png">
-On your rigth side you have the tchat scrollable panel.  
+On the rigth side you have the tchat scrollable panel.  
 When your friend is connected, he have a green ligth, otherwhise it's should be grey. When you click on a username, a text will open. You can see your old conversation and you can send a new message.  
 When you recevied a new message, the page's title is updated like : **(1) Ugram** . And you should be seen a warning box next to the sender name with the numner of new message.  
 
@@ -75,11 +75,10 @@ On rigth top side, you should see a search bar. When you started typping a autoc
 ![auto-completion](ressources/autocompletion.png)
 
 ### The Filters
-When your upload a picture you can some filters :
-
+When your upload a picture you can apply some filters :
 ![filter panel](ressources/filter_panel.png)
 
-### The following system.
-On your friend's page you can a see a following button. You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.
+### The following system
+On your friend's page you can see a following button. You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.
 ![following button](ressources/following_button.png)    
 ![following notification](ressources/following_message.png)
