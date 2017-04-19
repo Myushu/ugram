@@ -5,7 +5,7 @@ $foundation-primary-dark: darken($foundation-primary, 10%);
 
 // this is the container's theme
 $foundation-theme: (
-
+  container-border-bottom: none!important
 );
 
 $foundation-tag-theme: (
@@ -28,11 +28,6 @@ $foundation-tag-theme: (
 
 /deep/ .ng2-tag-input.foundation-theme tag {
   @include tag-theme($foundation-tag-theme);
-}
-
-.ng2-tag-input {
-  width: 100%;
-  container-border-bottom: none!important
 }
 
 #page-wrapper {

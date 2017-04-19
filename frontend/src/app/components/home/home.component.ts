@@ -11,7 +11,7 @@ import {IHashtagPicture} from "../../services/hashtags/hashtags.service";
 
 @Component({
   selector: "app-home",
-  encapsulation: ViewEncapsulation.None,
+  //encapsulation: ViewEncapsulation.None,
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
   providers: [CookieService, NgbPaginationConfig, ConfigService]

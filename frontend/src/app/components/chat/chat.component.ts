@@ -46,7 +46,6 @@ export class ChatComponent implements OnInit {
         this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
         for (let i = 0; i < this.users.length; i++)
           this.users[i]['newMessage'] = 0;
-        console.log('users', this.users);
       }
     );
 
@@ -55,20 +54,16 @@ export class ChatComponent implements OnInit {
         if (this.users.length > 0 && res['ID_USER'] != this._cookieService.get('user_id')) {
           if (res['STATUS'] == 'connected') {
             this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 1;
-            console.log('user connected', this.users);
           }
           else {
             this.users.filter(x => x.ID_USER === res['ID_USER'])[0].IS_CONNECTED = 0;
-            console.log('user deconnected', this.users);
           }
         }
       }
     );
 
     SocketIoService.getInstance().getMessage().subscribe(message => {
-      console.log('message', message);
       if (this.user == null || this.user.ID_USER != message['ID_SENDER']) {
-        console.log('u', this.users.filter(x => x.ID_USER === message['ID_SENDER']));
         this.users.filter(x => x.ID_USER === message['ID_SENDER'])[0]['newMessage'] += 1;
         this.titleService.setTitleNotif(1);
         this.globalNewMessage += 1;
@@ -85,7 +80,6 @@ export class ChatComponent implements OnInit {
             this.users = this.users.filter(x => x.ID_USER != <number><any>this._cookieService.get('user_id'));
             for (let i = 0; i < this.users.length; i++)
               this.users[i]['newMessage'] = 0;
-            console.log('users', this.users);
           }
         );
       }

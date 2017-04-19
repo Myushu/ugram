@@ -11,8 +11,6 @@ export class TitleService {
 
   setTitleNotif(nbrNotif) {
     this.nbrTotalMessage += nbrNotif;
-    console.log('===New Notif===');
-    console.log('current nbr of notifs : ', this.nbrTotalMessage);
     this.titleService.setTitle("(" + this.nbrTotalMessage + ") Ugram");
   }
 

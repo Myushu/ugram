@@ -40,11 +40,8 @@ export class ValidationService {
     }
     let res = [];
     const form = dataForm;
-    console.log('form', form);
     for (const field in dataForm.value) {
       const control = form.get(field);
-      console.log('cc', control);
-      console.log('error', control.errors);
       if (control && control.dirty && !control.valid) {
         for (const key in control.errors) {
           return this.getValidatorErrorMessage(key, field);

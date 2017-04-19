@@ -57,7 +57,6 @@ export class PictureComponent implements OnInit {
   }
 
   transformer(item: string): string {
-    console.log('item', item);
     return `#${item}`;
   }
 
@@ -139,7 +138,6 @@ export class PictureComponent implements OnInit {
         this.tags[i]["display"] = "#" + this.tags[i]["display"];
       u_tags.push({HASHTAG: this.tags[i]["value"]});
     }
-    console.log('hassssss', this.tags);
     for (let i = 0; i < this.mentions.length; i++) {
       u_mentions.push({ID_USER: this.mentions[i]["value"]});
     }

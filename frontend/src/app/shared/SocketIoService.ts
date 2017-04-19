@@ -35,10 +35,8 @@ export class SocketIoService {
   }
 
   connectWS() {
-    console.log('Connect Socket IO');
     this.socket = io.connect(this.configService.getSocketIoUrl());
     this.socket.on('connect', (data) => {
-      console.log('coooooo');
       //this.socket.emit('join', this._cookieService.get('token'));
     });
     this.socket.on('notification', (data) => {});
@@ -103,7 +101,6 @@ export class SocketIoService {
   }
 
   closeSocket() {
-    console.log('Close Socket');
     this.socket.disconnect();
     this.socket.close();
   }
