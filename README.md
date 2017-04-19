@@ -65,7 +65,7 @@ For the last release, we implemented some bonus :
  - A following system  
 
 ### The tchat
-<img align="right" width="160" height="300" src="ressources/tchat.png">
+![tchat](ressources/tchat.png)
 On the rigth side you have the tchat scrollable panel.  
 When your friend is connected, he have a green ligth, otherwhise it's should be grey. When you click on a username, a text will open. You can see your old conversation and you can send a new message.  
 When you recevied a new message, the page's title is updated like : **(1) Ugram** . And you should be seen a warning box next to the sender name with the numner of new message.  
