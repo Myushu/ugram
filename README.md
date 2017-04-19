@@ -1,5 +1,5 @@
 # Ugram
-The instagram like made by the **team 06** for [GLO-3312](https://github.com/GLO3112) on wither 2017.  
+The instagram like made by the **team 06** for [GLO-3312](https://github.com/GLO3112) on winter 2017.  
 
 [![Build Status](https://travis-ci.com/GLO3102/ugram-h17-team-06.svg?token=aFfqYprXthpFtCp3eomp&branch=master)](https://travis-ci.com/GLO3102/ugram-h17-team-06)
 
@@ -65,10 +65,12 @@ For the last release, we implemented some bonus :
  - A following system  
 
 ### The tchat
-![tchat](ressources/tchat.png)
 On the rigth side you have the tchat scrollable panel.  
 When your friend is connected, he have a green ligth, otherwhise it's should be grey. When you click on a username, a text will open. You can see your old conversation and you can send a new message.  
 When you recevied a new message, the page's title is updated like : **(1) Ugram** . And you should be seen a warning box next to the sender name with the numner of new message.  
+![tchat](ressources/tchat.png)
+When the chatbox is closed and you received a new message, a notifaction on the top of the chatbox appeared.
+![tchat](ressources/tchat_close.png)  
 
 ### The Autocompletion on the search bar  
 On rigth top side, you should see a search bar. When you started typping a autocompletion combox will appered. You can find by user, hashtag or word on description.  
@@ -79,6 +81,5 @@ When your upload a picture you can apply some filters :
 ![filter panel](ressources/filter_panel.png)
 
 ### The following system
-On your friend's page you can see a following button. You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.
-![following button](ressources/following_button.png)    
+On your friend's page you can see a following button. You can also see his number of followers and following. When your are a follower, you will received a notification when he post a new picture.   
 ![following notification](ressources/following_message.png)
