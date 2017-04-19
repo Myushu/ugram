@@ -123,7 +123,6 @@ export class UploadComponent implements OnInit {
   }
 
   cropped(bounds: Bounds) {
-    console.log('bb', bounds);
     this.cropperSettings1.croppedHeight = bounds.bottom - bounds.top;
     this.cropperSettings1.croppedWidth = bounds.right - bounds.left;
   }
@@ -158,7 +157,6 @@ export class UploadComponent implements OnInit {
 }
 
   uploadPicture() {
-    console.log(this.data1);
     const user_id = this._cookieService.getObject("user_id");
     let u_tags = [];
     let u_mentions = [];
@@ -185,7 +183,6 @@ export class UploadComponent implements OnInit {
     let byteArray = new Uint8Array(byteN);
     let blop = new Blob([byteArray], {type: this.data1.image.substring(this.data1.image.indexOf(":")+1, this.data1.image.indexOf(";"))});
     this.image = blop;
-    console.log(this.image);
     this.fileChange(u_tags, u_mentions, u_filters);
   }
 

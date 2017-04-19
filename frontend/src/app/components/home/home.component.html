@@ -9,13 +9,14 @@
           <div class="date">{{image.timeSince}}</div>
         </div>
         <div class="img"> <a routerLink="/picture/{{image.ID_OWNER}}/{{image.ID_PICTURE}}"><img *ngIf="image.FILENAME" [style]="image.filterCss" src="{{picture_url}}/picture?filename={{image.FILENAME}}" width="600px"></a></div>
-        <div class="user">
-          <ul>
+        <div class="user" style="text-align:start">
+          <ul style="display: inline-block; margin-bottom: 0!important">
             <li class="react">{{image.nbrReact}} <i [class.islike]="isLiked" class="fa fa-heart" style="font-size:15px;color: #e74c3c" aria-hidden="true"></i></li>
-            <li class="name">{{image.DESCRIPTION}}</li>
+            <li class="name"><p>{{image.DESCRIPTION}}</p></li>
           </ul>
-          <tag-input theme="foundation-theme" [ngModel]="image.tags" [transform]="transformer" [readonly]="true"></tag-input>
-
+          <div style="width: 100%;">
+            <tag-input theme="foundation-theme" [ngModel]="image.tags" [transform]="transformer" [readonly]="true"></tag-input>
+          </div>
         </div>
       </div>
     </div>
