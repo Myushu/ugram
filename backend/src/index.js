@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const io = socket(server, { path: '/socket.io'});
 const port = config.get('PORT', 'server.port', 3000);
 const corsOptions = {
-    origin: config.get('CORS_ORIGIN', 'server.cors'),
+    origin: [ config.get('CORS_ORIGIN', 'server.cors') , config.get('CORS_ORIGIN_CNAME', 'server.cors') ],
     methods: [
         'GET',
         'PUT',
